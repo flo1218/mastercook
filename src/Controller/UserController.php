@@ -2,41 +2,43 @@
 
 namespace App\Controller;
 
-use App\Form\UserPasswordType;
+use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/user/edit/{id}', name: 'user.edit')]
-    public function edit(UserRepository $repository, 
+    #[Route('/user/edit/{id}', name: 'user_edit')]
+    #[Security("is_granted('ROLE_USER') and user == choosenUser")]
+    public function edit(
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        int $id): Response
+        User $choosenUser): Response
     {
-        $user = $repository->findOneBy(['id' => $id]);
-
         if (!$this->getUser() ) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($this->getUser() != $user) {
+        if ($this->getUser() != $choosenUser) {
             return $this->redirectToRoute('recipe.index');
         }
 
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $choosenUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())) {
+            if ($hasher->isPasswordValid($choosenUser, $form->getData()->getPlainPassword())) {
                 $user = $form->getData();
                 $manager->persist($user);
                 $manager->flush();
@@ -54,21 +56,19 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/edit-password/{id}', name: 'user.edit-password')]
-    public function editPassword(UserRepository $repository, 
+    #[Route('/user/edit-password/{id}', name: 'user_edit-password')]
+    #[Security("is_granted('ROLE_USER') and user == choosenUser")]
+    public function editPassword(
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        int $id): Response
+        User $choosenUser): Response
     {
-
-        $user = $repository->findOneBy(['id' => $id]);
-
         if (!$this->getUser() ) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($this->getUser() != $user) {
+        if ($this->getUser() != $choosenUser) {
             return $this->redirectToRoute('recipe.index');
         }
 
@@ -76,10 +76,10 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
+            if ($hasher->isPasswordValid($choosenUser, $form->getData()['plainPassword'])) {
 
-                $user->setPassword($hasher->hashPassword($user, $form->getData()['newPassword']));
-                $manager->persist($user);
+                $choosenUser->setPassword($hasher->hashPassword($choosenUser, $form->getData()['newPassword']));
+                $manager->persist($choosenUser);
                 $manager->flush();
     
                 $this->addFlash('success','Votre mot de passe a été modifié avec succès.');

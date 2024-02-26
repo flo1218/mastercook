@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+SymRecipe - {{ recipe.name }}
+{% endblock %}
+
+
+
+{% block body %}
+	<div class="container">
+	    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-dismissible alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+		<h1 class="mt-4">{{ recipe.name}}</h1>
+
+		<p>La moyenne de cette recette est de
+			{{ recipe.average|number_format(2, '.', ',') }}/5
+		</p>
+		
+		<div>
+			<span class="badge bg-primary">Créé le 
+			{{ recipe.createdAt|date('d/m/Y')}}</span>
+		</div>
+
+		<p class="form-label mt-4">Temps en minutes: {{ recipe.time}}</p>
+
+		<p class="form-label mt-4">Pour  {{ recipe.nbPeople}} personnes</p>
+
+		<p class="form-label mt-4">Difficulté:  {{ recipe.difficulty}}/5</p>
+
+		<p class="form-label mt-4">Description</p>
+		<div>
+			{{ recipe.description| raw}}
+		</div>
+
+		<p class="form-label mt-4">Ingredients</p>
+		{% for ingredient in recipe.ingredients %}		
+			<span class="badge bg-primary">{{ ingredient.name }}</span>
+		{% endfor %}
+
+		<div class="mark">
+		{{ form(form) }}
+		</div>
+	</div>
+{% endblock %}

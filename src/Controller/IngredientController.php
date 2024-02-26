@@ -10,6 +10,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IngredientController extends AbstractController
@@ -23,10 +25,11 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient', name: 'ingredient.index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $ingredients = $paginator->paginate(
-            $repository->findAll(),
+            $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1),
             10
         );
@@ -37,7 +40,6 @@ class IngredientController extends AbstractController
             'ingredients' => $ingredients,
         ]);
     }
-
     
     /**
      * This function is used to add a new ingredients
@@ -47,6 +49,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/nouveau', name: 'ingredient.new', methods:['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
         EntityManagerInterface $manager
@@ -59,6 +62,7 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
+            $ingredient->setUser($this->getUser());
             $manager->persist($ingredient);
             $manager->flush();
 
@@ -75,14 +79,21 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * This function is used to edit an ingredients
+     *
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/ingredient/edition/{id}', name: 'ingredient.edit', methods:['GET', 'POST'])]
-    public function edit(Request $request,
-        IngredientRepository $repository, 
-        EntityManagerInterface $manager,
-        int $id) : Response
+    #[Security("is_granted('ROLE_USER') and user == ingredient.getUser()")]
+    public function edit(Ingredient $ingredient, 
+        Request $request,
+        EntityManagerInterface $manager
+        ) : Response
     {
-        $ingredient = $repository->findOneBy(['id' => $id]);
-
         $form = $this->createForm(IngredientType::class, $ingredient);
 
         $form->handleRequest($request);
@@ -104,27 +115,27 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * This function is used to delete an ingredients
+     *
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/ingredient/suppression/{id}', name: 'ingredient.delete', methods:['GET'])]
+    #[Security("is_granted('ROLE_USER') and user == ingredient.getUser()")]
     public function delete(Request $request,
-        IngredientRepository $repository, 
         EntityManagerInterface $manager,
-        int $id) : Response
+        Ingredient $ingredient) : Response
     {
-
-        $ingredient = $repository->findOneBy(['id' => $id]);
         if (!$ingredient) {
-            $this->addFlash(
-                'warning',
-                'Votre ingrédient a n\'a pas été trouvé !',
-            );
+            $this->addFlash('warning','Votre ingrédient a n\'a pas été trouvé !');
         } else {
             $manager->remove($ingredient);
             $manager->flush();
     
-            $this->addFlash(
-                'success',
-                'Votre ingrédient a été supprimé avec succès !',
-            );
+            $this->addFlash('success','Votre ingrédient a été supprimé avec succès !');
         }
 
         return $this->redirectToRoute('ingredient.index');

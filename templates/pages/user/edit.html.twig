@@ -2,9 +2,6 @@
 
 {% block title %}SymRecipe - Modification de l'utilisateur{% endblock %}
 
-
-
-
 {% block body %}
 
     {% for message in app.flashes('success') %}
@@ -19,7 +16,7 @@
         </div>
     {% endfor %}
 
-    <div class="container">
+    <div class="container mt-4">
         <h1>Formulaire de modification de l'utilisateur</h1>
         {{ form(form) }}
     </dv>
