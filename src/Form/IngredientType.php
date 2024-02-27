@@ -31,6 +31,7 @@ class IngredientType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'Prix',
+                'currency' => 'CHF',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],

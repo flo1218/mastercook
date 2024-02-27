@@ -2,13 +2,6 @@
 
 {% block body %}
     <div class="container">
-
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-dismissible alert-success mt-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-
         <h1 class="mt-4">Création d'une recette</h1>
 
     {{ form_start(form) }}
@@ -54,6 +47,8 @@
                 {{ form_errors(form.price) }}
             </div>
         </div>
+
+        {{ form_row(form.imageFile) }}
     {{ form_end(form) }}
     </div>
 {% endblock %}

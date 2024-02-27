@@ -8,6 +8,7 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/united/bootstrap.min.css" integrity="sha512-K7slJiS9xNJpev8NgMlUlF0XrIoGFx0GCgH2eKadDu72vwfe3Hd6ETVQQJEuD5hm2ssyD16EbvLkCeTL87ngeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" href="./../../style.css" />
         {% endblock %}
 
         {% block javascripts %}
@@ -15,10 +16,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         {% block header %}
             {% include "partials/_header.html.twig" %}
         {% endblock %}
+        
         {% block body %}{% endblock %}
+        
+        {% block footer %}
+        {% include "partials/_footer.html.twig" %}
+        {% endblock %}
+        
     </body>
 </html>

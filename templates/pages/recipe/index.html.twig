@@ -4,17 +4,7 @@
 
 {% block body %}
 <div class="container mt-4">
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-dismissible alert-success mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-dismissible alert-warning mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
-
+    {% include "partials/_flash-message.html.twig" %}
     <a class="btn btn-primary mt-4 mb-4" href="{{ path('recipe.new') }}">
         Créer un recette
     </a>
@@ -22,7 +12,7 @@
         <h1>Mes Recettes</h1>
 
         <div class="count mt-4">
-            <h5>Il y a {{ recettes.getTotalItemCount }} recettes</h5> 
+            <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
         </div>
 
         <table class="table table-hover mt-4">
@@ -33,8 +23,8 @@
             <th scope="col">Prix</th>
             <th scope="col">Difficulté</th>
             <th scope="col">Date de création</th>
-            <th scope="col">Edition</th>
-            <th scope="col">Suppression</th>
+            <th style="width: 10%" scope="col"></th>
+            <th style="width: 10%" scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +39,8 @@
                 <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">Modifier</a>
             </td>
             <td>
-                <a href="{{ path('recipe.delete', { id : recette.id }) }}" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('recipe.delete', { id : recette.id }) }}" class="btn btn-danger" 
+                    onclick="return confirm('Etes-vous sûr?')">Supprimer</a>
             </td>
             </tr>
         {% endfor %}

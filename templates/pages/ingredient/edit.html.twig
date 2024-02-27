@@ -2,16 +2,9 @@
 
 {% block body %}
     <div class="container">
-
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-dismissible alert-success mt-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-
         <h1 class="mt-4">Modification d'un ingrédient</h1>
 
-    {{ form_start(form) }}
+    <form name="ingredient" method="post">
         <div class="form-group">                
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
@@ -24,6 +17,9 @@
             {{ form_widget(form.price) }}
             {{ form_errors(form.price) }}
         </div>
-    {{ form_end(form) }}
+        {{ form_row(form._token) }}
+
+        <button type="submit" id="ingredient_submit" name="ingredient[submit]" class="btn btn-primary mt-4">Modifier mon ingrédient</button>
+    </form>
     </div>
 {% endblock %}

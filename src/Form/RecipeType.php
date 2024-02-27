@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
@@ -123,6 +124,15 @@ class RecipeType extends AbstractType
                 'label' => 'Favoris ? ',
                 'label_attr' => [
                     'class' => 'form-check-label mt-4'
+                ]
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'download_label' => "Télécharger l'image",
+                'imagine_pattern' => 'my_thumb',
+                'label' => 'Image de la recette',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
                 ]
             ])
             ->add('ingredients', EntityType::class, [

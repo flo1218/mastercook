@@ -14,29 +14,24 @@
             <p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous</p>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">Inscription</a>
-            </p>
-            <p class="lead">
                 <a class="btn btn-primary btn-lg" href="{{ path('app_login')}}" role="button">Login</a>
             </p>
         {% endif %}
     </div>
 </div>
 
-
 <div class="container mt-4">
-        <h1>Recettes de la communauté</h1>
-        <div class="d-flex justify-content-start flex-wrap">
-        {% for recipe in recipes %}
-            <div class="card bg-light m-3" style="max-width: 20rem;">
-                <div class="card-header">Recette n°{{ recipe.id }}</div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{ recipe.name }}</h4>
-                        <p class="card-text">{{ recipe.description }}</p>
-                    </div>
+    <h1>Recettes de la communauté</h1>
+    <div class="d-flex justify-content-start flex-wrap">
+    {% for recipe in recipes %}
+        <div class="card bg-light m-3" style="max-width: 20rem;">
+            <div class="card-header">Recette n°{{ recipe.id }}</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ recipe.name }}</h4>
+                    <p class="card-text">{{ recipe.description }}</p>
                 </div>
-        {% endfor %}
-        </div>
-
-  
+            </div>
+    {% endfor %}
+    </div>
 </div>
 {% endblock %}

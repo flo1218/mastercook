@@ -30,10 +30,8 @@ class IngredientController extends AbstractController
     {
         $ingredients = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
-            $request->query->getInt('page', 1),
-            10
+            $request->query->getInt('page', 1)
         );
-
 
         return $this->render('pages/ingredient/index.html.twig', [
             'controller_name' => 'IngredientController',
@@ -124,7 +122,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/suppression/{id}', name: 'ingredient.delete', methods:['GET'])]
-    #[Security("is_granted('ROLE_USER') and user == ingredient.getUser()")]
+    #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
     public function delete(Request $request,
         EntityManagerInterface $manager,
         Ingredient $ingredient) : Response

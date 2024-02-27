@@ -26,8 +26,7 @@ class RecipeController extends AbstractController
     {
         $recettes = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
-            $request->query->getInt('page', 1),
-            10
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('pages/recipe/index.html.twig', [
@@ -36,23 +35,26 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('recipe/public', 'recipe.public', methods:['GET'])]
+    #[Route('recipe/public', 'recipe.community', methods:['GET'])]
     public function indexPublic(
         RecipeRepository $repository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        Request $request
     ) : Response
     {
         $recipes = $paginator->paginate(
-            $repository->findPublicRecipe()
+            $repository->findPublicRecipe(),
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('pages/recipe/index_public.html.twig', [
+            'controller_name' => 'RecipeController',
             'recipes' => $recipes,
         ]);
     }
 
     #[Route('recipe/show/{id}', 'recipe.show', methods:['GET', 'POST'])]
-    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic() == true")]
+    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic() == true || user === recipe.getUser()")]
     public function show(Recipe $recipe, Request $request, MarkRepository $markRepository, EntityManagerInterface $manager)
     {
         $mark = new Mark();
@@ -150,6 +152,8 @@ class RecipeController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
 

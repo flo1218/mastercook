@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between flex-wrap">
         {% for recipe in recipes %}
             <div class="card bg-light m-3" style="max-width: 20rem;">
-                <div class="card-header">Header</div>
+                <div class="card-header">Recette n°{{ recipe.id }}</div>
                     <div class="card-body">
                         <h4 class="card-title">{{ recipe.name }}</h4>
                         <p class="card-text">{{ recipe.description }}</p>
