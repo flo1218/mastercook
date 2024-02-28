@@ -4,21 +4,25 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'app_contact')]
+    #[Route('/contact', name: 'app.contact')]
     public function index(
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        MailService $mailService
     ): Response {
         $contact = new Contact();
 
+        // Prefill fields if user is connected
         if ($this->getUser()) {
             $user = $this->getUser();
             $contact->setFullName($user->getFullName());
@@ -34,6 +38,13 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
+            // Send email
+            $mailService->sendMail(
+                $contact->getEmail(),
+                $contact->getSubject(),
+                'emails/contact.html.twig',
+                ['contact' => $contact]
+            );
 
             $this->addFlash('success','Votre demande a bien été envoyée.');
         }

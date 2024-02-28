@@ -53,7 +53,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('recipe/show/{id}', 'recipe.show', methods:['GET', 'POST'])]
+    #[Route('recipe/{id}', 'recipe.show', methods:['GET', 'POST'])]
     #[Security("is_granted('ROLE_USER') and recipe.isIsPublic() == true || user === recipe.getUser()")]
     public function show(Recipe $recipe, Request $request, MarkRepository $markRepository, EntityManagerInterface $manager)
     {

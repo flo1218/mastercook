@@ -23,10 +23,15 @@
           <a class="nav-link active" href="{{ path('recipe.index')}}">Recettes
             <span class="visually-hidden">(current)</span>
           </a>
-        </li>
+        </li>        
         {% endif %}
         <li class="nav-item">
           <a class="nav-link active" href="{{ path('recipe.community')}}">Recettes de la communauté
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ path('app.contact')}}">Contact
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
@@ -38,11 +43,14 @@
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
               <div class="dropdown-menu dropdown-menu-end">
                 <a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">Modifier mes informations</a>
-                <a class="dropdown-item" href="{{ path('user_edit-password', {id : app.user.id}) }}">Modifier mon mot de passe</a>
+                <a class="dropdown-item" href="{{ path('user_edit-password', {id : app.user.id}) }}">Modifier mon mot de passe</a>                
+                {% if 'ROLE_ADMIN' in app.user.roles %} 
+                <a class="dropdown-item" href="{{ path('admin') }}">Administration</a>
+                {% endif %}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
               </div>
-            </li>
+            </li>            
           {% else %}
             <li class="nav-item" >
                 <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>

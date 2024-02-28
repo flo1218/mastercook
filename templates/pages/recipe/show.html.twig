@@ -13,9 +13,9 @@ SymRecipe - {{ recipe.name }}
 		</div>
 
 		{% if recipe.average %}
-		<p>La moyenne de cette recette est de
-			{{ recipe.average|number_format(2, '.', ',') }}/5 
-		</p>
+			<p>La moyenne de cette recette est de
+				{{ recipe.average|number_format(2, '.', ',') }}/5 
+			</p>
 		{% endif %}
 		
 		<div>
@@ -23,9 +23,16 @@ SymRecipe - {{ recipe.name }}
 			{{ recipe.createdAt|date('d/m/Y')}}</span>
 		</div>
 
-		<p class="form-label mt-4">Temps en minutes: {{ recipe.time}}</p>
-		<p class="form-label mt-4">Pour  {{ recipe.nbPeople}} personnes</p>
-		<p class="form-label mt-4">Difficulté:  {{ recipe.difficulty}}/5</p>
+		{% if recipe.time %}
+			<p class="form-label mt-4">Temps: {{ recipe.time|min_to_hour }}</p>
+		{% endif %}
+	
+		{% if recipe.nbPeople %}
+			<p class="form-label mt-4">Pour  {{ recipe.nbPeople }} personnes</p>
+		{% endif %}
+		{% if recipe.difficulty %}
+			<p class="form-label mt-4">Difficulté:  {{ recipe.difficulty }}/5</p>
+		{% endif %}
 		<p class="form-label mt-4">Description</p>
 		<div>
 			{{ recipe.description| raw}}

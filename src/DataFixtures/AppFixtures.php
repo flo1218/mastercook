@@ -28,9 +28,20 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-
-        $users = [];
         // Users
+        $users = [];
+        
+
+        $admin = new User();
+        $admin->setFullName('Admin')
+            ->setPseudo('')
+            ->setEmail('admin@symrecipe.ch')
+            ->setRoles(['ROLE_USER','ROLE_ADMIN'])
+            ->setPlainPassword('password');
+
+        $users[] = $admin;
+        $manager->persist($admin);
+
         for ($i=0; $i < 10; $i++) { 
             $user = new User();
             $user->setFullName($this->faker->name())
