@@ -5,11 +5,11 @@ namespace App\Form;
 use App\Entity\Recipe;
 use App\Entity\Ingredient;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,8 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-
 class RecipeType extends AbstractType
 {
 
@@ -116,7 +114,7 @@ class RecipeType extends AbstractType
                     new Assert\LessThan(1000),
                 ]
             ])
-            ->add('isFavorite',CheckboxType::class, [
+            ->add('isPublic',CheckboxType::class, [
                 'attr' => [
                     'class' => 'form-check'
                 ],

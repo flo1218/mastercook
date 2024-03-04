@@ -10,15 +10,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
     #[Route('/user/edit/{id}', name: 'user_edit')]
-    #[Security("is_granted('ROLE_USER') and user == choosenUser")]
+    #[IsGranted(
+        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
+        subject: new Expression('args["choosenUser"]'),
+        message: "This is not your user"
+    )]
     public function edit(
         EntityManagerInterface $manager,
         Request $request,
@@ -57,7 +61,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit-password/{id}', name: 'user_edit-password')]
-    #[Security("is_granted('ROLE_USER') and user == choosenUser")]
+    #[IsGranted(
+        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
+        subject: new Expression('args["choosenUser"]'),
+        message: "This is not your user"
+    )]
     public function editPassword(
         EntityManagerInterface $manager,
         Request $request,

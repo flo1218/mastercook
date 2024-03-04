@@ -9,10 +9,10 @@ class HomePageTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/en/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Bienvenue sur SymRecipe');
+        $this->assertSelectorTextContains('h1', 'Welcome to SymRecipe!');
 
         // Check homepage has 3 cards displaying public recipes
         $recipes = $crawler->filter('.card');

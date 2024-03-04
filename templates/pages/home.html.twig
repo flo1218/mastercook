@@ -1,37 +1,38 @@
 {% extends 'base.html.twig' %}
-
-{% block title %} SymRecipe - Accueil
+{% block title %} SymRecipe - {{ 'home.welcome'|trans }}
 {% endblock %}
 
 {% block body  %}
 <div class="container mt-4">
     <div class="jumbotron">
-        <h1 class="display-4">Bienvenue sur SymRecipe</h1>
-        <p class="lead">SymRecipe est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées.</p>
+        <h1 class="display-4">{{ 'home.title'|trans }}</h1>
+        <p class="lead">{{ 'home.description'|trans }} </p>
         <hr class="my-4">
 
         {% if not is_granted('IS_AUTHENTICATED') %}
-            <p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous</p>
+            <p>{{ 'home.start.description'|trans }}</p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">Inscription</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('app_login')}}" role="button">Login</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'subscription.label'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_login')}}" role="button">{{ 'login.label'|trans }}</a>
             </p>
         {% endif %}
     </div>
 </div>
 
 <div class="container mt-4">
-    <h1>Recettes de la communauté</h1>
+    <h1>{{ 'recipe.community.label'|trans }}</h1>
     <div class="d-flex justify-content-start flex-wrap">
-    {% for recipe in recipes %}
-        <div class="card bg-light m-3" style="max-width: 20rem;">
-            <div class="card-header">Recette n°{{ recipe.id }}</div>
-                <div class="card-body">
-                    <h4 class="card-title">{{ recipe.name }}</h4>
-                    <p class="card-text">{{ recipe.description }}</p>
+        {% for recipe in recipes %}
+        <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
+            <div class="card bg-light m-3" style="max-width: 20rem;">
+                <div class="card-header">{{ 'recipe.no.label'|trans }}{{ recipe.id }}</div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ recipe.name }}</h4>
+                        <p class="card-text">{{ recipe.description }}</p>
+                    </div>
                 </div>
-            </div>
-    {% endfor %}
+        </a>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

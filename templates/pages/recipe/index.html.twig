@@ -4,12 +4,11 @@
 
 {% block body %}
 <div class="container mt-4">
-    {% include "partials/_flash-message.html.twig" %}
     <a class="btn btn-primary mt-4 mb-4" href="{{ path('recipe.new') }}">
-        Créer un recette
+        {{ 'recipe.create.label'|trans }}
     </a>
     {% if not recettes.items is same as([]) %}
-        <h1>Mes Recettes</h1>
+        <h1>{{ 'recipe.my.label'|trans }}Mes Recettes</h1>
 
         <div class="count mt-4">
             <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
@@ -18,11 +17,11 @@
         <table class="table table-hover mt-4">
         <thead>
             <tr>
-            <th scope="col">Numéro</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Difficulté</th>
-            <th scope="col">Date de création</th>
+            <th scope="col">{{ 'recipe.number.label'|trans }}Numéro</th>
+            <th scope="col">{{ 'recipe.name.label'|trans }}</th>
+            <th scope="col">{{ 'recipe.price.label'|trans }}</th>
+            <th scope="col">{{ 'recipe.difficulty.label'|trans }}</th>
+            <th scope="col">{{ 'recipe.creation_date.label'|trans }}Date de création</th>
             <th style="width: 10%" scope="col"></th>
             <th style="width: 10%" scope="col"></th>
             </tr>

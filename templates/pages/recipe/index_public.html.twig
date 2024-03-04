@@ -1,27 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Recettes de la communauté{% endblock %}
+{% block title %}SymRecipe - {{ 'recipe.community.label'|trans }}
+{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
     {% if not recipes.items is same as([]) %}
-        <h1>Recettes de la communauté</h1>
+        <h1>{{ 'recipe.community.label'|trans }}</h1>
         <div class="d-flex justify-content-between flex-wrap">
         {% for recipe in recipes %}
+        <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
             <div class="card bg-light m-3" style="max-width: 20rem;">
-                <div class="card-header">Recette n°{{ recipe.id }}</div>
+                <div class="card-header">{{ 'recipe.no.label'|trans }}{{ recipe.id }}</div>
                     <div class="card-body">
                         <h4 class="card-title">{{ recipe.name }}</h4>
                         <p class="card-text">{{ recipe.description }}</p>
                     </div>
                 </div>
+        </a>
         {% endfor %}
         </div>
         <div class="navigation d-flex justify-content-center mt-4">
             {{ knp_pagination_render(recipes) }}
         </div>
     {% else %}
-        <h4> Il n'y a pas de recettes publiques</h4>
+        <h4> {{ 'recipe.nodata.label'|trans }}</h4>
     {% endif %}
 </div>
 

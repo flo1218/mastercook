@@ -4,10 +4,9 @@
 
 {% block body %}
 <div class="container mt-4">
-    {% include "partials/_flash-message.html.twig" %}
 
     <a class="btn btn-primary mt-4 mb-4" href="{{ path('ingredient.new') }}">
-        Créer un ingrédient
+        {{ 'ingredient.new.label'|trans }}
     </a>    
     {% if not ingredients.items is same as([]) %}
         <h1>Mes ingrédients</h1>

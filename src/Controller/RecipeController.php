@@ -9,12 +9,14 @@ use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
@@ -42,10 +44,14 @@ class RecipeController extends AbstractController
         Request $request
     ) : Response
     {
-        $recipes = $paginator->paginate(
-            $repository->findPublicRecipe(),
-            $request->query->getInt('page', 1)
-        );
+
+        $cache = new FilesystemAdapter();
+        $data = $cache->get('recipes', function(ItemInterface $item) use ($repository) {
+            $item->expiresAfter(10);
+            return $repository->findPublicRecipe();
+        });
+
+        $recipes = $paginator->paginate($data, $request->query->getInt('page', 1));
 
         return $this->render('pages/recipe/index_public.html.twig', [
             'controller_name' => 'RecipeController',
@@ -53,8 +59,15 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('recipe/{id}', 'recipe.show', methods:['GET', 'POST'])]
-    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic() == true || user === recipe.getUser()")]
+    #[Route('recipe/{id}', 'recipe.show', methods:['GET', 'POST'], requirements: ['id' => '\d+'] )]
+    #[IsGranted(
+        attribute: new Expression('is_granted("ROLE_USER") && (user === subject["recipe_user"] || subject["recipe_public"] )'),
+        subject: [
+            'recipe_user' => new Expression('args["recipe"].getUser()'),
+            'recipe_public' => new Expression('args["recipe"].isIsPublic()'),
+        ],
+        message: "This is not your recipe"
+    )]
     public function show(Recipe $recipe, Request $request, MarkRepository $markRepository, EntityManagerInterface $manager)
     {
         $mark = new Mark();
@@ -99,7 +112,7 @@ class RecipeController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[Route('/recipe/nouveau', name: 'recipe.new', methods:['GET', 'POST'])]
+    #[Route('/recipe/nouveau', 'recipe.new', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
@@ -138,13 +151,23 @@ class RecipeController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[Route('/recipe/edition/{id}', name: 'recipe.edit', methods:['GET', 'POST'])]
-    #[Security("is_granted('ROLE_USER') and user == recipe.getUser()")]
-    public function edit(Request $request,
+    #[Route('/recipe/edit/{id}', name: 'recipe.edit', methods:['GET', 'POST'])]
+    #[IsGranted(
+        attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
+        subject: new Expression('args["recipe"].getUser()'),
+    )]
+    public function edit(
+        Request $request,
         Reciperepository $repository, 
         EntityManagerInterface $manager,
-        Recipe $recipe) : Response
+        Recipe $recipe
+    ) : Response
     {
+
+        if ($recipe->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Ce n'est pas votre recette");
+        }
+
         $form = $this->createForm(RecipeType::class, $recipe, [
             'attr' => [
                 'flavor' => 'edit'
@@ -177,7 +200,10 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recipe/suppression/{id}', name: 'recipe.delete', methods:['GET'])]
-    #[Security("is_granted('ROLE_USER') and user == recipe.getUser()")]
+    #[IsGranted(
+        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
+        subject: new Expression('args["recipe"].getUser()'),
+    )]
     public function delete(Request $request,
         Reciperepository $repository, 
         EntityManagerInterface $manager,

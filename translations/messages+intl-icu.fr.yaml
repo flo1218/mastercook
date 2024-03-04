@@ -1,0 +1,23 @@
+home.title: 'Bienvenue sur SymRecipe!'
+app.description: "SymRecipe est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
+home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous"
+recipe.community.label: 'Recettes de la communauté'
+recipe.no.label: 'Recette n°'
+login.label: 'Se connecter'
+subscription.label: Inscription
+home.welcome: Accueil
+recipe.nodata.label: "Il n'y a pas de recettes publiques"
+
+home.description: __home.description
+recipe.create.label: __recipe.create.label
+recipe.my.label: __recipe.my.label
+recipe.number.label: __recipe.number.label
+recipe.name.label: __recipe.name.label
+recipe.price.label: __recipe.price.label
+recipe.difficulty.label: __recipe.difficulty.label
+recipe.creation_date.label: __recipe.creation_date.label
+
+'ingredient.new.label' : 'Créer un ingrédient'
+
+'header.recipes.label' : "Recettes"
+header.recipes_public.label : "Recettes de la communauté"

@@ -1,15 +1,32 @@
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-dismissible alert-success mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-dismissible alert-warning mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-dismissible alert-success mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-dismissible alert-success fade show alert-container" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        {{ message }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('warning') %}
+    <div class="alert alert-dismissible alert-warning fade show alert-container" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        {{ message }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-dismissible alert-success fade show alert-container" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        {{ message }}
+    </div>
+{% endfor %}
+<script>
+$(".alert").fadeTo(5000, 1).slideUp(500, function(){
+});
+</script>
+<style>
+.alert-container {
+    position: relative;
+}
+.alert {
+  position: absolute;
+  margin-top:56px;
+  width: 100%;
+}
+</style>

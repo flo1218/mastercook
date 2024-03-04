@@ -10,8 +10,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IngredientController extends AbstractController
@@ -86,12 +86,23 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/edition/{id}', name: 'ingredient.edit', methods:['GET', 'POST'])]
-    #[Security("is_granted('ROLE_USER') and user == ingredient.getUser()")]
-    public function edit(Ingredient $ingredient, 
+    #[IsGranted(
+        attribute: new Expression('user === subject && is_granted("ROLE_USER")'),
+        subject: new Expression('args["ingredient"].getUser()'),
+        message: "This is not your ingredient"
+    )]
+    public function edit(
+        Ingredient $ingredient, 
         Request $request,
         EntityManagerInterface $manager
         ) : Response
     {
+
+        if ($ingredient->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Ce n'est pas votre ingredient");
+        }
+
+
         $form = $this->createForm(IngredientType::class, $ingredient);
 
         $form->handleRequest($request);
@@ -122,7 +133,11 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/suppression/{id}', name: 'ingredient.delete', methods:['GET'])]
-    #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
+    #[IsGranted(
+        attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
+        subject: new Expression('args["ingredient"].getUser()'),
+        message: "This is not your ingredient"
+    )]
     public function delete(Request $request,
         EntityManagerInterface $manager,
         Ingredient $ingredient) : Response

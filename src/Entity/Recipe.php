@@ -353,5 +353,4 @@ class Recipe
 
         return $this->average;
     }
-
 }
