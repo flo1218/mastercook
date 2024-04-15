@@ -2,7 +2,7 @@ controllers:
     resource: ../src/Controller/
     type: attribute
     requirements:
-        _locale: 'en|fr'
+        _locale: 'fr|en'
     prefix:
         fr: /fr
         en: /en
@@ -11,5 +11,5 @@ home_fallback:
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
     defaults:
-        path: /en
+        path: /fr
         permanent: true

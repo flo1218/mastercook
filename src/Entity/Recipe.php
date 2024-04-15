@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\RecipeRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
@@ -23,12 +23,12 @@ class Recipe
 
     #[Assert\NotBlank()]
     #[Assert\Length(
-        min: 2, 
+        min: 2,
         max: 50,
         minMessage: 'Le nom doit avoir une longueur de {{ limit }} caractères au minimum',
         maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-        )
-        ]
+    )
+    ]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
@@ -61,7 +61,10 @@ class Recipe
     private ?float $price = null;
 
     #[ORM\Column]
-    private ?bool $isFavorite = null;
+    private ?bool $isFavorite = false;
+
+    #[ORM\Column]
+    private ?bool $isPublic = false;
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -77,9 +80,6 @@ class Recipe
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-
-    #[ORM\Column]
-    private ?bool $isPublic = false;
 
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'recipe', orphanRemoval: true)]
     private Collection $marks;
@@ -333,20 +333,19 @@ class Recipe
     }
 
     /**
-     * Get the value of average
-     */ 
+     * Get the value of average.
+     */
     public function getAverage()
     {
         $marks = $this->marks;
 
-        if ($marks->toArray() === []) {
+        if ([] === $marks->toArray()) {
             return 0;
         }
 
         $total = 0;
-        foreach($marks as $mark) {
-            $total += $mark->getMark(); 
-
+        foreach ($marks as $mark) {
+            $total += $mark->getMark();
         }
 
         $this->average = $total / count($marks);

@@ -12,11 +12,11 @@ class HomePageTest extends WebTestCase
         $crawler = $client->request('GET', '/en/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Welcome to SymRecipe!');
+        $this->assertSelectorTextContains('h1', 'Welcome to MasterCook!');
 
         // Check homepage has 3 cards displaying public recipes
         $recipes = $crawler->filter('.card');
-        $this->assertEquals(3, count($recipes));
+        $this->assertEquals(20, count($recipes));
 
         // Check homepage has 2 button (login, register)
         $button = $crawler->filter('.btn');

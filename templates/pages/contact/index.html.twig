@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Contact{% endblock %}
+{% block title %}MasterCook - Contact{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1 class="mt-4">Formulaire de contact</h1>
+    <h1 class="mt-4">{{'contact.title.label'|trans}}</h1>
     {{ form(form) }}
 </div>
 {% endblock %}

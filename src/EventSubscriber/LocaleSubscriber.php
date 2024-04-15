@@ -2,66 +2,44 @@
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
     private $defaultLocale;
+    private $tokenStorage;
 
-    public function __construct($defaultLocale = 'fr')
+    public function __construct(TokenStorageInterface $tokenStorage, $defaultLocale = 'fr')
     {
         $this->defaultLocale = $defaultLocale;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
+
         if (!$request->hasPreviousSession()) {
             return;
         }
-
 
         // try to see if the locale has been set as a _locale routing parameter
         if ($locale = $request->attributes->get('_locale')) {
             $request->getSession()->set('_locale', $locale);
         } else {
             // if no explicit locale has been set on this request, use one from the session
-            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));        
+            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }
-
-    // public function onKernelException(ExceptionEvent $event): void {
-    //     $exception = $event->getThrowable();
-
-    //     if ($exception instanceof NotFoundHttpException) {
-    //         $message = sprintf(
-    //             'Handled PHP Exception %s: %s',
-    //             get_class($exception),
-    //             $exception->getMessage()
-    //         );
-
-    //         $responseData = [
-    //             'error' => [
-    //                 'code' => $exception->getCode(),
-    //                 'message' => $exception->getMessage()
-    //             ]
-    //         ];
-    //          $event->setResponse(new JsonResponse($responseData, 400));
-    //     }
-    // }
 
     public static function getSubscribedEvents()
     {
         return [
             // must be registered before (i.e. with a higher priority than) the default Locale listener
-            KernelEvents::REQUEST => [['onKernelRequest', 2111110]],
-            //KernelEvents::EXCEPTION => [['onKernelException', 2111110]],
+            KernelEvents::REQUEST => [['onKernelRequest', 10000]],
         ];
     }
 }

@@ -4,13 +4,13 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType
 {
@@ -25,11 +25,11 @@ class UserType extends AbstractType
             ],
             'label' => 'Nom / Prénom',
             'label_attr' => [
-                'class' => 'form-label mt-4'
+                'class' => 'form-label mt-4',
             ],
             'constraints' => [
                 new Assert\NotBlank(),
-            ]
+            ],
         ])
         ->add('pseudo', TextType::class, [
             'attr' => [
@@ -40,7 +40,20 @@ class UserType extends AbstractType
             'required' => false,
             'label' => 'Pseudo',
             'label_attr' => [
-                'class' => 'form-label mt-4'
+                'class' => 'form-label mt-4',
+            ],
+        ])
+        ->add('language', ChoiceType::class, [
+            'choices' => [
+                'Français' => 'fr',
+                'Anglais' => 'en',
+            ],
+            'attr' => [
+                'class' => 'form-select',
+            ],
+            'label' => 'Langue préférée',
+            'label_attr' => [
+                'class' => 'form-label mt-4',
             ],
         ])
         ->add('plainPassword', PasswordType::class, [
@@ -49,14 +62,14 @@ class UserType extends AbstractType
             'label' => 'Mot de passe',
             'label_attr' => [
                 'class' => 'form-label mt-4',
-             ]
+            ],
         ])
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary mt-4'
-            ]
+                'class' => 'btn btn-primary mt-4',
+            ],
         ])
-    ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

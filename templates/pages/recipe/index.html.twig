@@ -1,57 +1,65 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}SymRecipe - Mes recettes{% endblock %}
-
+{% block title %}MasterCook - Mes recettes{% endblock %}
 {% block body %}
 <div class="container mt-4">
     <a class="btn btn-primary mt-4 mb-4" href="{{ path('recipe.new') }}">
         {{ 'recipe.create.label'|trans }}
     </a>
     {% if not recettes.items is same as([]) %}
-        <h1>{{ 'recipe.my.label'|trans }}Mes Recettes</h1>
+    <h1>{{ 'recipe.my.label'|trans }}</h1>
 
-        <div class="count mt-4">
-            <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
-        </div>
+    <div class="count mt-4">
+        <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
+    </div>
 
-        <table class="table table-hover mt-4">
+    <table class="table table-hover mt-4">
         <thead>
             <tr>
-            <th scope="col">{{ 'recipe.number.label'|trans }}Numéro</th>
-            <th scope="col">{{ 'recipe.name.label'|trans }}</th>
-            <th scope="col">{{ 'recipe.price.label'|trans }}</th>
-            <th scope="col">{{ 'recipe.difficulty.label'|trans }}</th>
-            <th scope="col">{{ 'recipe.creation_date.label'|trans }}Date de création</th>
-            <th style="width: 10%" scope="col"></th>
-            <th style="width: 10%" scope="col"></th>
+                <th scope="col">Numéro</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Nb Personne</th>
+                <th scope="col">Difficulté</th>
+                <th scope="col">Date de création</th>
+                <th style="width: 5%" scope="col"></th>
+                <th style="width: 5%" scope="col"></th>
             </tr>
         </thead>
         <tbody>
         {% for recette in recettes %}    
-            <tr class="table-primary">
-            <th scope="row">{{recette.id}}</th>
-            <td>{{recette.name}}</td>
-            <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>
-            <td>{{recette.difficulty is null ? 'Non renseigné' : recette.difficulty}}</td>
-            <td>{{recette.createdAt | date('d/m/Y')}}</td>
-            <td>
-                <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">Modifier</a>
-            </td>
-            <td>
-                <a href="{{ path('recipe.delete', { id : recette.id }) }}" class="btn btn-danger" 
-                    onclick="return confirm('Etes-vous sûr?')">Supprimer</a>
-            </td>
+            <tr>
+                <td scope="row">{{recette.id}}</td>
+                <td>{{recette.name}}</td>
+                <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>
+                <td>{{recette.nbPeople is null ? 'Non renseigné' : recette.nbPeople}}</td>
+                <td>{{recette.difficulty is null ? 'Non renseigné' : recette.difficulty}}</td>
+                <td>{{recette.createdAt | date('d/m/Y')}}</td>
+                <td>
+                    <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('recipe.delete', { id : recette.id }) }}" 
+                        class="btn btn-danger" 
+                        data-toggle="confirm"
+                        data-locale="{{ app.request.locale }}"
+                        data-title="{{ 'app.confirmation.label'|trans }}"
+                        {# data-yes-label="{{ 'app.yes.label'|trans }}" #}
+                        {# data-no-label="{{ 'app.no.label'|trans }}" #}
+                        >
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
-        </table>
-
-        <div class="navigation d-flex justify-content-center mt-4">
-            {{ knp_pagination_render(recettes) }}
-        </div>
-    {% else %}
-        <h4> Il n'y a pas de recettes</h4>
-    {% endif %}
+    </table>
+    <div class="navigation d-flex justify-content-center mt-4">
+        {{ knp_pagination_render(recettes) }}
+    </div>
+{% else %}
+    <h4> Il n'y a pas de recettes</h4>
+{% endif %}
 </div>
-
 {% endblock %}

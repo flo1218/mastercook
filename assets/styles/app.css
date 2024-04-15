@@ -1,3 +1,22 @@
-body {
-    /* background-color: red; */
+.carousel .carousel-item img {
+    height: 400px !important;
+    object-fit: cover;
+  }
+
+  body { 
+    margin: 0;
+    .modal-backdrop {
+      backdrop-filter: blur(2px) !important;
+      --bs-backdrop-opacity: 1 !important;
+      --bs-backdrop-bg: rgba(52, 73, 84, 0.70) !important; 
+    }
+}
+
+.spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

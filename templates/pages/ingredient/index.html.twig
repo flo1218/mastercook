@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Mes ingredients{% endblock %}
+{% block title %}MasterCook - Mes ingredients{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
@@ -9,7 +9,7 @@
         {{ 'ingredient.new.label'|trans }}
     </a>    
     {% if not ingredients.items is same as([]) %}
-        <h1>Mes ingrédients</h1>
+        <h1>{{'ingredient.my.label'|trans}}</h1>
 
         <div class="count mt-4">
             <h5>Il y a {{ ingredients.getTotalItemCount }} ingrédient(s)</h5> 
@@ -18,17 +18,17 @@
         <table class="table table-hover mt-4">
         <thead>
             <tr>
-            <th scope="col">Numéro</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Date de création</th>
-            <th style="width: 10%" scope="col"></th>
-            <th style="width: 10%" scope="col"></th>
+            <th style="width: 10%" scope="col">Numéro</th>
+            <th style="width: 35%" scope="col">Nom</th>
+            <th style="width: 25%" scope="col">Prix</th>
+            <th style="width: 20%" scope="col">Date de création</th>
+            <th style="width: 5%" scope="col"></th>
+            <th style="width: 5%" scope="col"></th>
             </tr>
         </thead>
         <tbody>
         {% for ingredient in ingredients %}    
-            <tr class="table-primary">
+            <tr>
             <th scope="row">{{ ingredient.id }}</th>
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.price|number_format(2, '.', ',') }}
@@ -37,11 +37,20 @@
             <td>{{ ingredient.createdAt | date('d/m/Y') }}</td>
             <td>
                 <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" class="btn btn-info">
-                Modifier</a>
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
             </td>
             <td>
-                <a href="{{ path('ingredient.delete', { id : ingredient.id }) }}" class="btn btn-danger"
-                    onclick="return confirm('Etes-vous sûr?')">Supprimer</a>
+                <a href="{{ path('ingredient.delete', { id : ingredient.id }) }}" 
+                    class="btn btn-danger" 
+                    data-toggle="confirm"
+                    data-title="{{ 'app.confirmation.label'|trans }}"
+                    data-locale="{{ app.request.locale }}"
+                    {# data-yes-label="{{ 'app.yes.label'|trans }}" #}
+                    {# data-no-label="{{ 'app.no.label'|trans }}" #}
+                    >
+                    <i class="bi bi-trash3"></i>
+                </a>
             </td>
             </tr>
         {% endfor %}

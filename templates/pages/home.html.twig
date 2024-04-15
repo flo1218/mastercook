@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} SymRecipe - {{ 'home.welcome'|trans }}
+{% block title %} MasterCook - {{ 'home.welcome'|trans }}
 {% endblock %}
 
 {% block body  %}
@@ -12,13 +12,33 @@
         {% if not is_granted('IS_AUTHENTICATED') %}
             <p>{{ 'home.start.description'|trans }}</p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'subscription.label'|trans }}</a>
-                <a class="btn btn-primary btn-lg" href="{{ path('app_login')}}" role="button">{{ 'login.label'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'app.subscription.label'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
             </p>
         {% endif %}
     </div>
 </div>
-
+<div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../images/raclette.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../images/poulet_au_four.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../images/raclette.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 <div class="container mt-4">
     <h1>{{ 'recipe.community.label'|trans }}</h1>
     <div class="d-flex justify-content-start flex-wrap">

@@ -9,9 +9,11 @@ class BasicTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $urlGenerator = $client->getContainer()->get('router');
+
+        $crawler = $client->request('GET', $urlGenerator->generate('home.index'));
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Bienvenue sur SymRecipe');
+        $this->assertSelectorTextContains('h1', 'Bienvenue sur MasterCook');
     }
 }

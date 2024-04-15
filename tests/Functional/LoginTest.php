@@ -17,15 +17,13 @@ class LoginTest extends WebTestCase
 
         // Form
         $form = $crawler->filter("form[name=login]")->form([
-            '_username' =>  'admin@symrecipe.ch'
+            '_username' =>  'admin@mastercook.ch'
         ]);
 
         $client->submit($form);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
 
-        $client->followRedirect();
-
-        
+        $client->followRedirect();        
     }
 }

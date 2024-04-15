@@ -10,7 +10,9 @@ class ContactTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/contact');
+        $urlGenerator = $client->getContainer()->get('router');
+
+        $crawler = $client->request('GET', $urlGenerator->generate('app.contact'));
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Formulaire de contact');

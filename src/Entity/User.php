@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('email')]
@@ -22,35 +22,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()] 
+    #[Assert\NotBlank()]
     #[Assert\Length(min: 3, max: 50)]
     private ?string $fullName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Assert\Length(max: 50)] 
+    #[Assert\Length(max: 50)]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email()]
-    #[Assert\Length(min: 2, max: 180)] 
+    #[Assert\Length(min: 2, max: 180)]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Assert\NotNull()] 
+    #[Assert\NotNull()]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank()] 
+    #[Assert\NotBlank()]
     private ?string $password = 'password';
 
     #[ORM\Column]
-    #[Assert\NotNull()] 
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
-    private $plainPassword = null;
+    private $plainPassword;
 
     #[ORM\OneToMany(targetEntity: Ingredient::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $ingredients;
@@ -60,6 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $marks;
+
+    #[ORM\Column(length: 255)]
+    private ?string $language = null;
 
     public function getId(): ?int
     {
@@ -168,18 +171,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get the value of plainPassword
-     */ 
+     * Get the value of plainPassword.
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
     /**
-     * Set the value of plainPassword
+     * Set the value of plainPassword.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
@@ -281,6 +284,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $mark->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): static
+    {
+        $this->language = $language;
 
         return $this;
     }

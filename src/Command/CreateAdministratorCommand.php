@@ -4,13 +4,13 @@ namespace App\Command;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:create-administrator',
@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateAdministratorCommand extends Command
 {
-
     private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -49,12 +48,12 @@ class CreateAdministratorCommand extends Command
 
         $email = $input->getArgument('email');
         if (!$email) {
-            $question = new Question("Quel est l'email de " . $fullName . " ?");
+            $question = new Question("Quel est l'email de ".$fullName.' ?');
             $email = $helper->ask($input, $output, $question);
         }
         $plainPassword = $input->getArgument('password');
         if (!$plainPassword) {
-            $question = new Question("Quel est le mot de passe de " . $fullName . " ?");
+            $question = new Question('Quel est le mot de passe de '.$fullName.' ?');
             $plainPassword = $helper->ask($input, $output, $question);
         }
 

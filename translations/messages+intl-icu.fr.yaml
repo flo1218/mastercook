@@ -1,23 +1,44 @@
-home.title: 'Bienvenue sur SymRecipe!'
-app.description: "SymRecipe est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
+# APP
+app.save.label : 'Sauvegarder'
+app.send.label : 'Envoyer'
+app.yes.label : 'Oui'
+app.no.label : 'Non'
+app.confirmation.label : 'Etes-vous sûr ?'
+app.login.label: 'Se connecter'
+app.subscription.label: Inscription
+
+# HOME
+home.title: 'Bienvenue sur MasterCook!'
+home.welcome: Accueil
+home.hello: 'Bonjour'
+home.description: "MasterCook est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
 home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous"
+
+# HEADER
+header.home.label: 'Accueil'
+header.recipes.label : "Recettes"
+header.ingredient.label : "Ingredients"
+header.favorite.label : "Favoris"
+header.recipes_public.label : "Recettes de la communauté"
+
+# RECIPE
 recipe.community.label: 'Recettes de la communauté'
 recipe.no.label: 'Recette n°'
-login.label: 'Se connecter'
-subscription.label: Inscription
-home.welcome: Accueil
+recipe.create.label : Créer une recette
 recipe.nodata.label: "Il n'y a pas de recettes publiques"
+recipe.my.label: 'Mes recettes'
 
-home.description: __home.description
-recipe.create.label: __recipe.create.label
-recipe.my.label: __recipe.my.label
-recipe.number.label: __recipe.number.label
-recipe.name.label: __recipe.name.label
-recipe.price.label: __recipe.price.label
-recipe.difficulty.label: __recipe.difficulty.label
-recipe.creation_date.label: __recipe.creation_date.label
+# INGREDIENT
+ingredient.new.label : 'Créer un ingrédient'
+ingredient.my.label : 'Mes ingrédients'
+ingredient.edit.title : 'Modification d''un ingrédient'
 
-'ingredient.new.label' : 'Créer un ingrédient'
+# CONTACT
+contact.title.label: 'Formulaire de contact'
+contact.fullname.label : 'Prénom / Nom'
+contact.email.label : 'Email'
+contact.subject.label : 'Sujet'
+contact.message.label : 'Message'
 
-'header.recipes.label' : "Recettes"
-header.recipes_public.label : "Recettes de la communauté"
+# ADMINISTRATION
+admin.user.title : Administration des utilisateurs

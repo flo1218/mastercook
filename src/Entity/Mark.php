@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MarkRepository;
-use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,7 +38,7 @@ class Mark
 
     public function __construct()
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

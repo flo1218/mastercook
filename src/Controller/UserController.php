@@ -3,17 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
 use App\Form\UserPasswordType;
-use App\Repository\UserRepository;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -21,7 +20,7 @@ class UserController extends AbstractController
     #[IsGranted(
         attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
         subject: new Expression('args["choosenUser"]'),
-        message: "This is not your user"
+        message: 'This is not your user'
     )]
     public function edit(
         EntityManagerInterface $manager,
@@ -29,7 +28,7 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $hasher,
         User $choosenUser): Response
     {
-        if (!$this->getUser() ) {
+        if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
@@ -37,26 +36,24 @@ class UserController extends AbstractController
             return $this->redirectToRoute('recipe.index');
         }
 
-
         $form = $this->createForm(UserType::class, $choosenUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($hasher->isPasswordValid($choosenUser, $form->getData()->getPlainPassword())) {
                 $user = $form->getData();
                 $manager->persist($user);
                 $manager->flush();
-    
-                $this->addFlash('success','Votre utilisateur a été modifié avec succès.');
-    
+
+                $this->addFlash('success', 'Votre utilisateur a été modifié avec succès.');
+
                 return $this->redirectToRoute('recipe.index');
             } else {
-                $this->addFlash('warning','le mot de passe renseigné est incorrect.');
+                $this->addFlash('warning', 'le mot de passe renseigné est incorrect.');
             }
         }
 
         return $this->render('pages/user/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -64,7 +61,7 @@ class UserController extends AbstractController
     #[IsGranted(
         attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
         subject: new Expression('args["choosenUser"]'),
-        message: "This is not your user"
+        message: 'This is not your user'
     )]
     public function editPassword(
         EntityManagerInterface $manager,
@@ -72,7 +69,7 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $hasher,
         User $choosenUser): Response
     {
-        if (!$this->getUser() ) {
+        if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
@@ -85,21 +82,20 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($hasher->isPasswordValid($choosenUser, $form->getData()['plainPassword'])) {
-
                 $choosenUser->setPassword($hasher->hashPassword($choosenUser, $form->getData()['newPassword']));
                 $manager->persist($choosenUser);
                 $manager->flush();
-    
-                $this->addFlash('success','Votre mot de passe a été modifié avec succès.');
-    
+
+                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+
                 return $this->redirectToRoute('recipe.index');
             } else {
-                $this->addFlash('warning','le mot de passe renseigné est incorrect.');
+                $this->addFlash('warning', 'le mot de passe renseigné est incorrect.');
             }
         }
 
         return $this->render('pages/user/edit_password.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -2,31 +2,44 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IngredientRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[UniqueEntity('name')]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => 'ingredient:item']),
+        new GetCollection(normalizationContext: ['groups' => 'ingredient:list']),
+    ],
+    order: ['id' => 'DESC'],
+    paginationEnabled: false,
+)]
 class Ingredient
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['ingredient:list', 'ingredient:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(
-        min: 3, 
+        min: 3,
         max: 50,
         minMessage: 'Le nom doit avoir une longueur de {{ limit }} caractères au minimum',
         maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-        )
-        ]
+    )
+    ]
+    #[Groups(['ingredient:list', 'ingredient:item'])]
     private ?string $name = null;
 
     #[ORM\Column]
@@ -37,20 +50,21 @@ class Ingredient
 
     #[ORM\Column]
     #[Assert\NotNull()]
+    #[Groups(['ingredient:list'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?User $user = null;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
     }
-    
 
     public function getId(): ?int
     {

@@ -15,10 +15,9 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-
     public function minutesToHours($value)
     {
-        if ($value < 60 || !$value){
+        if ($value < 60 || !$value) {
             return $value;
         }
 
@@ -26,16 +25,13 @@ class AppExtension extends AbstractExtension
         $minutes = $value % 60;
 
         if ($minutes < 10) {
-            $minutes = '0' . $minutes;
+            $minutes = '0'.$minutes;
         }
 
-
-        $time = sprintf("%sh%s", $hours, $minutes);
+        $time = sprintf('%sh%s', $hours, $minutes);
 
         return $time;
-
     }
-
 
     public function getFunctions(): array
     {

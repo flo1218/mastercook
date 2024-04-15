@@ -4,7 +4,8 @@
     <div class="container">
         <h1 class="mt-4">Modification d'une recette</h1>
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
+
         <div class="form-group">                
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
@@ -12,6 +13,7 @@
                 {{ form_errors(form.name) }}
             </div>
         </div>
+
         <div class="form-group">                
             {{ form_label(form.time) }}
             {{ form_widget(form.time) }}
@@ -19,6 +21,7 @@
                 {{ form_errors(form.time) }}
             </div>
         </div>
+
         <div class="form-group">                
             {{ form_label(form.nbPeople) }}
             {{ form_widget(form.nbPeople) }}
@@ -26,6 +29,7 @@
                 {{ form_errors(form.nbPeople) }}
             </div>
         </div>
+
         <div class="form-group">                
             {{ form_label(form.difficulty) }}
             {{ form_widget(form.difficulty) }}
@@ -33,6 +37,7 @@
                 {{ form_errors(form.difficulty) }}
             </div>
         </div>
+
         <div class="form-group">                
             {{ form_label(form.description) }}
             {{ form_widget(form.description) }}
@@ -40,6 +45,7 @@
                 {{ form_errors(form.description) }}
             </div>
         </div>
+        
         <div class="form-group">                
             {{ form_label(form.price) }}
             {{ form_widget(form.price) }}
@@ -47,14 +53,47 @@
                 {{ form_errors(form.price) }}
             </div>
         </div>
-        
-        
+
+        {# <div class="form-group">                
+            {{ form_label(form.isPublic) }}
+            {{ form_widget(form.isPublic) }}
+            <div class="form-error">
+                {{ form_errors(form.isPublic) }}
+            </div>
+        </div> #}
+
+        {# <div class="form-group">                
+            {{ form_label(form.isFavorite) }}
+            {{ form_widget(form.isFavorite) }}
+            <div class="form-error">
+                {{ form_errors(form.isFavorite) }}
+            </div>
+        </div>         #}
+
+        <div class="form-check form-switch mt-4">
+            <input class="form-check-input" type="checkbox" id= "recipe_isPublic" value="recipe_isPublic"
+                name="{{ field_name(form.isPublic) }}" 
+                {% if form.isPublic.vars.checked %} checked="" {%  endif %} >
+            <label class="form-check-label" for="recipe_isPublic">
+                {{ field_label(form.isPublic) }}
+            </label>
+        </div>
+
+        <div class="form-check form-switch mt-4">
+            <input class="form-check-input" type="checkbox" id= "recipe_isFavorite" value="recipe_isFavorite"
+                name="{{ field_name(form.isFavorite) }}" 
+                {% if form.isFavorite.vars.checked %} checked="" {%  endif %} >
+            <label class="form-check-label" for="recipe_isFavorite">
+                {{ field_label(form.isFavorite) }}
+            </label>
+        </div>
+
         <fieldset class="form-group">    
             <div class="form-label mt-4">Ingredients</div>
             {% for ingredient in form.ingredients %}
-            <div class="form-check">
+            <div>
                 {{ form_widget(ingredient) }}
-                <label class="form-check-label" for="flexCheckDefault">{{ form_label(ingredient) }}</label>
+                <label class="form-check-label">{{ form_label(ingredient) }}</label>
             </div>
             {% endfor %}
         </fieldset>
