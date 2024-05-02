@@ -1,8 +1,13 @@
 # APP
 app.save.label : 'Sauvegarder'
+app.cancel.label : 'Annuler'
+app.create.label : 'Créer'
+app.edit.label : 'Mettre à jour'
 app.send.label : 'Envoyer'
+
 app.yes.label : 'Oui'
 app.no.label : 'Non'
+
 app.confirmation.label : 'Etes-vous sûr ?'
 app.login.label: 'Se connecter'
 app.password.label: 'Mot de passe'
@@ -20,22 +25,63 @@ home.start.description: "Pour commencer, rendez-vous sur la page d'inscription p
 # HEADER
 header.home.label: 'Accueil'
 header.recipes.label : "Recettes"
-header.ingredient.label : "Ingredients"
+header.ingredient.label : "Ingrédients"
 header.favorite.label : "Favoris"
 header.recipes_public.label : "Recettes de la communauté"
+header.update-informations.label : 'Modifier mes informations'
+header.update-password.label : 'Modifier mon mot de passe'
+header.login.label : 'Connexion'
+header.register.label : 'Inscription'
+header.logout.label : 'Se déconnecter'
 
 # RECIPE
 recipe.community.label: 'Recettes de la communauté'
+recipe.name.label : 'Nom'
+recipe.time.label : 'Temps (minutes)'
+recipe.nbPeople.label : 'Nb personne'
+recipe.difficulty.label : 'Difficulté'
+recipe.description.label : 'Description'
+recipe.price.label : 'Prix'
+recipe.isPublic.label : 'Public'
+recipe.isFavorite.label : 'Favoris'
+recipe.image.label : 'Image de la recette'
+recipe.delete-image.label : "Supprimer l'image ?"
+recipe.download-image.label : "Télécharger l'image"
+recipe.created.label : 'Votre recette a été créé avec succès !'
+recipe.updated.label : 'Votre recette a été modifié avec succès !'
+recipe.deleted.label : 'Votre recette a été supprimée avec succès !'
+recipe.notfound.label : "Votre recette n'a pas été trouvée !"
+recipe.vote.success : 'Votre note a bien été prise en compte'
+
+
 recipe.no.label: 'Recette n°'
 recipe.create.label : 'Créer une recette'
+recipe.update.label : "Modification d'une recette"
 recipe.nodata.label: "Il n'y a pas de recettes publiques"
 recipe.my.label: 'Mes recettes'
 recipe.favorite.label: 'Mes recettes favorites'
+recipe:
+  count.label: "{count, plural,
+        =0 {Aucune recettes trouvées}
+        one {Il y a une recette}
+        other {Il y a # recettes}
+      }"
 
 # INGREDIENT
 ingredient.new.label : 'Créer un ingrédient'
 ingredient.my.label : 'Mes ingrédients'
+ingredient.name.label : 'Nom'
+ingredient.price.label : 'Prix'
 ingredient.edit.title : 'Modification d''un ingrédient'
+ingredient.saved.label : "Votre ingrédient a été modifié avec succès"
+ingredient.created.label : "Votre ingrédient a été créé avec succès"
+ingredient.error.notunique.name : "Un ingrédient avec le même nom existe déjà"
+ingredient:
+  count.label: "{count, plural,
+        =0 {Aucun ingrédients trouvé}
+        one {Il y a un ingrédient}
+        other {Il y a # ingrédients}
+      }"
 
 # CONTACT
 contact.title.label: 'Contactez-nous'
@@ -43,15 +89,20 @@ contact.fullname.label : 'Prénom / Nom'
 contact.email.label : 'Email'
 contact.subject.label : 'Sujet'
 contact.message.label : 'Message'
+contact.success.message : 'Votre demande a bien été envoyée.'
 
 # REGISTRATION
 registration.title.label : "Formulaire d'inscription"
 registration.name.label : 'Nom / Prénom'
 registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
+registration.language.label: 'Language'
 registration.password.label : 'Mot de passe'
 registration.repeat-password.label : 'Confirmation du mot de passe'
 registration.submit.label : 'Soumettre'
+registration.success.label : 'Votre utilisateur a été créé avec succès !'
+registration.update.label : 'Votre utilisateur a été modifié avec succès !'
+registration.invalid-password.label : 'le mot de passe renseigné est incorrect !'
 
 # ADMINISTRATION
 admin.user.title : Administration des utilisateurs

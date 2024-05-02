@@ -3,16 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserPasswordType;
 use App\Form\UserType;
+use App\Form\UserPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -20,12 +21,13 @@ class UserController extends AbstractController
     #[IsGranted(
         attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
         subject: new Expression('args["choosenUser"]'),
-        message: 'This is not your user'
+        message: 'Access denied'
     )]
     public function edit(
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
+        TranslatorInterface $translator,
         User $choosenUser): Response
     {
         if (!$this->getUser()) {
@@ -44,11 +46,11 @@ class UserController extends AbstractController
                 $manager->persist($user);
                 $manager->flush();
 
-                $this->addFlash('success', 'Votre utilisateur a été modifié avec succès.');
+                $this->addFlash('success', $translator->trans('registration.update.label'));
 
                 return $this->redirectToRoute('recipe.index');
             } else {
-                $this->addFlash('warning', 'le mot de passe renseigné est incorrect.');
+                $this->addFlash('warning', $translator->trans('registration.invalid-password.label'));
             }
         }
 
@@ -61,7 +63,7 @@ class UserController extends AbstractController
     #[IsGranted(
         attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
         subject: new Expression('args["choosenUser"]'),
-        message: 'This is not your user'
+        message: 'Access denied'
     )]
     public function editPassword(
         EntityManagerInterface $manager,

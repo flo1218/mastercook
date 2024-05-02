@@ -63,30 +63,30 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">
-									<i class="bi bi-info-circle m-2"></i>Modifier mes informations
+									<i class="bi bi-info-circle m-2"></i>{{ 'header.update-informations.label'|trans }}
 								</a>
 								<a class="dropdown-item" href="{{ path('user_edit-password', {id : app.user.id}) }}">
-									<i class="bi bi-file-person m-2"></i>Modifier mon mot de passe
+									<i class="bi bi-file-person m-2"></i>{{ 'header.update-password.label'|trans }}
 								</a>
 								{% if 'ROLE_ADMIN' in app.user.roles %}
 									<a class="dropdown-item" href="{{ path('admin') }}">
-										<i class="bi bi-speedometer m-2"></i>Administration
+										<i class="bi bi-speedometer m-2"></i>{{ 'header.administration.label'|trans }}
 									</a>
 									<a class="dropdown-item" href="{{ path('app_chart_recipe_per_year') }}">
-										<i class="bi bi-bar-chart m-2"></i>Chart
+										<i class="bi bi-bar-chart m-2"></i>{{ 'header.chart.label'|trans }}
 									</a>
 								{% endif %}
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ path('app_logout') }}">
-									<i class="bi bi-door-closed m-2"></i>Déconnexion</a>
+									<i class="bi bi-door-closed m-2"></i>{{ 'header.logout.label'|trans }}</a>
 							</div>
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+							<a class="nav-link" href="{{ path('app_login') }}">{{ 'header.login.label'|trans }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+							<a class="nav-link" href="{{ path('app_register') }}">{{ 'header.register.label'|trans }}</a>
 						</li>
 					{% endif %}
 				</ul>

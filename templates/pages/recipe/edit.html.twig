@@ -2,7 +2,7 @@
 
 {% block body %}
 	<div class="container">
-		<h1 class="mt-4">Modification d'une recette</h1>
+		<h1 class="mt-4">{{ 'recipe.update.label'|trans }}</h1>
 
 		{{ form_start(form) }}
 
@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="col">
-                <div class="form-label mt-4">Ingredients</div>
+                <div class="form-label mt-4">{{ field_label(form.ingredients) }}</div>
                 {% for ingredient in form.ingredients %}
                     <div>
                         {{ form_widget(ingredient, {'attr': {'class': 'ingredients_checkbox'}}) }}
@@ -92,20 +92,4 @@
 		</div>
 		{{ form_end(form) }}
 	</div>
-
-<script>
-$(document).ready(function() {
-    let total = 0;
-    const checkboxs = document.querySelectorAll('.ingredients_checkbox');
-    checkboxs.forEach(function(element) {
-        element.addEventListener('change', (event) => {
-            if (event.currentTarget.checked) {
-                alert('checked');
-            } else {
-                alert('not checked');
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

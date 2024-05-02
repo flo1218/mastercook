@@ -20,7 +20,7 @@ class IngredientType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Nom',
+                'label' => 'ingredient.name.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -29,7 +29,7 @@ class IngredientType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Prix',
+                'label' => 'ingredient.price.label',
                 'currency' => '',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
@@ -43,7 +43,14 @@ class IngredientType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-4',
                 ],
-                'label' => 'Créer mon ingrédient',
+                'label' => 'app.save.label',
+            ])
+            ->add('cancel', SubmitType::class, [
+                'attr' => [
+                    'formnovalidate' => 'formnovalidate',
+                    'class' => 'btn btn-light mt-4 ms-2',
+                ],
+                'label' => 'app.cancel.label',
             ])
         ;
     }

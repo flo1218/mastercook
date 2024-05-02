@@ -1,8 +1,13 @@
 # APP
 app.save.label : 'Save'
+app.cancel.label : 'Cancel'
+app.create.label : 'Create'
+app.edit.label : 'Update'
 app.send.label : 'Send'
+
 app.yes.label : 'Yes'
 app.no.label : 'No'
+
 app.confirmation.label : 'Are you sure ?'
 app.login.label : 'Login'
 app.password.label: 'Password'
@@ -23,19 +28,60 @@ header.recipes.label : "Recipes"
 header.home.label: 'Home'
 header.favorite.label : "Favorites"
 header.recipes_public.label : "Community recipes"
+header.update-informations.label : 'Update my profile'
+header.update-password.label : 'Update my password'
+header.login.label : 'Login'
+header.register.label : 'Register'
+header.logout.label : 'Logout'
 
 # RECIPE
 recipe.community.label : 'Community Recipes'
+recipe.name.label : 'Name'
+recipe.time.label : 'Time(minutes)'
+recipe.nbPeople.label : 'Nb People'
+recipe.difficulty.label : 'Difficulty'
+recipe.description.label : 'Description'
+recipe.price.label : 'Price'
+recipe.isPublic.label : 'Public'
+recipe.isFavorite.label : 'Favoris'
+recipe.image.label : 'Recipe Image'
+recipe.delete-image.label : "Delete picture ?"
+recipe.download-image.label : "Download picture"
+recipe.created.label : 'Your recipe has been created with success !'
+recipe.updated.label : 'Your recipe has been updated with success !'
+recipe.deleted.label : 'Your recipe has been deleted with success !'
+recipe.notfound.label : "Your recipe has not been found !"
+recipe.vote.success : 'Your rating has been taken into account'
+
+
 recipe.no.label : 'Recipe n°'
-recipe.create.label : Create a recipe
+recipe.create.label : "Create a recipe"
+recipe.update.label : "Update a recipe"
 recipe.nodata.label : 'There is no public recipes'
 recipe.my.label: 'My Recipes'
 recipe.favorite.label: 'My favorite recipes'
+recipe:
+  count.label: "{count, plural,
+        =0 {No recipes found}
+        one {There is one recipe}
+        other {There are # recipes}
+      }"
 
 # INGREDIENT
 ingredient.new.label : 'Create an ingredient'
 ingredient.my.label : 'My ingredients'
+ingredient.name.label : 'Name'
+ingredient.price.label : 'Price'
 ingredient.edit.title : 'Update ingredient'
+ingredient.saved.label : 'Your ingredient has been saved successfully'
+ingredient.created.label : "Your ingredient has been created successfully"
+ingredient.error.notunique.name : "An ingredient already exists with the same name"
+ingredient:
+  count.label: "{count, plural,
+        =0 {No ingredients found}
+        one {There is one ingredient}
+        other {There are # ingredients}
+      }"
 
 # CONTACT
 contact.title.label: 'Contact Us'
@@ -43,15 +89,19 @@ contact.fullname.label : 'Firstname / Lastname'
 contact.email.label : 'Email'
 contact.subject.label : 'Subject'
 contact.message.label : 'Message'
+contact.success.message : 'Your request has been sent successfully'
 
 # REGISTRATION
 registration.title.label : "Registration Form"
 registration.name.label : 'Name / Firstname'
 registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
+registration.language.label: 'Language'
 registration.password.label : 'Password'
 registration.repeat-password.label : 'Confirm your password'
 registration.submit.label : 'Submit'
+registration.success.label : 'Your user has been created with success !'
+registration.invalid-password.label : 'The specified password is invalid !'
 
 # ADMINISTRATION
 admin.user.title : Users Administration

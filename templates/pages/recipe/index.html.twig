@@ -2,15 +2,14 @@
 {% block title %}MasterCook - Mes recettes{% endblock %}
 {% block body %}
 <div class="container mt-4">    
-    {% if not recettes.items is same as([]) %}
     <h1>{{ 'recipe.my.label'|trans }}</h1>
     <a class="btn btn-primary mt-4 mb-4" href="{{ path('recipe.new') }}">
         {{ 'recipe.create.label'|trans }}
     </a>
+    {% if not recettes.items is same as([]) %}    
     <div class="count mt-4">
-        <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
+        <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
     </div>
-
     <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
@@ -55,7 +54,7 @@
         {{ knp_pagination_render(recettes) }}
     </div>
 {% else %}
-    <h4> Il n'y a pas de recettes</h4>
+    <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
 {% endif %}
 </div>
 {% endblock %}

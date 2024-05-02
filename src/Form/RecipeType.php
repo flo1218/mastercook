@@ -37,7 +37,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Nom',
+                'label' => 'recipe.name.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -50,7 +50,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Temps(minutes)',
+                'label' => 'recipe.time.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -64,7 +64,7 @@ class RecipeType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'required' => false,
-                'label' => 'Nb personne',
+                'label' => 'recipe.nbPeople.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -79,7 +79,7 @@ class RecipeType extends AbstractType
                     'min' => 1,
                     'max' => 5,
                 ],
-                'label' => 'Difficulté',
+                'label' => 'recipe.difficulty.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -93,7 +93,7 @@ class RecipeType extends AbstractType
                     'class' => 'form-control',
                     'rows' => '7',
                 ],
-                'label' => 'Description',
+                'label' => 'recipe.description.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -106,7 +106,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Prix',
+                'label' => 'recipe.price.label',
                 'currency' => '',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
@@ -121,7 +121,7 @@ class RecipeType extends AbstractType
                     'class' => 'form-check',
                 ],
                 'required' => false,
-                'label' => 'Public ',
+                'label' => 'recipe.isPublic.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -131,19 +131,19 @@ class RecipeType extends AbstractType
                     'class' => 'form-check',
                 ],
                 'required' => false,
-                'label' => 'Favoris',
+                'label' => 'recipe.isFavorite.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
             ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
-                'download_label' => "Télécharger l'image",
-                'delete_label' => "Supprimer l'image ?",
+                'download_label' => "recipe.download-image.label",
+                'delete_label' => "recipe.delete-image.label",
                 'download_uri' => true,
                 'asset_helper' => true,
                 'imagine_pattern' => 'my_thumb',
-                'label' => 'Image de la recette',
+                'label' => 'recipe.image.label',
             ])
             ->add('ingredients', EntityType::class, [
                 'choice_label' => function (Ingredient $ingredient): string {
@@ -153,7 +153,7 @@ class RecipeType extends AbstractType
                 'class' => Ingredient::class,
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'Ingredients',
+                'label' => 'header.ingredient.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -168,7 +168,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-4',
                 ],
-                'label' => 'create' == $options['attr']['flavor'] ? 'Créer ma recette' : 'Mettre à jour',
+                'label' => sprintf("app.%s.label", $options['attr']['flavor']),
             ])
         ;
     }

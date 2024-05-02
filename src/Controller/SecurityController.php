@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -22,7 +23,7 @@ class SecurityController extends AbstractController
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('error', 'Votre ingrédient a été supprimé avec succès !');
+            $this->addFlash('error', $error);
         }
 
         // last username entered by the user
@@ -47,7 +48,10 @@ class SecurityController extends AbstractController
      * This function manage the registration process.
      */
     #[Route(path: '/inscription', name: 'app_register')]
-    public function registration(Request $request, EntityManagerInterface $manager): Response
+    public function registration(Request $request, 
+        EntityManagerInterface $manager,
+        TranslatorInterface $translator
+        ): Response
     {
         $user = new User();
         $user->setRoles(['ROLE_USER']);
@@ -59,7 +63,7 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre utilisateur a été créé avec succès !');
+            $this->addFlash('success', $translator->trans('registration.success.label'));
 
             return $this->redirectToRoute('ingredient.index');
         }

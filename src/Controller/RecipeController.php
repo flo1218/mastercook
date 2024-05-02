@@ -9,16 +9,17 @@ use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
@@ -101,9 +102,14 @@ class RecipeController extends AbstractController
             'recipe_user' => new Expression('args["recipe"].getUser()'),
             'recipe_public' => new Expression('args["recipe"].isIsPublic()'),
         ],
-        message: 'This is not your recipe'
+        message: 'Access denied'
     )]
-    public function show(Recipe $recipe, Request $request, MarkRepository $markRepository, EntityManagerInterface $manager)
+    public function show(Recipe $recipe, 
+        Request $request, 
+        MarkRepository $markRepository, 
+        EntityManagerInterface $manager,
+        TranslatorInterface $translator,
+        ) 
     {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
@@ -126,7 +132,7 @@ class RecipeController extends AbstractController
                 );
             }
             $manager->flush();
-            $this->addFlash('success', 'Votre note a bien été prise en compte');
+            $this->addFlash('success', $translator->trans('recipe.vote.success'));
 
             return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
         }
@@ -144,7 +150,8 @@ class RecipeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        TranslatorInterface $translator,
     ): Response {
         $recipe = new Recipe();
 
@@ -161,7 +168,7 @@ class RecipeController extends AbstractController
             $manager->persist($recipe);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre recette a été créé avec succès !');
+            $this->addFlash('success', $translator->trans('recipe.created.label'));
 
             return $this->redirectToRoute('recipe.index');
         }
@@ -178,17 +185,15 @@ class RecipeController extends AbstractController
     #[IsGranted(
         attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
         subject: new Expression('args["recipe"].getUser()'),
+        message: 'Access denied'
     )]
     public function edit(
         Request $request,
         RecipeRepository $repository,
         EntityManagerInterface $manager,
-        Recipe $recipe
+        Recipe $recipe,
+        TranslatorInterface $translator,
     ): Response {
-        if ($recipe->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException("Ce n'est pas votre recette");
-        }
-
         $form = $this->createForm(RecipeType::class, $recipe, [
             'attr' => [
                 'flavor' => 'edit',
@@ -202,7 +207,7 @@ class RecipeController extends AbstractController
 
             $manager->persist($recipe);
             $manager->flush();
-            $this->addFlash('success', 'Votre recette a été modifié avec succès !');
+            $this->addFlash('success', $translator->trans('recipe.updated.label'));
 
             return $this->redirectToRoute('recipe.index');
         }
@@ -223,14 +228,15 @@ class RecipeController extends AbstractController
     public function delete(Request $request,
         RecipeRepository $repository,
         EntityManagerInterface $manager,
+        TranslatorInterface $translator,
         Recipe $recipe): Response
     {
         if (!$recipe) {
-            $this->addFlash('warning', 'Votre recette a n\'a pas été trouvée!');
+            $this->addFlash('warning', $translator->trans('recipe.notfound.label'));
         } else {
             $manager->remove($recipe);
             $manager->flush();
-            $this->addFlash('success', 'Votre recette a été supprimée avec succès !');
+            $this->addFlash('success', $translator->trans('recipe.deleted.label'));
         }
 
         return $this->redirectToRoute('recipe.index');

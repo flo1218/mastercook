@@ -4,15 +4,14 @@
 
 {% block body %}
 <div class="container mt-4">        
-    {% if not ingredients.items is same as([]) %}
-        <h1>{{'ingredient.my.label'|trans}}</h1>
+    <h1>{{'ingredient.my.label'|trans}}</h1>
         <a class="btn btn-primary mt-4 mb-4" href="{{ path('ingredient.new') }}">
             {{ 'ingredient.new.label'|trans }}
         </a>
+    {% if not ingredients.items is same as([]) %}        
         <div class="count mt-4">
-            <h5>Il y a {{ ingredients.getTotalItemCount }} ingrédient(s)</h5> 
+            <h5>{{ 'ingredient.count.label'|trans({'count': ingredients.getTotalItemCount}) }}</h5> 
         </div>
-
         <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
@@ -56,7 +55,7 @@
             {{ knp_pagination_render(ingredients) }}
         </div>
     {% else %}
-        <h4> Il n'y a pas d'ingredients</h4>
+        <h5>{{ 'ingredient.count.label'|trans({'count': ingredients.getTotalItemCount}) }}</h5> 
     {% endif %}
 </div>
 

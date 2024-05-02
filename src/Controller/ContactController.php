@@ -50,7 +50,7 @@ class ContactController extends AbstractController
                 ['contact' => $contact]
             );
 
-            $this->addFlash('success', 'Votre demande a bien été envoyée.');
+            $this->addFlash('success', 'contact.success.message');
         }
 
         return $this->render('pages/contact/index.html.twig', [
