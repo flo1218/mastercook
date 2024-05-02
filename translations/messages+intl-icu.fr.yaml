@@ -5,11 +5,14 @@ app.yes.label : 'Oui'
 app.no.label : 'Non'
 app.confirmation.label : 'Etes-vous sûr ?'
 app.login.label: 'Se connecter'
+app.password.label: 'Mot de passe'
+app.logout.label: 'Se déconnecter'
+app.logged.label: 'Vous êtes connecté en tant que'
 app.subscription.label: Inscription
 
 # HOME
 home.title: 'Bienvenue sur MasterCook!'
-home.welcome: Accueil
+home.welcome: 'Accueil'
 home.hello: 'Bonjour'
 home.description: "MasterCook est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
 home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous"
@@ -24,9 +27,10 @@ header.recipes_public.label : "Recettes de la communauté"
 # RECIPE
 recipe.community.label: 'Recettes de la communauté'
 recipe.no.label: 'Recette n°'
-recipe.create.label : Créer une recette
+recipe.create.label : 'Créer une recette'
 recipe.nodata.label: "Il n'y a pas de recettes publiques"
 recipe.my.label: 'Mes recettes'
+recipe.favorite.label: 'Mes recettes favorites'
 
 # INGREDIENT
 ingredient.new.label : 'Créer un ingrédient'
@@ -34,11 +38,20 @@ ingredient.my.label : 'Mes ingrédients'
 ingredient.edit.title : 'Modification d''un ingrédient'
 
 # CONTACT
-contact.title.label: 'Formulaire de contact'
+contact.title.label: 'Contactez-nous'
 contact.fullname.label : 'Prénom / Nom'
 contact.email.label : 'Email'
 contact.subject.label : 'Sujet'
 contact.message.label : 'Message'
+
+# REGISTRATION
+registration.title.label : "Formulaire d'inscription"
+registration.name.label : 'Nom / Prénom'
+registration.pseudo.label : 'Pseudo'
+registration.email.label : 'Email'
+registration.password.label : 'Mot de passe'
+registration.repeat-password.label : 'Confirmation du mot de passe'
+registration.submit.label : 'Soumettre'
 
 # ADMINISTRATION
 admin.user.title : Administration des utilisateurs

@@ -21,11 +21,23 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
+    public function groupByMonth(string $year)
+    {        
+        $qb = $this->createQueryBuilder('r')
+            ->select('MONTH(r.createdAt) AS gBmonth, count(r.id) AS gCount')
+            ->where('YEAR(r.createdAt) = :year')
+            ->orderBy('r.updatedAt', 'DESC')
+            ->groupBy('gBmonth');
+        $qb->setParameter('year', $year);
+        
+        return $qb->getQuery()->getResult();
+    }
+
     public function findPublicRecipe(int $nbRecipes = 0): array
     {
         $qb = $this->createQueryBuilder('r')
             ->where('r.isPublic = 1')
-            ->orderBy('r.createdAt', 'DESC');
+            ->orderBy('r.updatedAt', 'DESC');
 
         if (0 != $nbRecipes) {
             $qb->setMaxResults($nbRecipes);
@@ -49,29 +61,4 @@ class RecipeRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
-    //    /**
-    //     * @return Recipe[] Returns an array of Recipe objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Recipe
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

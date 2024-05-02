@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginTest extends WebTestCase
 {
@@ -16,14 +16,14 @@ class LoginTest extends WebTestCase
         $crawler = $client->request('GET', $urlGenerator->generate('app_login'));
 
         // Form
-        $form = $crawler->filter("form[name=login]")->form([
-            '_username' =>  'admin@mastercook.ch'
+        $form = $crawler->filter('form[name=login]')->form([
+            '_username' => 'admin@mastercook.ch',
         ]);
 
         $client->submit($form);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
 
-        $client->followRedirect();        
+        $client->followRedirect();
     }
 }

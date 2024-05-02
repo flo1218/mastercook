@@ -2,15 +2,16 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
+use App\Entity\Mark;
+use App\Entity\User;
+use Faker\Generator;
+use App\Entity\Recipe;
+use DateTimeImmutable;
 use App\Entity\Contact;
 use App\Entity\Ingredient;
-use App\Entity\Mark;
-use App\Entity\Recipe;
-use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
-use Faker\Generator;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -65,17 +66,18 @@ class AppFixtures extends Fixture
             $manager->persist($ingredient);
         }
 
-        // Recipe
-        for ($j = 1; $j <= 50; ++$j) {
+        // Recipes
+        for ($j = 1; $j <= 200; ++$j) {
             $recipe = new Recipe();
             $recipe->setName($this->faker->word())
-                ->setTime(1 == mt_rand(0, 1) ? mt_rand(1, 1440) : null)
+                ->setTime(mt_rand(1, 1440))
+                ->setPrice(mt_rand(1, 1000))
                 ->setNbPeople(1 == mt_rand(0, 1) ? mt_rand(1, 50) : null)
                 ->setDifficulty(1 == mt_rand(0, 1) ? mt_rand(1, 5) : null)
-                ->setDescription($this->faker->text(300))
-                ->setPrice(1 == mt_rand(0, 1) ? mt_rand(1, 1000) : null)
+                ->setDescription($this->faker->text(300))                
                 ->setIsFavorite(1 == mt_rand(0, 1) ? true : false)
                 ->setIsPublic(1 == mt_rand(0, 1) ? true : false)
+                ->setCreatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years')))
                 ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             for ($k = 1; $k < mt_rand(5, 15); ++$k) {

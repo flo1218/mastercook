@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Nouvelles recettes par mois
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<ul class="list-group list-group-horizontal">
+					{% for i in 0..5 %}
+						<li class="list-group-item {{ chartYear==currentYear ? 'active' :'' }}">
+							<a class="dropdown-item" href="{{ path('app_chart_recipe_per_year', {year : currentYear, type : currentType}) }}">
+								{{currentYear}}
+							</a>
+						</li>
+						{% set currentYear = currentYear - 1 %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-6 d-flex justify-content-end">
+				<ul class="list-group list-group-horizontal">
+					<li class="list-group-item d-flex justify-content-end align-items-end {{ currentType=='bar' ? 'active' :'' }}">
+						<a class="dropdown-item" href="{{ path('app_chart_recipe_per_year', {year : chartYear, type: 'bar'}) }}">
+							Bar
+						</a>
+					</li>
+					<li class="list-group-item d-flex justify-content-end align-items-end {{ currentType=='line' ? 'active' :'' }}">
+						<a class="dropdown-item" href="{{ path('app_chart_recipe_per_year', {year : chartYear, type: 'line'}) }}">
+							Line
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				{{ render_chart(chart, {'class': 'my-chart'}) }}
+			</div>
+		</div>
+
+	</div>
+<style>
+canvas.my-chart {
+    background-color: white;
+}
+</style>
+{% endblock %}

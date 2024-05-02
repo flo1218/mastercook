@@ -2,22 +2,25 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Delete;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IngredientRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity(['name', 'user'])]
 #[ApiResource(
+    security: "is_granted('ROLE_USER')",
     operations: [
         new Get(normalizationContext: ['groups' => 'ingredient:item']),
         new GetCollection(normalizationContext: ['groups' => 'ingredient:list']),
+        new Delete(),
     ],
     order: ['id' => 'DESC'],
     paginationEnabled: false,
@@ -50,7 +53,7 @@ class Ingredient
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    #[Groups(['ingredient:list'])]
+    #[Groups(['ingredient:list', 'ingredient:item'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]

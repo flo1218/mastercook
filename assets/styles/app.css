@@ -1,9 +1,4 @@
-.carousel .carousel-item img {
-    height: 400px !important;
-    object-fit: cover;
-  }
-
-  body { 
+body { 
     margin: 0;
     .modal-backdrop {
       backdrop-filter: blur(2px) !important;
@@ -12,11 +7,13 @@
     }
 }
 
-.spin {
-  animation: spin 2s linear infinite;
+.carousel .carousel-item img {
+  height: 400px !important;
+  object-fit: cover;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+label[for="recipe_imageFile_delete"] {
+  padding: 10px 10px 10px 0px;
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  text-decoration: underline;
 }

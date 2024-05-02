@@ -16,6 +16,9 @@
                         <h4 class="card-title">{{ recipe.name }}</h4>
                         <p class="card-text">{{ recipe.description }}</p>
                     </div>
+                    <div class="card-footer">
+                      <small class="text-muted">Last updated {{ recipe.updatedAt | date('d/m/Y H:i') }}</small>
+                    </div>
                 </div>
         </a>
         {% endfor %}

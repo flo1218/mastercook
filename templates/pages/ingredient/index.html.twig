@@ -3,23 +3,21 @@
 {% block title %}MasterCook - Mes ingredients{% endblock %}
 
 {% block body %}
-<div class="container mt-4">
-
-    <a class="btn btn-primary mt-4 mb-4" href="{{ path('ingredient.new') }}">
-        {{ 'ingredient.new.label'|trans }}
-    </a>    
+<div class="container mt-4">        
     {% if not ingredients.items is same as([]) %}
         <h1>{{'ingredient.my.label'|trans}}</h1>
-
+        <a class="btn btn-primary mt-4 mb-4" href="{{ path('ingredient.new') }}">
+            {{ 'ingredient.new.label'|trans }}
+        </a>
         <div class="count mt-4">
             <h5>Il y a {{ ingredients.getTotalItemCount }} ingrédient(s)</h5> 
         </div>
 
-        <table class="table table-hover mt-4">
+        <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
-            <th style="width: 10%" scope="col">Numéro</th>
-            <th style="width: 35%" scope="col">Nom</th>
+            <th data-sortable="true" style="width: 10%" scope="col">Numéro</th>
+            <th data-sortable="true" style="width: 35%" scope="col">Nom</th>
             <th style="width: 25%" scope="col">Prix</th>
             <th style="width: 20%" scope="col">Date de création</th>
             <th style="width: 5%" scope="col"></th>
@@ -34,7 +32,7 @@
             <td>{{ ingredient.price|number_format(2, '.', ',') }}
             CHF
             </td>
-            <td>{{ ingredient.createdAt | date('d/m/Y') }}</td>
+            <td>{{ ingredient.createdAt | date('d/m/Y H:i') }}</td>
             <td>
                 <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" class="btn btn-info">
                     <i class="bi bi-pencil-fill"></i>
@@ -45,10 +43,7 @@
                     class="btn btn-danger" 
                     data-toggle="confirm"
                     data-title="{{ 'app.confirmation.label'|trans }}"
-                    data-locale="{{ app.request.locale }}"
-                    {# data-yes-label="{{ 'app.yes.label'|trans }}" #}
-                    {# data-no-label="{{ 'app.no.label'|trans }}" #}
-                    >
+                    data-locale="{{ app.request.locale }}">
                     <i class="bi bi-trash3"></i>
                 </a>
             </td>

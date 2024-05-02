@@ -49,4 +49,7 @@ return [
     '@app/translations/configuration' => [
         'path' => './var/translations/configuration.js',
     ],
+    'chart.js/auto' => [
+        'version' => '3.9.1',
+    ],
 ];

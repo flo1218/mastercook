@@ -2,23 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RecipeRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
+#[ApiResource(
+    security: "is_granted('ROLE_USER')",
+    securityMessage: 'Sorry, but you are not the book owner.',
+    operations: [
+        new Get(normalizationContext: ['groups' => 'recipe:item']),
+        new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
+    ],
+    order: ['id' => 'DESC'],
+    paginationEnabled: false,
+)]
 class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $id = null;
 
     #[Assert\NotBlank()]
@@ -30,6 +45,7 @@ class Recipe
     )
     ]
     #[ORM\Column(length: 50)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $name = null;
 
     #[Assert\Range(
@@ -38,10 +54,12 @@ class Recipe
         notInRangeMessage: 'Le temps doit être compris entre {{ min }} et {{ max }}',
     )]
     #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $time = null;
 
     #[Assert\LessThan(51)]
     #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $nbPeople = null;
 
     #[Assert\Range(
@@ -50,38 +68,48 @@ class Recipe
         notInRangeMessage: 'La difficulté doit être compris entre {{ min }} et {{ max }}',
     )]
     #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $difficulty = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $description = null;
 
     #[Assert\GreaterThan(0)]
     #[Assert\LessThan(1000)]
     #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?bool $isFavorite = false;
 
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?bool $isPublic = false;
 
     #[ORM\Column]
     #[Assert\NotNull()]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $ingredients;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?User $user = null;
 
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $marks;
 
     private ?float $average = null;
@@ -91,6 +119,14 @@ class Recipe
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
+
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->marks = new ArrayCollection();
+    }
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -125,14 +161,6 @@ class Recipe
     public function getImageName(): ?string
     {
         return $this->imageName;
-    }
-
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
-        $this->marks = new ArrayCollection();
     }
 
     #[ORM\PrePersist]

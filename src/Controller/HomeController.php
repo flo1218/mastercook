@@ -15,6 +15,7 @@ class HomeController extends AbstractController
     #[Route('/', 'home.index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository): Response
     {
+        // $user = $this->getUser();
         return $this->render('pages/home.html.twig', [
             'recipes' => $recipeRepository->findPublicRecipe(20),
         ]);

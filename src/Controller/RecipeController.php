@@ -49,9 +49,11 @@ class RecipeController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
+        // $user = $this->getUser();
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(10);
+
             return $repository->findPublicRecipe();
         });
 
@@ -77,12 +79,13 @@ class RecipeController extends AbstractController
         $cache = new FilesystemAdapter();
         $data = $cache->get('favorite_recipes', function (ItemInterface $item) use ($repository, $user) {
             $item->expiresAfter(10);
+
             return $repository->findFavoriteRecipe(0, $user->getId());
         });
 
         $recettes = $paginator->paginate($data, $request->query->getInt('page', 1));
 
-        return $this->render('pages/recipe/index.html.twig', [
+        return $this->render('pages/recipe/index_favorite.html.twig', [
             'controller_name' => 'RecipeController',
             'recettes' => $recettes,
         ]);
@@ -124,6 +127,7 @@ class RecipeController extends AbstractController
             }
             $manager->flush();
             $this->addFlash('success', 'Votre note a bien été prise en compte');
+
             return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
         }
 
@@ -158,6 +162,7 @@ class RecipeController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Votre recette a été créé avec succès !');
+
             return $this->redirectToRoute('recipe.index');
         }
 
@@ -191,13 +196,14 @@ class RecipeController extends AbstractController
         ]);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
+            $recipe->setUpdatedAt(new \DateTimeImmutable());
 
             $manager->persist($recipe);
             $manager->flush();
             $this->addFlash('success', 'Votre recette a été modifié avec succès !');
+
             return $this->redirectToRoute('recipe.index');
         }
 

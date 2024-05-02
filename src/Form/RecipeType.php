@@ -50,7 +50,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Temps',
+                'label' => 'Temps(minutes)',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -139,15 +139,17 @@ class RecipeType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'download_label' => "Télécharger l'image",
-                'delete_label' => "Supprimer l'image",
+                'delete_label' => "Supprimer l'image ?",
+                'download_uri' => true,
+                'asset_helper' => true,
                 'imagine_pattern' => 'my_thumb',
                 'label' => 'Image de la recette',
-                'label_attr' => [
-                    'class' => 'form-label mt-4',
-                ],
             ])
             ->add('ingredients', EntityType::class, [
-                'choice_label' => 'name',
+                'choice_label' => function (Ingredient $ingredient): string {
+                    return $ingredient->getName().' ('.$ingredient->getPrice().' CHF)';
+                },
+                'row_attr' => ['class' => 'tinymce'],
                 'class' => Ingredient::class,
                 'multiple' => true,
                 'expanded' => true,

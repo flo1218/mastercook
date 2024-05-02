@@ -3,10 +3,8 @@
 {% block body %}
 <div class="container mt-4">    
     {% if not recettes.items is same as([]) %}
-    <h1>{{ 'recipe.my.label'|trans }}</h1>
-    <a class="btn btn-primary mt-4 mb-4" href="{{ path('recipe.new') }}">
-        {{ 'recipe.create.label'|trans }}
-    </a>
+    <h1>{{ 'recipe.favorite.label'|trans }}</h1>
+
     <div class="count mt-4">
         <h5>Il y a {{ recettes.getTotalItemCount }} recette(s)</h5> 
     </div>
@@ -19,7 +17,7 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Nb Personne</th>
                 <th scope="col">Difficulté</th>
-                <th scope="col">Dernières modifications</th>
+                <th scope="col">Date de création</th>
                 <th style="width: 5%" scope="col"></th>
                 <th style="width: 5%" scope="col"></th>
             </tr>
@@ -32,7 +30,7 @@
                 <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>
                 <td>{{recette.nbPeople is null ? 'Non renseigné' : recette.nbPeople}}</td>
                 <td>{{recette.difficulty is null ? 'Non renseigné' : recette.difficulty}}</td>
-                <td>{{recette.updatedAt | date('d/m/Y H:i')}}</td>
+                <td>{{recette.createdAt | date('d/m/Y H:i')}}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i>

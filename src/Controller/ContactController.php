@@ -15,7 +15,8 @@ class ContactController extends AbstractController
 {
     /**
      * Controller used to manage the contact page.
-     * @var User user 
+     *
+     * @var User user
      */
     #[Route('/contact', name: 'app.contact')]
     public function index(
@@ -46,7 +47,6 @@ class ContactController extends AbstractController
             $mailService->sendMail(
                 $contact->getEmail(),
                 $contact->getSubject(),
-                'emails/contact.html.twig',
                 ['contact' => $contact]
             );
 

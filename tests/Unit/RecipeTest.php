@@ -3,8 +3,8 @@
 namespace App\Tests\Unit;
 
 use App\Entity\Mark;
-use App\Entity\User;
 use App\Entity\Recipe;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RecipeTest extends KernelTestCase
@@ -28,7 +28,7 @@ class RecipeTest extends KernelTestCase
 
         $recipe = $this->getEntity();
         $recipe->setName('Name');
-        
+
         $errors = $container->get('validator')->validate($recipe);
 
         $this->assertCount(0, $errors);
@@ -42,7 +42,7 @@ class RecipeTest extends KernelTestCase
 
         $recipe = $this->getEntity();
         $recipe->setName('');
-        
+
         $errors = $container->get('validator')->validate($recipe);
 
         $this->assertCount(2, $errors);
@@ -51,10 +51,10 @@ class RecipeTest extends KernelTestCase
     public function testGetAverage(): void
     {
         $recipe = $this->getEntity();
-        
+
         $user = static::getContainer()->get('doctrine.orm.entity_manager')->find(User::class, 1);
 
-        for ($i = 0;$i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $mark = new Mark();
             $mark->setMark(2)
                 ->setUser($user)

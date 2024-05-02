@@ -145,3 +145,4 @@ Error: Erreur
 'Le temps doit être compris entre {{ min }} et {{ max }}': '__Le temps doit être compris entre {{ min }} et {{ max }}'
 'La difficulté doit être compris entre {{ min }} et {{ max }}': '__La difficulté doit être compris entre {{ min }} et {{ max }}'
 'Cet utilisateur a déjà noté cette recette': '__Cet utilisateur a déjà noté cette recette'
+'validators.notmatching-password.label': 'Les mots de passe ne correspondent pas'

@@ -24,7 +24,7 @@ class RegistrationType extends AbstractType
                     'minlength' => '2',
                     'maxlength' => '50',
                 ],
-                'label' => 'Nom / Prénom',
+                'label' => 'registration.name.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -39,7 +39,7 @@ class RegistrationType extends AbstractType
                     'maxlength' => '50',
                 ],
                 'required' => false,
-                'label' => 'Pseudo',
+                'label' => 'registration.pseudo.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -50,7 +50,7 @@ class RegistrationType extends AbstractType
                     'minlength' => '2',
                     'maxlength' => '50',
                 ],
-                'label' => 'Email',
+                'label' => 'registration.email.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -62,7 +62,7 @@ class RegistrationType extends AbstractType
                 'type' => PasswordType::class,
                 'options' => ['attr' => ['class' => 'password-field']],
                 'first_options' => [
-                    'label' => 'Mot de passe',
+                    'label' => 'registration.password.label',
                     'label_attr' => [
                         'class' => 'form-label mt-4',
                     ],
@@ -71,7 +71,7 @@ class RegistrationType extends AbstractType
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'Confirmation du mot de passe',
+                    'label' => 'registration.repeat-password.label',
                     'label_attr' => [
                         'class' => 'form-label mt-4',
                     ],
@@ -79,9 +79,10 @@ class RegistrationType extends AbstractType
                         'class' => 'form-control',
                     ],
                 ],
-                'invalid_message' => 'Les mots de passes ne correspondent pas.',
+                'invalid_message' => 'validators.notmatching-password.label',
             ])
             ->add('submit', SubmitType::class, [
+                'label' => 'registration.submit.label',
                 'attr' => [
                     'class' => 'btn btn-primary mt-4',
                 ],

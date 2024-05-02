@@ -7,13 +7,13 @@ use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IngredientController extends AbstractController
 {
@@ -23,12 +23,11 @@ class IngredientController extends AbstractController
     #[Route('/ingredient', name: 'ingredient.index', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function index(
-        IngredientRepository $repository, 
-        PaginatorInterface $paginator, 
+        IngredientRepository $repository,
+        PaginatorInterface $paginator,
         Request $request,
         TranslatorInterface $translator
-        ): Response
-    {
+    ): Response {
         $ingredients = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1)
@@ -59,7 +58,7 @@ class IngredientController extends AbstractController
             $ingredient->setUser($this->getUser());
             $manager->persist($ingredient);
             $manager->flush();
-            $this->addFlash('success','Votre ingrédient a été créé avec succès !');
+            $this->addFlash('success', 'Votre ingrédient a été créé avec succès !');
 
             return $this->redirectToRoute('ingredient.index');
         }
@@ -95,7 +94,7 @@ class IngredientController extends AbstractController
 
             $manager->persist($ingredient);
             $manager->flush();
-            $this->addFlash('success','Votre ingrédient a été modifié avec succès !');
+            $this->addFlash('success', 'Votre ingrédient a été modifié avec succès !');
 
             return $this->redirectToRoute('ingredient.index');
         }

@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * This function manage the registration process
+     * This function manage the registration process.
      */
     #[Route(path: '/inscription', name: 'app_register')]
     public function registration(Request $request, EntityManagerInterface $manager): Response
@@ -60,6 +60,7 @@ class SecurityController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Votre utilisateur a été créé avec succès !');
+
             return $this->redirectToRoute('ingredient.index');
         }
 

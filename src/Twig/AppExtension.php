@@ -32,11 +32,4 @@ class AppExtension extends AbstractExtension
 
         return $time;
     }
-
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('function_name', [$this, 'doSomething']),
-        ];
-    }
 }

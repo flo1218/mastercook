@@ -20,8 +20,8 @@ class MailService
     public function sendMail(
         string $from,
         string $subject,
-        string $htmlTemplate,
         array $context,
+        string $htmlTemplate = 'emails/contact.html.twig',
         string $to = 'admin@mastercook.com'
     ) {
         $email = (new TemplatedEmail())

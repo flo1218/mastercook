@@ -5,6 +5,9 @@ app.yes.label : 'Yes'
 app.no.label : 'No'
 app.confirmation.label : 'Are you sure ?'
 app.login.label : 'Login'
+app.password.label: 'Password'
+app.logout.label: 'Logout'
+app.logged.label: 'You are logged in as'
 app.subscription.label : 'Subscription'
 
 # HOME
@@ -27,6 +30,7 @@ recipe.no.label : 'Recipe n°'
 recipe.create.label : Create a recipe
 recipe.nodata.label : 'There is no public recipes'
 recipe.my.label: 'My Recipes'
+recipe.favorite.label: 'My favorite recipes'
 
 # INGREDIENT
 ingredient.new.label : 'Create an ingredient'
@@ -34,11 +38,20 @@ ingredient.my.label : 'My ingredients'
 ingredient.edit.title : 'Update ingredient'
 
 # CONTACT
-contact.title.label: 'Contact Form'
+contact.title.label: 'Contact Us'
 contact.fullname.label : 'Firstname / Lastname'
 contact.email.label : 'Email'
 contact.subject.label : 'Subject'
 contact.message.label : 'Message'
+
+# REGISTRATION
+registration.title.label : "Registration Form"
+registration.name.label : 'Name / Firstname'
+registration.pseudo.label : 'Pseudo'
+registration.email.label : 'Email'
+registration.password.label : 'Password'
+registration.repeat-password.label : 'Confirm your password'
+registration.submit.label : 'Submit'
 
 # ADMINISTRATION
 admin.user.title : Users Administration
