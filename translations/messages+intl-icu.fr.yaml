@@ -24,12 +24,14 @@ home.start.description: "Pour commencer, rendez-vous sur la page d'inscription p
 
 # HEADER
 header.home.label: 'Accueil'
-header.recipes.label : "Recettes"
-header.ingredient.label : "Ingrédients"
-header.favorite.label : "Favoris"
+header.recipes.label : "Mes recettes"
+header.ingredient.label : "Mes ingrédients"
+header.favorite.label : "Mes favoris"
 header.recipes_public.label : "Recettes de la communauté"
 header.update-informations.label : 'Modifier mes informations'
 header.update-password.label : 'Modifier mon mot de passe'
+header.administration.label : 'Administration'
+header.chart.label : 'Chart'
 header.login.label : 'Connexion'
 header.register.label : 'Inscription'
 header.logout.label : 'Se déconnecter'
@@ -59,7 +61,7 @@ recipe.create.label : 'Créer une recette'
 recipe.update.label : "Modification d'une recette"
 recipe.nodata.label: "Il n'y a pas de recettes publiques"
 recipe.my.label: 'Mes recettes'
-recipe.favorite.label: 'Mes recettes favorites'
+recipe.favorite.label: 'Mes favoris'
 recipe:
   count.label: "{count, plural,
         =0 {Aucune recettes trouvées}
@@ -98,11 +100,13 @@ registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
 registration.language.label: 'Language'
 registration.password.label : 'Mot de passe'
+registration.new-password.label : 'Nouveau Mot de passe'
 registration.repeat-password.label : 'Confirmation du mot de passe'
 registration.submit.label : 'Soumettre'
 registration.success.label : 'Votre utilisateur a été créé avec succès !'
 registration.update.label : 'Votre utilisateur a été modifié avec succès !'
 registration.invalid-password.label : 'le mot de passe renseigné est incorrect !'
+registration.update-password.label : 'Mettre à jour mon mot de passe'
 
 # ADMINISTRATION
 admin.user.title : Administration des utilisateurs

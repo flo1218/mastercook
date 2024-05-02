@@ -166,7 +166,7 @@ class RecipeType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4',
+                    'class' => 'btn btn-primary custom-btn mt-4 bi bi-save2-fill',
                 ],
                 'label' => sprintf("app.%s.label", $options['attr']['flavor']),
             ])

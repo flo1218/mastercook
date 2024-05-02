@@ -23,7 +23,7 @@ class UserType extends AbstractType
                 'minlength' => '2',
                 'maxlength' => '50',
             ],
-            'label' => 'Nom / Prénom',
+            'label' => 'registration.name.label',
             'label_attr' => [
                 'class' => 'form-label mt-4',
             ],
@@ -38,7 +38,7 @@ class UserType extends AbstractType
                 'maxlength' => '50',
             ],
             'required' => false,
-            'label' => 'Pseudo',
+            'label' => 'registration.pseudo.label',
             'label_attr' => [
                 'class' => 'form-label mt-4',
             ],
@@ -51,7 +51,7 @@ class UserType extends AbstractType
             'attr' => [
                 'class' => 'form-select',
             ],
-            'label' => 'Langue préférée',
+            'label' => 'registration.language.label',
             'label_attr' => [
                 'class' => 'form-label mt-4',
             ],
@@ -59,15 +59,16 @@ class UserType extends AbstractType
         ->add('plainPassword', PasswordType::class, [
             'attr' => [
                 'class' => 'form-control'],
-            'label' => 'Mot de passe',
+            'label' => 'registration.password.label',
             'label_attr' => [
                 'class' => 'form-label mt-4',
             ],
         ])
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary mt-4',
+                'class' => 'btn btn-primary custom-btn mt-4 bi bi-save2-fill',
             ],
+            'label' => 'app.edit.label',            
         ])
         ;
     }

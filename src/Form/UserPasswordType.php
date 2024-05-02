@@ -18,7 +18,7 @@ class UserPasswordType extends AbstractType
             'type' => PasswordType::class,
             'options' => ['attr' => ['class' => 'password-field']],
             'first_options' => [
-                'label' => 'Mot de passe',
+                'label' => 'registration.password.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -27,7 +27,7 @@ class UserPasswordType extends AbstractType
                 ],
             ],
             'second_options' => [
-                'label' => 'Confirmation du mot de passe',
+                'label' => 'registration.repeat-password.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -35,22 +35,22 @@ class UserPasswordType extends AbstractType
                     'class' => 'form-control',
                 ],
             ],
-            'invalid_message' => 'Les mots de passes ne correspondent pas.',
+            'invalid_message' => 'validators.notmatching-password.label',
         ])
             ->add('newPassword', PasswordType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Nouveau mot de passe',
+                'label' => 'registration.new-password.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4',
+                    'class' => 'btn btn-primary mt-4 custom-btn mt-4 bi bi-save2-fill',
                 ],
-                'label' => 'Mettre à jour mon mot de passe',
+                'label' => 'registration.update-password.label',
             ])
         ;
     }

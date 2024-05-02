@@ -30,6 +30,8 @@ header.favorite.label : "Favorites"
 header.recipes_public.label : "Community recipes"
 header.update-informations.label : 'Update my profile'
 header.update-password.label : 'Update my password'
+header.administration.label : 'Administration'
+header.chart.label : 'Chart'
 header.login.label : 'Login'
 header.register.label : 'Register'
 header.logout.label : 'Logout'
@@ -98,10 +100,13 @@ registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
 registration.language.label: 'Language'
 registration.password.label : 'Password'
+registration.new-password.label : 'New Password'
 registration.repeat-password.label : 'Confirm your password'
 registration.submit.label : 'Submit'
 registration.success.label : 'Your user has been created with success !'
+registration.update.label : 'Your user has been updated with success !'
 registration.invalid-password.label : 'The specified password is invalid !'
+registration.update-password.label : 'Update my password'
 
 # ADMINISTRATION
 admin.user.title : Users Administration

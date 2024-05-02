@@ -17,3 +17,16 @@ label[for="recipe_imageFile_delete"] {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   text-decoration: underline;
 }
+
+.custom-btn.bi::before {
+  padding-right: 10px;
+}
+
+h1 {
+  color:#ea5421;
+  font-weight: bold;
+}
+
+h1.big-title {
+  font-size: 3.5rem;
+}

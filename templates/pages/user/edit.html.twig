@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MasterCook - Modification de l'utilisateur{% endblock %}
+{% block title %}MasterCook - {{ 'header.update-informations.label'|trans}}{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
-    <h1>Formulaire de modification de l'utilisateur</h1>
+    <h1>{{ 'header.update-informations.label'|trans}}</h1>
     {{ form(form) }}
 </div>
 {% endblock %}
