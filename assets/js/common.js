@@ -33,7 +33,7 @@ jQuery(function() {
           },
         locale: locale,
         message: lText,
-        backdrop: false,
+        backdrop: true,
         callback: function (confirmed) {
           if (confirmed) {
             window.location.href = lHref;

@@ -51,11 +51,9 @@ class RecipeController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        // $user = $this->getUser();
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(10);
-
             return $repository->findPublicRecipe();
         });
 
@@ -81,7 +79,6 @@ class RecipeController extends AbstractController
         $cache = new FilesystemAdapter();
         $data = $cache->get('favorite_recipes', function (ItemInterface $item) use ($repository, $user) {
             $item->expiresAfter(10);
-
             return $repository->findFavoriteRecipe(0, $user->getId());
         });
 
@@ -114,8 +111,8 @@ class RecipeController extends AbstractController
     {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $mark->setuser($this->getUser())
                 ->setRecipe($recipe);
@@ -128,9 +125,7 @@ class RecipeController extends AbstractController
             if (!$existingMark) {
                 $manager->persist($mark);
             } else {
-                $existingMark->setMark(
-                    $form->getData()->getMark()
-                );
+                $existingMark->setMark($form->getData()->getMark());
             }
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.vote.success'));
@@ -157,8 +152,8 @@ class RecipeController extends AbstractController
         $recipe = new Recipe();
 
         $form = $this->createForm(RecipeType::class, $recipe);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
             $recipe->setUser($this->getUser());
@@ -186,18 +181,18 @@ class RecipeController extends AbstractController
     )]
     public function edit(
         Request $request,
-        RecipeRepository $repository,
         EntityManagerInterface $manager,
         Recipe $recipe,
         TranslatorInterface $translator,
     ): Response {
 
-        if( isset($request->get('recipe')['cancel'])) {
+        if(isset($request->get('recipe')['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }
 
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
             $recipe->setUpdatedAt(new \DateTimeImmutable());
@@ -223,7 +218,6 @@ class RecipeController extends AbstractController
         subject: new Expression('args["recipe"].getUser()'),
     )]
     public function delete(Request $request,
-        RecipeRepository $repository,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         Recipe $recipe): Response

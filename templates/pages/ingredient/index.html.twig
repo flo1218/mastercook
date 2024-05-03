@@ -15,8 +15,8 @@
         <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
-            <th data-sortable="true" style="width: 10%" scope="col">Numéro</th>
-            <th data-sortable="true" style="width: 35%" scope="col">Nom</th>
+            <th style="width: 10%" scope="col">Numéro</th>
+            <th style="width: 35%" scope="col">Nom</th>
             <th style="width: 25%" scope="col">Prix</th>
             <th style="width: 20%" scope="col">Date de création</th>
             <th style="width: 5%" scope="col"></th>
@@ -26,7 +26,7 @@
         <tbody>
         {% for ingredient in ingredients %}    
             <tr>
-            <th scope="row">{{ ingredient.id }}</th>
+            <th scope="row"><a href="{{ path('ingredient.edit', { id : ingredient.id }) }}">{{ ingredient.id }}</a></th>
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.price|number_format(2, '.', ',') }}
             CHF

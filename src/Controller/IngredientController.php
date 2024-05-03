@@ -56,7 +56,7 @@ class IngredientController extends AbstractController
     ): Response {
         /** @var User $user **/
         
-        if( isset($request->get('ingredient')['cancel'])) {
+        if(isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         
@@ -98,7 +98,7 @@ class IngredientController extends AbstractController
         TranslatorInterface $translator,
     ): Response {
         
-        if( isset($request->get('ingredient')['cancel'])) {
+        if(isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         

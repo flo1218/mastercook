@@ -26,12 +26,12 @@
         <tbody>
         {% for recette in recettes %}    
             <tr>
-                <td scope="row">{{recette.id}}</td>
-                <td>{{recette.name}}</td>
-                <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>
-                <td>{{recette.nbPeople is null ? 'Non renseigné' : recette.nbPeople}}</td>
-                <td>{{recette.difficulty is null ? 'Non renseigné' : recette.difficulty}}</td>
-                <td>{{recette.updatedAt | date('d/m/Y H:i')}}</td>
+                <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
+                <td>{{ recette.name }}</td>
+                <td>{{ recette.price }}</td>
+                <td>{{ recette.nbPeople }}</td>
+                <td>{{ recette.difficulty }}</td>
+                <td>{{ recette.updatedAt | date('d/m/Y H:i') }}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i>

@@ -1,10 +1,5 @@
 body { 
-    margin: 0;
-    .modal-backdrop {
-      backdrop-filter: blur(2px) !important;
-      --bs-backdrop-opacity: 1 !important;
-      --bs-backdrop-bg: rgba(52, 73, 84, 0.70) !important; 
-    }
+    margin: 0;    
 }
 
 .carousel .carousel-item img {
@@ -25,10 +20,10 @@ label[for="recipe_imageFile_delete"] {
 h1 {
   color:#ea5421;
   font-weight: bold;
-}
 
-h1.big-title {
-  font-size: 3.5rem;
+  &.big-title {
+    font-size: 3.5rem;
+  }
 }
 
 /* ALERTS */
@@ -41,3 +36,11 @@ margin-top:56px;
 width: 100%;
 }
 /* END ALERTS */
+
+.vich-image {
+  padding-top: 10px;
+}
+
+.form-image img, .vich-image img{
+  width: 250px;
+}

@@ -1,6 +1,6 @@
 import './bootstrap.js';
 // Project assets
-import './styles/app.css'
+import './styles/app.scss'
 import './js/common'
 
 // Jquery
