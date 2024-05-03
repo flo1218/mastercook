@@ -48,7 +48,7 @@ class UserPasswordType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4 custom-btn mt-4 bi bi-save2-fill',
+                    'class' => 'btn btn-primary mt-4 custom-btn mt-4 bi bi-floppy2',
                 ],
                 'label' => 'registration.update-password.label',
             ])

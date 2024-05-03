@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MasterCook - {{ 'header.update-informations.label'|trans}}{% endblock %}
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{ 'header.update-informations.label'|trans}}{% endblock %}
 
 {% block body %}
 <div class="container mt-4">

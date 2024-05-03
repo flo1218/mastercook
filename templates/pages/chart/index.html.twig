@@ -1,11 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Nouvelles recettes par mois
-{% endblock %}
-
+{% block title %}{{ app.request.server.get('APP_NAME') }} - Nouvelles recettes par mois{% endblock %}
 {% block body %}
-
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
@@ -37,14 +33,8 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				{{ render_chart(chart, {'class': 'my-chart'}) }}
+				{{ render_chart(chart) }}
 			</div>
 		</div>
-
 	</div>
-<style>
-canvas.my-chart {
-    background-color: white;
-}
-</style>
 {% endblock %}

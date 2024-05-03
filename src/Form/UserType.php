@@ -66,7 +66,7 @@ class UserType extends AbstractType
         ])
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary custom-btn mt-4 bi bi-save2-fill',
+                'class' => 'btn btn-primary custom-btn mt-4 bi bi-floppy2',
             ],
             'label' => 'app.edit.label',            
         ])

@@ -90,6 +90,16 @@
 				{{ form_row(form.imageFile) }}
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col">
+				{{ form_label(form.submit) }}
+				{{ form_widget(form.submit) }}
+
+				{{ form_label(form.cancel) }}
+				{{ form_widget(form.cancel) }}
+			</div>		
+		</div>		
 		{{ form_end(form) }}
 	</div>
 {% endblock %}

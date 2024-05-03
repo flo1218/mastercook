@@ -27,7 +27,7 @@ class MarkType extends AbstractType
                 ],
                 'label' => 'Noter la recette',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
+                    'class' => 'form-label',
                 ],
             ])
             ->add('submit', SubmitType::class, [

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Mark;
+use App\Entity\User;
 use App\Entity\Recipe;
 use App\Form\MarkType;
 use App\Form\RecipeType;
@@ -76,7 +77,7 @@ class RecipeController extends AbstractController
         Request $request,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user * */
+        /** @var User $user **/
         $cache = new FilesystemAdapter();
         $data = $cache->get('favorite_recipes', function (ItemInterface $item) use ($repository, $user) {
             $item->expiresAfter(10);
@@ -97,7 +98,7 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/{id}', 'recipe.show', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     #[IsGranted(
-        attribute: new Expression('is_granted("ROLE_USER") && (user === subject["recipe_user"] || subject["recipe_public"] )'),
+        attribute: new Expression('user === subject["recipe_user"] || subject["recipe_public"]'),
         subject: [
             'recipe_user' => new Expression('args["recipe"].getUser()'),
             'recipe_public' => new Expression('args["recipe"].isIsPublic()'),
@@ -155,11 +156,7 @@ class RecipeController extends AbstractController
     ): Response {
         $recipe = new Recipe();
 
-        $form = $this->createForm(RecipeType::class, $recipe, [
-            'attr' => [
-                'flavor' => 'create',
-            ],
-        ]);
+        $form = $this->createForm(RecipeType::class, $recipe);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -194,12 +191,12 @@ class RecipeController extends AbstractController
         Recipe $recipe,
         TranslatorInterface $translator,
     ): Response {
-        $form = $this->createForm(RecipeType::class, $recipe, [
-            'attr' => [
-                'flavor' => 'edit',
-            ],
-        ]);
 
+        if( isset($request->get('recipe')['cancel'])) {
+            return $this->redirectToRoute('recipe.index');
+        }
+
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();

@@ -30,7 +30,7 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Utilisateur')
             ->setEntityLabelInPlural('Utilisateurs')
-            ->setPageTitle('index', $this->translator->trans('admin.user.title')); // 'MasterCook - Administration des utilisateurs')
+            ->setPageTitle('index', $this->translator->trans('admin.user.title'));
     }
 
     public function configureFields(string $pageName): iterable

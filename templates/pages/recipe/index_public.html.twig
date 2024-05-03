@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MasterCook - {{ 'recipe.community.label'|trans }}
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{ 'recipe.community.label'|trans }}
 {% endblock %}
 
 {% block body %}

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} MasterCook - {{ 'home.welcome'|trans }}
+{% block title %} {{ app.request.server.get('APP_NAME') }} - {{ 'home.welcome'|trans }}
 {% endblock %}
 
 {% block body  %}

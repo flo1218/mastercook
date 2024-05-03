@@ -25,11 +25,9 @@ class AppExtension extends AbstractExtension
         $minutes = $value % 60;
 
         if ($minutes < 10) {
-            $minutes = '0'.$minutes;
+            $minutes = '0' . $minutes;
         }
 
-        $time = sprintf('%sh%s', $hours, $minutes);
-
-        return $time;
+        return sprintf('%sh%s', $hours, $minutes);
     }
 }

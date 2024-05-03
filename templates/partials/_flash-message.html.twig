@@ -23,16 +23,5 @@
     </div>
 {% endfor %}
 <script>
-$(".alert").fadeTo(5000, 1).slideUp(500, function(){
-});
+$(".alert").fadeTo(5000, 1).fadeTo(500, 0);
 </script>
-<style>
-.alert-container {
-    position: relative;
-}
-.alert {
-  position: absolute;
-  margin-top:56px;
-  width: 100%;
-}
-</style>

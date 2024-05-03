@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
@@ -28,7 +29,7 @@ class ContactController extends AbstractController
 
         // Prefill fields if user is connected
         if ($this->getUser()) {
-            /** @var \App\Entity\User */
+            /** @var User $user **/
             $user = $this->getUser();
             $contact->setFullName($user->getFullName());
             $contact->setEmail($user->getEmail());

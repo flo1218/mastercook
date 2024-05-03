@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Ingredient;
 use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IngredientController extends AbstractController
 {
+    
     /**
      * This function displays all ingredients.
      */
@@ -41,6 +43,7 @@ class IngredientController extends AbstractController
 
     /**
      * This function is used to add a new ingredients.
+     * @var User user
      */
     #[Route('/ingredient/nouveau', name: 'ingredient.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -51,15 +54,14 @@ class IngredientController extends AbstractController
         IngredientRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user * */
+        /** @var User $user **/
         
-         if( isset($request->get('ingredient')['cancel'])) {
+        if( isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         
         $ingredient = new Ingredient();
         $form = $this->createForm(IngredientType::class, $ingredient);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
@@ -96,7 +98,7 @@ class IngredientController extends AbstractController
         TranslatorInterface $translator,
     ): Response {
         
-        if( $request->get('cancel')) {
+        if( isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         

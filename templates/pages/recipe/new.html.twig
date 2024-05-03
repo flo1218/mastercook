@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{ 'recipe.create.label'|trans }}{% endblock %}
 {% block body %}
     <div class="container">
         <h1 class="mt-4">{{ 'recipe.create.label'|trans }}</h1>

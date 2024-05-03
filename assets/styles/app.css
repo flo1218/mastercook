@@ -19,7 +19,7 @@ label[for="recipe_imageFile_delete"] {
 }
 
 .custom-btn.bi::before {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 h1 {
@@ -30,3 +30,14 @@ h1 {
 h1.big-title {
   font-size: 3.5rem;
 }
+
+/* ALERTS */
+.alert-container {
+  position: relative;
+}
+.alert {
+position: absolute;
+margin-top:56px;
+width: 100%;
+}
+/* END ALERTS */
