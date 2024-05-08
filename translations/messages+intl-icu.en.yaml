@@ -7,6 +7,10 @@ app.send.label : 'Send'
 
 app.yes.label : 'Yes'
 app.no.label : 'No'
+app.or.label : 'or'
+app.try-again.label : 'try again'
+app.hi.label: 'Hi'
+app.greeting.label: 'Greetings'
 
 app.confirmation.label : 'Are you sure ?'
 app.login.label : 'Login'
@@ -92,6 +96,7 @@ contact.email.label : 'Email'
 contact.subject.label : 'Subject'
 contact.message.label : 'Message'
 contact.success.message : 'Your request has been sent successfully'
+contact.forgot-password.label : 'Forgot my password'
 
 # REGISTRATION
 registration.title.label : "Registration Form"
@@ -107,6 +112,15 @@ registration.success.label : 'Your user has been created with success !'
 registration.update.label : 'Your user has been updated with success !'
 registration.invalid-password.label : 'The specified password is invalid !'
 registration.update-password.label : 'Update my password'
+
+reset-password.title.label : 'Reset my password'
+reset-password.description.label : 'Enter your email address, and we will send you a link to reset your password.'
+reset-password.sent.title : 'Password Reset Email Sent'
+reset-password.sent.description : 'If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in ' 
+reset-password.not-received.description : "If you don't receive an email please check your spam folder"
+reset-password.link.label: 'To reset your password, please visit the following link'
+reset-password.link-expire.label: 'This link will expire in'
+reset-password.email.subject: 'Your password reset request'
 
 # ADMINISTRATION
 admin.user.title : Users Administration

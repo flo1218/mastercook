@@ -7,6 +7,10 @@ app.send.label : 'Envoyer'
 
 app.yes.label : 'Oui'
 app.no.label : 'Non'
+app.or.label : 'ou'
+app.try-again.label : 'réessayez'
+app.hi.label: 'Bonjour'
+app.greeting.label: 'Salutations'
 
 app.confirmation.label : 'Etes-vous sûr ?'
 app.login.label: 'Se connecter'
@@ -92,6 +96,7 @@ contact.email.label : 'Email'
 contact.subject.label : 'Sujet'
 contact.message.label : 'Message'
 contact.success.message : 'Votre demande a bien été envoyée.'
+contact.forgot-password.label : 'Mot de passe oublié'
 
 # REGISTRATION
 registration.title.label : "Formulaire d'inscription"
@@ -107,6 +112,15 @@ registration.success.label : 'Votre utilisateur a été créé avec succès !'
 registration.update.label : 'Votre utilisateur a été modifié avec succès !'
 registration.invalid-password.label : 'le mot de passe renseigné est incorrect !'
 registration.update-password.label : 'Mettre à jour mon mot de passe'
+
+reset-password.title.label: 'Réinitialiser mon mot de passe'
+reset-password.description.label: 'Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.'
+reset-password.sent.title: 'E-mail de réinitialisation du mot de passe envoyé'
+reset-password.sent.description: "S'il existe un compte correspondant à votre adresse e-mail, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans " 
+reset-password.not-received.description: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam"
+reset-password.link.label: 'Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant'
+reset-password.link-expire.label: 'Ce lien expirera dans'
+reset-password.email.subject: 'Votre demande de réinitialisation de mot de passe'
 
 # ADMINISTRATION
 admin.user.title : Administration des utilisateurs

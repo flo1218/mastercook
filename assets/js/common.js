@@ -24,16 +24,17 @@ jQuery(function() {
           buttons: {
             confirm: {
                 label: yesLabel,
-                className: 'btn btn-primary'
+                className: 'btn btn-primary custom-btn bi bi-floppy2'
             },
            cancel: {
                 label: noLabel,
-                className: 'btn btn-secondary'
+                className: 'btn btn-light custom-btn bi bi-x-circle-fill'
             }
           },
         locale: locale,
         message: lText,
         backdrop: true,
+        swapButtonOrder : true,
         callback: function (confirmed) {
           if (confirmed) {
             window.location.href = lHref;

@@ -78,8 +78,10 @@
 			</div>
             <div class="col">
 				{{ form_row(form.imageFile) }}
-			</div>
+			</div>            
 		</div>
+        {{ form_widget(form.submit) }}
+        {{ form_widget(form.cancel) }}
     {{ form_end(form) }}
     </div>
 {% endblock %}
