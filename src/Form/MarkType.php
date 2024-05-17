@@ -24,6 +24,7 @@ class MarkType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-select',
+                    'aria-label' => 'test'
                 ],
                 'label' => 'Noter la recette',
                 'label_attr' => [

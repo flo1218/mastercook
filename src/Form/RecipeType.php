@@ -55,8 +55,8 @@ class RecipeType extends AbstractType
                     'class' => 'form-label mt-4',
                 ],
                 'constraints' => [
-                    new Assert\Positive(),
-                    new Assert\LessThan(1441),
+                    new Assert\GreaterThanOrEqual(0),
+                    new Assert\LessThanOrEqual(1440),
                 ],
             ])
             ->add('nbPeople', IntegerType::class, [

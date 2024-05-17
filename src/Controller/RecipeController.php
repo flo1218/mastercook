@@ -149,6 +149,11 @@ class RecipeController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
+
+        if(isset($request->get('recipe')['cancel'])) {
+            return $this->redirectToRoute('recipe.index');
+        }
+        
         $recipe = new Recipe();
 
         $form = $this->createForm(RecipeType::class, $recipe);

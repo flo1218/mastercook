@@ -14,10 +14,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
+#[UniqueEntity(['name', 'user'])]
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
     securityMessage: 'Sorry, but you are not the book owner.',
@@ -37,22 +39,10 @@ class Recipe
     private ?int $id = null;
 
     #[Assert\NotBlank()]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: 'Le nom doit avoir une longueur de {{ limit }} caractères au minimum',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-    )
-    ]
     #[ORM\Column(length: 50)]
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $name = null;
 
-    #[Assert\Range(
-        min: 1,
-        max: 1440,
-        notInRangeMessage: 'Le temps doit être compris entre {{ min }} et {{ max }}',
-    )]
     #[ORM\Column(nullable: true)]
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $time = null;

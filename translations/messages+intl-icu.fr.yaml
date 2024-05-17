@@ -19,6 +19,19 @@ app.logout.label: 'Se déconnecter'
 app.logged.label: 'Vous êtes connecté en tant que'
 app.subscription.label: Inscription
 
+app.january.label: 'Janvier'
+app.february.label: 'Février'
+app.march.label: 'Mars'
+app.april.label: 'Avril'
+app.may.label: 'Mai'
+app.june.label: 'Juin'
+app.july.label: 'Juillet'
+app.august.label: 'Août'
+app.september.label: 'Septembre'
+app.october.label: 'Octobre'
+app.november.label: 'Novembre'
+app.december.label: 'Décembre'
+
 # HOME
 home.title: 'Bienvenue sur MasterCook!'
 home.welcome: 'Accueil'
@@ -72,6 +85,8 @@ recipe:
         one {Il y a une recette}
         other {Il y a # recettes}
       }"
+
+recipe.recipe-per-month.label : 'Nouvelles recettes par mois'
 
 # INGREDIENT
 ingredient.new.label : 'Créer un ingrédient'

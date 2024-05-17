@@ -26,7 +26,7 @@
         <tbody>
         {% for ingredient in ingredients %}    
             <tr>
-            <th scope="row"><a href="{{ path('ingredient.edit', { id : ingredient.id }) }}">{{ ingredient.id }}</a></th>
+            <td scope="row"><a href="{{ path('ingredient.edit', { id : ingredient.id }) }}">{{ ingredient.id }}</a></td>
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.price|number_format(2, '.', ',') }}
             CHF
