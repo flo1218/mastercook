@@ -1,53 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.request.server.get('APP_NAME') }} - {{ recipe.name }} {% endblock %}
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }} - {{ recipe.name }}
+{% endblock %}
 {% block body %}
-<div class="container">
-
+	<div class="container">
 		<h1 class="mt-4">{{ recipe.name}}</h1>
-		<span class="badge bg-info">Créé le {{ recipe.createdAt|date('d/m/Y')}}</span>
-
+		<span class="badge bg-info-subtle">Créé le {{ recipe.createdAt|date('d/m/Y')}}</span>
 		<div class="recipe_image">
 			<img style="max-width:500px" src="{{ vich_uploader_asset(recipe, 'imageFile') }}">
 		</div>
+		<div class="row">
+			<div class="col-8">
+				{% if recipe.average %}
+					<p>La moyenne de cette recette est de{{ recipe.average|number_format(2, '.', ',') }}/5</p>
+				{% endif %}
 
-	<div class="row">
-		<div class="col-8">
-		{% if recipe.average %}
-			<p>La moyenne de cette recette est de
-				{{ recipe.average|number_format(2, '.', ',') }}/5
-			</p>
-		{% endif %}		
+				{% if recipe.time %}
+					<p class="form-label mt-4">Temps:
+						{{ recipe.time|min_to_hour }}</p>
+				{% endif %}
 
-		{% if recipe.time %}
-			<p class="form-label mt-4">Temps: {{ recipe.time|min_to_hour }}</p>
-		{% endif %}
+				{% if recipe.nbPeople %}
+					<p class="form-label mt-4">Pour:
+						{{ recipe.nbPeople }}
+						personnes</p>
+				{% endif %}
+				{% if recipe.difficulty %}
+					<p class="form-label mt-4">Difficulté: {{ recipe.difficulty }}/5</p>
+				{% endif %}
 
-		{% if recipe.nbPeople %}
-			<p class="form-label mt-4">Pour: {{ recipe.nbPeople }} personnes</p>
-		{% endif %}
-		{% if recipe.difficulty %}
-			<p class="form-label mt-4">Difficulté: {{ recipe.difficulty }}/5</p>
-		{% endif %}
-		
-		<p class="form-label mt-4">Description:</p>
-		<div>
-			{{ recipe.description| raw}}
-		</div>
+				<p class="form-label mt-4">Description:</p>
+				<div>
+					{{ recipe.description| raw}}
+				</div>
 
-		<p class="form-label mt-4">Ingredients:</p>
-		{% for ingredient in recipe.ingredients %}
-			<span class="badge bg-info">{{ ingredient.name }}</span>
-		{% endfor %}
-		<br><br>
-		</div>
-		
-		{% if app.user %}
-			<div class="col-4">
-				{{ form(form) }}
+				<p class="form-label mt-4">Ingredients:</p>
+				{% for ingredient in recipe.ingredients %}
+					<span class="badge bg-info">{{ ingredient.name }}</span>
+				{% endfor %}
 			</div>
-		{% endif %}
-	</div>
-</div>
+			{% if app.user %}
+				<div class="col-4">
+					{{ form(form) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
 	{% endblock %}
-
