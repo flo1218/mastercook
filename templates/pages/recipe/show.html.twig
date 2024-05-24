@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 		<h1 class="mt-4">{{ recipe.name}}</h1>
-		<span class="badge bg-info">Créé le {{ recipe.createdAt|date('d/m/Y')}}</span>
+		<span class="badge bg-info rounded-pill">Créé le {{ recipe.createdAt|date('d/m/Y')}}</span>
 		<div class="recipe_image">
 			<img style="max-width:500px" src="{{ vich_uploader_asset(recipe, 'imageFile') }}">
 		</div>
@@ -37,7 +37,7 @@
 
 				<p class="form-label mt-4">Ingredients:</p>
 				{% for ingredient in recipe.ingredients %}
-					<span class="badge bg-info">{{ ingredient.name }}</span>
+					<span class="badge bg-info rounded-pill">{{ ingredient.name }}</span>
 				{% endfor %}
 			</div>
 			{% if app.user %}
