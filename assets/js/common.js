@@ -28,7 +28,7 @@ jQuery(function() {
             },
            cancel: {
                 label: noLabel,
-                className: 'btn btn-light custom-btn bi bi-x-circle-fill'
+                className: 'btn btn-light custom-btn bi bi-x-circle'
             }
           },
         locale: locale,

@@ -48,7 +48,7 @@ class IngredientType extends AbstractType
             ->add('cancel', SubmitType::class, [
                 'attr' => [
                     'formnovalidate' => 'formnovalidate',
-                    'class' => 'btn btn-light mt-4 ms-2 custom-btn bi bi-x-circle-fill',
+                    'class' => 'btn btn-light mt-4 ms-2 custom-btn bi bi-x-circle',
                 ],
                 'label' => 'app.cancel.label',
             ])
