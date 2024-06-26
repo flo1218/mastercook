@@ -19,7 +19,10 @@ class ContactController extends AbstractController
      *
      * @var User user
      */
-    #[Route('/contact', name: 'app.contact')]
+    #[Route(path: [
+        'en' => '/contact-us',
+        'fr' => '/contactez-nous'
+    ], name: 'app.contact')]
     public function index(
         Request $request,
         EntityManagerInterface $manager,

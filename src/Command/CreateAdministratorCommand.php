@@ -60,6 +60,7 @@ class CreateAdministratorCommand extends Command
         $user = (new User())->setFullName($fullName)
             ->setEmail($email)
             ->setPseudo('')
+            ->setLanguage('en')
             ->setPlainPassword($plainPassword)
             ->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 

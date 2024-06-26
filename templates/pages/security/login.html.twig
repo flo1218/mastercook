@@ -20,6 +20,7 @@
                 value="{{ csrf_token('authenticate') }}"
             >
 
+        <input type="hidden" name="_target_path" value="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
             <button class="btn btn-lg btn-primary mt-4 custom-btn bi bi-door-open" type="submit">
                 {{ 'app.login.label'|trans }}
             </button>

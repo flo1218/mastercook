@@ -85,4 +85,14 @@
     array (
     ),
   ),
+  'chart.js' => 
+  array (
+    'version' => '3.9.1',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
 );
