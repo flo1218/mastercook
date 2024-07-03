@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
@@ -26,6 +27,7 @@ class ContactController extends AbstractController
     public function index(
         Request $request,
         EntityManagerInterface $manager,
+        TranslatorInterface $translator,
         MailService $mailService
     ): Response {
         $contact = new Contact();
@@ -54,7 +56,7 @@ class ContactController extends AbstractController
                 ['contact' => $contact]
             );
 
-            $this->addFlash('success', 'contact.success.message');
+            $this->addFlash('success', $translator->trans('contact.success.message'));
         }
 
         return $this->render('pages/contact/index.html.twig', [
