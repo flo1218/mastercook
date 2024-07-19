@@ -25,7 +25,7 @@
         </thead>
         <tbody>
         {% for ingredient in ingredients %}    
-            <tr>
+            <tr class="jsTableRow">
             <td scope="row"><a href="{{ path('ingredient.edit', { id : ingredient.id }) }}">{{ ingredient.id }}</a></td>
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.price|number_format(2, '.', ',') }}

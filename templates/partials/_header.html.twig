@@ -19,12 +19,14 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{ path('recipe.index')}}">{{ 'header.recipes.label'|trans}}
+						<a class="nav-link active" href="{{ path('recipe.index')}}">
+							{{ 'header.recipes.label'|trans}}
 							<span class="visually-hidden">(current)</span>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{ path('recipe.favorite')}}">{{ 'header.favorite.label'|trans}}
+						<a class="nav-link active" href="{{ path('recipe.favorite')}}">
+							{{ 'header.favorite.label'|trans}}
 							<span class="visually-hidden">(current)</span>
 						</a>
 					</li>
@@ -43,21 +45,25 @@
 			<div class="d-flex align-content-around flex-wrap">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown-language" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="btn btn-primary dropdown-toggle" href="#" id="dropdown-language" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							{{ app.request.locale|upper }}
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-language">
 							<li>
-								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">English</a>
+								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
+									English
+								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}">Français</a>
+								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}">
+									Français
+								</a>
 							</li>
 						</ul>
 					</li>
 					{% if app.user %}
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<a class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 								{{ app.user.fullName }} 
 							</a>
 							<div class="dropdown-menu dropdown-menu-end">
@@ -82,10 +88,14 @@
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_login') }}">{{ 'header.login.label'|trans }}</a>
+							<a class="nav-link" href="{{ path('app_login') }}">
+								{{ 'header.login.label'|trans }}
+							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_register') }}">{{ 'header.register.label'|trans }}</a>
+							<a class="nav-link" href="{{ path('app_register') }}">
+								{{ 'header.register.label'|trans }}
+							</a>
 						</li>
 					{% endif %}
 				</ul>

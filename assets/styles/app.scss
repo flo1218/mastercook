@@ -45,3 +45,8 @@ width: 100%;
 .vich-image img {
   width: 250px;
 }
+
+.card-img-top {
+  border-top-left-radius: unset;
+  border-top-right-radius: unset;
+}

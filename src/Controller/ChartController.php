@@ -32,6 +32,7 @@ class ChartController extends AbstractController
         $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
         // Get datas for chart
+        $monthRecipes = [];
         $year = ($year === null) ? date('Y') : $year;
         $recipesPerMonth = $repository->groupByMonth($year);
         for ($i = 1; $i < 13; $i++) {

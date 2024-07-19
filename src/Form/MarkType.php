@@ -15,6 +15,8 @@ class MarkType extends AbstractType
     {
         $builder
             ->add('mark', ChoiceType::class, [
+                'required' => true,
+                'placeholder' => 'Sélectionnez une note',
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
@@ -24,7 +26,7 @@ class MarkType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-select',
-                    'aria-label' => 'test'
+                    'aria-label' => 'test',
                 ],
                 'label' => 'Noter la recette',
                 'label_attr' => [

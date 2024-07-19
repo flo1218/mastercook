@@ -6,6 +6,7 @@ use App\Entity\Mark;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Form\MarkType;
+use DateTimeImmutable;
 use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
@@ -102,13 +103,16 @@ class RecipeController extends AbstractController
         ],
         message: 'Access denied'
     )]
-    public function show(Recipe $recipe, 
-        Request $request, 
-        MarkRepository $markRepository, 
+     /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
+    public function show(
+        Recipe $recipe,
+        Request $request,
+        MarkRepository $markRepository,
         EntityManagerInterface $manager,
-        TranslatorInterface $translator,
-        ) 
-    {
+        TranslatorInterface $translator
+    ) {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
         $form->handleRequest($request);
@@ -150,10 +154,10 @@ class RecipeController extends AbstractController
         TranslatorInterface $translator,
     ): Response {
 
-        if(isset($request->get('recipe')['cancel'])) {
+        if (isset($request->get('recipe')['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }
-        
+
         $recipe = new Recipe();
 
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -179,19 +183,22 @@ class RecipeController extends AbstractController
      * This function is used to update an existing recipe.
      */
     #[Route('/recipe/edit/{id}', name: 'recipe.edit', methods: ['GET', 'POST'])]
+    #[Route('/recipe/favorite/edit/{id}', name: 'recipe.favorite.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
         attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
         subject: new Expression('args["recipe"].getUser()'),
         message: 'Access denied'
     )]
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function edit(
         Request $request,
         EntityManagerInterface $manager,
         Recipe $recipe,
         TranslatorInterface $translator,
     ): Response {
-
-        if(isset($request->get('recipe')['cancel'])) {
+        if (isset($request->get('recipe')['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }
 
@@ -200,13 +207,17 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
-            $recipe->setUpdatedAt(new \DateTimeImmutable());
+            $recipe->setUpdatedAt(new DateTimeImmutable());
 
             $manager->persist($recipe);
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.updated.label'));
 
-            return $this->redirectToRoute('recipe.index');
+            if ($request->attributes->get('_route') == 'recipe.edit') {
+                return $this->redirectToRoute('recipe.index');
+            } else {
+                return $this->redirectToRoute('recipe.favorite');
+            }
         }
 
         return $this->render('pages/recipe/edit.html.twig', [
@@ -222,11 +233,15 @@ class RecipeController extends AbstractController
         attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
         subject: new Expression('args["recipe"].getUser()'),
     )]
-    public function delete(Request $request,
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
+    public function delete(
+        Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
-        Recipe $recipe): Response
-    {
+        Recipe $recipe
+    ): Response {
         if (!$recipe) {
             $this->addFlash('warning', $translator->trans('recipe.notfound.label'));
         } else {

@@ -68,7 +68,7 @@ class UserType extends AbstractType
             'attr' => [
                 'class' => 'btn btn-primary custom-btn mt-4 bi bi-floppy2',
             ],
-            'label' => 'app.edit.label',            
+            'label' => 'app.edit.label',
         ])
         ;
     }

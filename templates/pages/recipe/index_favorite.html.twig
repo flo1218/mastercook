@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         {% for recette in recettes %}    
-            <tr>
+            <tr class="jsTableRow">
                 <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
                 <td>{{recette.name}}</td>
                 <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>

@@ -19,7 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IngredientController extends AbstractController
 {
-    
     /**
      * This function displays all ingredients.
      */
@@ -55,11 +54,9 @@ class IngredientController extends AbstractController
         UserInterface $user
     ): Response {
         /** @var User $user **/
-        
-        if(isset($request->get('ingredient')['cancel'])) {
+        if (isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
-        
         $ingredient = new Ingredient();
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
@@ -70,11 +67,9 @@ class IngredientController extends AbstractController
                 $manager->persist($ingredient);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('ingredient.created.label'));
-                
                 return $this->redirectToRoute('ingredient.index');
-            } else {
-                $this->addFlash('warning', $translator->trans('ingredient.error.notunique.name'));
-            }            
+            }
+            $this->addFlash('warning', $translator->trans('ingredient.error.notunique.name'));
         }
 
         return $this->render('pages/ingredient/new.html.twig', [
@@ -85,7 +80,7 @@ class IngredientController extends AbstractController
     /**
      * This function is used to edit an ingredients.
      */
-    #[Route('/ingredient/edition/{id}', name: 'ingredient.edit', methods: ['GET', 'POST'])]
+    #[Route('/ingredient/edit/{id}', name: 'ingredient.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
         attribute: new Expression('user === subject && is_granted("ROLE_USER")'),
         subject: new Expression('args["ingredient"].getUser()'),
@@ -97,15 +92,13 @@ class IngredientController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
-        
-        if(isset($request->get('ingredient')['cancel'])) {
+        if (isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
-        
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $ingredient = $form->getData();            
+            $ingredient = $form->getData();
 
             $manager->persist($ingredient);
             $manager->flush();
@@ -128,10 +121,14 @@ class IngredientController extends AbstractController
         subject: new Expression('args["ingredient"].getUser()'),
         message: 'Access denied'
     )]
-    public function delete(Request $request,
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
+    public function delete(
+        Request $request,
         EntityManagerInterface $manager,
-        Ingredient $ingredient): Response
-    {
+        Ingredient $ingredient
+    ): Response {
         if (!$ingredient) {
             $this->addFlash('warning', 'Votre ingrédient n\'a pas été trouvé !');
         } else {

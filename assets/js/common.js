@@ -42,4 +42,9 @@ jQuery(function() {
         }
         });
     });
+
+      // Manage dbl click to edit page
+      $(".jsTableRow").on("dblclick", function(){
+        $(location).attr('href',$(location).attr('href') + '/edit/' + $(this).closest('tr').children('td:first').text()); 
+      });
 });

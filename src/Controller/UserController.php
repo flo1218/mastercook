@@ -23,13 +23,16 @@ class UserController extends AbstractController
         subject: new Expression('args["choosenUser"]'),
         message: 'Access denied'
     )]
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function edit(
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
         TranslatorInterface $translator,
-        User $choosenUser): Response
-    {
+        User $choosenUser
+    ): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
@@ -65,12 +68,15 @@ class UserController extends AbstractController
         subject: new Expression('args["choosenUser"]'),
         message: 'Access denied'
     )]
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function editPassword(
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        User $choosenUser): Response
-    {
+        User $choosenUser
+    ): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }

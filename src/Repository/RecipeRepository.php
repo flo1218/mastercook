@@ -22,14 +22,14 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     public function groupByMonth(string $year)
-    {        
+    {
         $qb = $this->createQueryBuilder('r')
             ->select('MONTH(r.createdAt) AS gBmonth, count(r.id) AS gCount')
             ->where('YEAR(r.createdAt) = :year')
             ->orderBy('r.updatedAt', 'DESC')
             ->groupBy('gBmonth');
         $qb->setParameter('year', $year);
-        
+
         return $qb->getQuery()->getResult();
     }
 

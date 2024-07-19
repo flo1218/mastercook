@@ -18,6 +18,9 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
@@ -27,7 +30,8 @@ class LocaleSubscriber implements EventSubscriberInterface
         }
 
         // try to see if the locale has been set as a _locale routing parameter
-        if ($locale = $request->attributes->get('_locale')) {
+        $locale = $request->attributes->get('_locale');
+        if ($locale) {
             $request->getSession()->set('_locale', $locale);
         } else {
             // if no explicit locale has been set on this request, use one from the session
@@ -41,5 +45,5 @@ class LocaleSubscriber implements EventSubscriberInterface
             // must be registered before (i.e. with a higher priority than) the default Locale listener
             KernelEvents::REQUEST => [['onKernelRequest', 10000]],
         ];
-    }    
+    }
 }

@@ -147,7 +147,7 @@ class RecipeType extends AbstractType
             ])
             ->add('ingredients', EntityType::class, [
                 'choice_label' => function (Ingredient $ingredient): string {
-                    return $ingredient->getName().' ('.$ingredient->getPrice().' CHF)';
+                    return $ingredient->getName() . ' (' . $ingredient->getPrice() . ' CHF)';
                 },
                 'row_attr' => ['class' => 'tinymce'],
                 'class' => Ingredient::class,
@@ -174,7 +174,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'formnovalidate' => 'formnovalidate',
                     'class' => 'btn btn-light mt-4 ms-2 custom-btn bi bi-x-circle',
-                ],                
+                ],
                 'label' => 'app.cancel.label',
             ])
         ;

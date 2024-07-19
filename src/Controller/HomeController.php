@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-
     /**
      * Used autoswitch to the right locale
      */
@@ -20,7 +19,7 @@ class HomeController extends AbstractController
         /** @var User $user **/
         $user = $this->getUser();
         if ($user && $request->getLocale() != strtolower($user->getLanguage())) {
-            return $this->redirect('/'.strtolower($user->getLanguage()));
+            return $this->redirect('/' . strtolower($user->getLanguage()));
         }
 
         return $this->redirect('/');
@@ -31,7 +30,7 @@ class HomeController extends AbstractController
      */
     #[Route('/', 'home.index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository, Request $request): Response
-    {       
+    {
         return $this->render('pages/home.html.twig', [
             'recipes' => $recipeRepository->findPublicRecipe(20),
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use LogicException;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,18 +42,18 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new LogicException('It will be intercepted by the logout key on your firewall.');
     }
 
     /**
      * This function manage the registration process.
      */
     #[Route(path: '/inscription', name: 'app_register')]
-    public function registration(Request $request, 
+    public function registration(
+        Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator
-        ): Response
-    {
+    ): Response {
         $user = new User();
         $user->setRoles(['ROLE_USER']);
         $form = $this->createForm(RegistrationType::class, $user);

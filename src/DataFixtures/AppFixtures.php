@@ -20,7 +20,8 @@ class AppFixtures extends Fixture
 
     public function __construct(UserPasswordHasherInterface $hasher)
     {
-        $this->faker = Factory::create('fr_FR');
+        $factory = new Factory();
+        $this->faker = $factory::create('fr_FR');
         $this->hasher = $hasher;
     }
 
@@ -56,6 +57,7 @@ class AppFixtures extends Fixture
         }
 
         // Ingredients
+        $ingredients = [];
         for ($i = 1; $i <= 50; ++$i) {
             $ingredient = new Ingredient();
             $ingredient->setName($this->faker->word())
@@ -67,6 +69,7 @@ class AppFixtures extends Fixture
         }
 
         // Recipes
+        $dateTimeImmutable = new DateTimeImmutable();
         for ($j = 1; $j <= 200; ++$j) {
             $recipe = new Recipe();
             $recipe->setName($this->faker->word())
@@ -74,10 +77,12 @@ class AppFixtures extends Fixture
                 ->setPrice(mt_rand(1, 1000))
                 ->setNbPeople(1 == mt_rand(0, 1) ? mt_rand(1, 50) : null)
                 ->setDifficulty(1 == mt_rand(0, 1) ? mt_rand(1, 5) : null)
-                ->setDescription($this->faker->text(300))                
+                ->setDescription($this->faker->text(300))
                 ->setIsFavorite(1 == mt_rand(0, 1) ? true : false)
                 ->setIsPublic(1 == mt_rand(0, 1) ? true : false)
-                ->setCreatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years')))
+                ->setCreatedAt(
+                    $dateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years'))
+                )
                 ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             for ($k = 1; $k < mt_rand(5, 15); ++$k) {
@@ -104,7 +109,7 @@ class AppFixtures extends Fixture
             $contact = new Contact();
             $contact->setFullName($this->faker->name())
                 ->setEmail($this->faker->email())
-                ->setSubject('Demande n°'.($i + 1))
+                ->setSubject('Demande n°' . ($i + 1))
                 ->setMessage($this->faker->text());
 
             $manager->persist($contact);

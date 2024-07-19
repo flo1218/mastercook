@@ -48,12 +48,12 @@ class CreateAdministratorCommand extends Command
 
         $email = $input->getArgument('email');
         if (!$email) {
-            $question = new Question("Quel est l'email de ".$fullName.' ?');
+            $question = new Question("Quel est l'email de " . $fullName . ' ?');
             $email = $helper->ask($input, $output, $question);
         }
         $plainPassword = $input->getArgument('password');
         if (!$plainPassword) {
-            $question = new Question('Quel est le mot de passe de '.$fullName.' ?');
+            $question = new Question('Quel est le mot de passe de ' . $fullName . ' ?');
             $plainPassword = $helper->ask($input, $output, $question);
         }
 
