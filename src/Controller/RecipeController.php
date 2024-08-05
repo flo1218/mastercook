@@ -38,7 +38,6 @@ class RecipeController extends AbstractController
         );
 
         return $this->render('pages/recipe/index.html.twig', [
-            'controller_name' => 'RecipeController',
             'recettes' => $recettes,
         ]);
     }
@@ -61,7 +60,6 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate($data, $request->query->getInt('page', 1));
 
         return $this->render('pages/recipe/index_public.html.twig', [
-            'controller_name' => 'RecipeController',
             'recipes' => $recipes,
         ]);
     }
@@ -86,7 +84,6 @@ class RecipeController extends AbstractController
         $recettes = $paginator->paginate($data, $request->query->getInt('page', 1));
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
-            'controller_name' => 'RecipeController',
             'recettes' => $recettes,
         ]);
     }

@@ -35,7 +35,6 @@ class IngredientController extends AbstractController
         );
 
         return $this->render('pages/ingredient/index.html.twig', [
-            'controller_name' => 'IngredientController',
             'ingredients' => $ingredients,
         ]);
     }

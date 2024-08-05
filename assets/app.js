@@ -10,7 +10,7 @@ window.$ = window.jQuery = $;
 // Bootstrap 
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
-import "bootswatch/dist/united/bootstrap.min.css";
+import "bootswatch/dist/zephyr/bootstrap.min.css";
 
 
 global.bootbox = require('bootbox');

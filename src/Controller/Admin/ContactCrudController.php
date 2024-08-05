@@ -31,14 +31,13 @@ class ContactCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $textField = new TextField();
         return [
             IdField::new('id')
                 ->hideOnForm(),
-            $textField::new('fullName'),
-            $textField::new('email')
+            TextField::new('fullName'),
+            TextField::new('email')
                 ->setFormTypeOption('disabled', 'disabled'),
-            $textField::new('subject'),
+            TextField::new('subject'),
             TextareaField::new('message')
                 ->setFormType(CKEditorType::class),
             DateTimeField::new('createdAt')
