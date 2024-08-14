@@ -22,55 +22,45 @@ class ContactType extends AbstractType
             ->add('fullName', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlength' => '2',
-                    'maxlength' => '50',
                 ],
+                'required' => false,
                 'label' => 'contact.fullname.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
-                ],
-                'constraints' => [
-                    new Assert\Length(min: 3, max: 50),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlength' => '2',
-                    'maxlength' => '180',
                 ],
+                'required' => true,
                 'label' => 'contact.email.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
+                    'class' => 'form-label mt-4 required',
                 ],
                 'constraints' => [
-                    new Assert\Length(min: 2, max: 180),
+                    new Assert\Email(),
+                    new Assert\NotBlank(),
                 ],
             ])
             ->add('subject', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minlength' => '2',
-                    'maxlength' => '50',
                 ],
+                'required' => false,
                 'label' => 'contact.subject.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
-                ],
-                'constraints' => [
-                    new Assert\Length(min: 2, max: 100),
+                    'class' => 'form-label mt-4 required',
                 ],
             ])
             ->add('message', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'required' => false,
                 'label' => 'contact.message.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
+                    'class' => 'form-label mt-4 required',
                 ],
             ])
             ->add('submit', SubmitType::class, [

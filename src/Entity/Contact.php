@@ -23,10 +23,12 @@ class Contact
     #[ORM\Column(length: 180)]
     #[Assert\Email()]
     #[Assert\Length(min: 2, max: 180)]
+    #[Assert\NotBlank()]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Length(min: 2, max: 100)]
+    #[Assert\NotBlank()]
     private ?string $subject = null;
 
     #[ORM\Column(type: Types::TEXT)]

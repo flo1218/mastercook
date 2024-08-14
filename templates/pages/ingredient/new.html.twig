@@ -17,7 +17,9 @@
             <div class="form-group">                
                 {{ form_label(form.price) }}
                 {{ form_widget(form.price) }}
-                {{ form_errors(form.price) }}
+                <div class="form-error">
+                    {{ form_errors(form.price) }}
+                </div>
             </div>
             {{ form_widget(form.submit) }}
             {{ form_widget(form.cancel) }}

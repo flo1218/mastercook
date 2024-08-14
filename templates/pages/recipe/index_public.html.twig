@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mt-4 animate__animated animate__bounceInLeft">
+<div class="recipe_container container mt-4 animate__animated animate__bounceInLeft">
     {% if not recipes.items is same as([]) %}
         <h1>{{ 'recipe.community.label'|trans }}</h1>
         <div class="d-flex justify-content-between flex-wrap">
@@ -20,7 +20,8 @@
                         <p class="card-text">{{ recipe.description }}</p>
                     </div>
                     <div class="card-footer">
-                      <small class="text-muted">Last updated {{ recipe.updatedAt | date('d/m/Y H:i') }}</small>
+                      <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.user.fullName }}</small><br/>
+                      <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>
                     </div>
                 </div>
         </a>

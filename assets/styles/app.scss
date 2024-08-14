@@ -49,3 +49,15 @@ width: 100%;
   border-top-left-radius: unset;
   border-top-right-radius: unset;
 }
+
+.recipe_container .card-header {
+  font-weight: bold;
+}
+
+.form-error li {
+  color: red;
+}
+
+label.required:after {
+  content: ' *';
+}

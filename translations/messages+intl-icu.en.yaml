@@ -4,14 +4,16 @@ app.cancel.label : 'Cancel'
 app.create.label : 'Create'
 app.edit.label : 'Update'
 app.send.label : 'Send'
-
+app.updatedAt.label : 'Last updated at'
+app.createdBy.label : 'Created by'
+app.createdAt.label : 'Created at'
+app.by.label : 'by'
 app.yes.label : 'Yes'
 app.no.label : 'No'
 app.or.label : 'or'
 app.try-again.label : 'try again'
 app.hi.label: 'Hi'
 app.greeting.label: 'Greetings'
-
 app.confirmation.label : 'Are you sure ?'
 app.login.label : 'Login'
 app.password.label: 'Password'
@@ -71,8 +73,9 @@ recipe.updated.label : 'Your recipe has been updated with success !'
 recipe.deleted.label : 'Your recipe has been deleted with success !'
 recipe.notfound.label : "Your recipe has not been found !"
 recipe.vote.success : 'Your rating has been taken into account'
-
-
+recipe.vote.label : 'Rate this recipe'
+recipe.vote.placeholder : 'Please select a rating'
+recipe.average.label: 'The average rating for this recipe is'
 recipe.no.label : 'Recipe n°'
 recipe.create.label : "Create a recipe"
 recipe.update.label : "Update a recipe"

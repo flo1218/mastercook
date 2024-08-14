@@ -37,19 +37,20 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'required' => false,
                 'label' => 'recipe.name.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
+                    'class' => 'form-label mt-4 required',
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50]),
-                    new Assert\NotBlank(),
                 ],
             ])
             ->add('time', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'required' => false,
                 'label' => 'recipe.time.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
@@ -79,6 +80,7 @@ class RecipeType extends AbstractType
                     'min' => 1,
                     'max' => 5,
                 ],
+                'required' => false,
                 'label' => 'recipe.difficulty.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
@@ -93,9 +95,10 @@ class RecipeType extends AbstractType
                     'class' => 'form-control',
                     'rows' => '7',
                 ],
+                'required' => false,
                 'label' => 'recipe.description.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
+                    'class' => 'form-label mt-4 required',
                 ],
                 'constraints' => [
                     new Assert\Positive(),
@@ -106,6 +109,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'required' => false,
                 'label' => 'recipe.price.label',
                 'currency' => '',
                 'label_attr' => [

@@ -39,8 +39,8 @@ class Ingredient
     #[Assert\Length(
         min: 3,
         max: 50,
-        minMessage: 'Le nom doit avoir une longueur de {{ limit }} caractères au minimum',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+        minMessage: 'app.min.label',
+        maxMessage: 'app.max.label',
     )
     ]
     #[Groups(['ingredient:list', 'ingredient:item'])]

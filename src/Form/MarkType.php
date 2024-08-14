@@ -16,7 +16,7 @@ class MarkType extends AbstractType
         $builder
             ->add('mark', ChoiceType::class, [
                 'required' => true,
-                'placeholder' => 'Sélectionnez une note',
+                'placeholder' => 'recipe.vote.placeholder',
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
@@ -28,7 +28,7 @@ class MarkType extends AbstractType
                     'class' => 'form-select',
                     'aria-label' => 'test',
                 ],
-                'label' => 'Noter la recette',
+                'label' => 'recipe.vote.label',
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
@@ -37,7 +37,7 @@ class MarkType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-4 custom-btn bi bi-floppy2',
                 ],
-                'label' => 'Noter la recette',
+                'label' => 'recipe.vote.label',
             ])
         ;
     }

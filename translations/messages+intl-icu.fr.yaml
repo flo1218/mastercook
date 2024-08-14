@@ -4,6 +4,10 @@ app.cancel.label : 'Annuler'
 app.create.label : 'Créer'
 app.edit.label : 'Mettre à jour'
 app.send.label : 'Envoyer'
+app.updatedAt.label : 'Dernières modifications le'
+app.createdBy.label : 'Créé par'
+app.createdAt.label : 'Créé le'
+app.by.label : 'par'
 
 app.yes.label : 'Oui'
 app.no.label : 'Non'
@@ -71,8 +75,9 @@ recipe.updated.label : 'Votre recette a été modifié avec succès !'
 recipe.deleted.label : 'Votre recette a été supprimée avec succès !'
 recipe.notfound.label : "Votre recette n'a pas été trouvée !"
 recipe.vote.success : 'Votre note a bien été prise en compte'
-
-
+recipe.vote.label : 'Noter la recette'
+recipe.vote.placeholder : 'Veuillez sélectionnez une note'
+recipe.average.label: 'La moyenne de cette recette est de'
 recipe.no.label: 'Recette n°'
 recipe.create.label : 'Créer une recette'
 recipe.update.label : "Modification d'une recette"

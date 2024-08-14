@@ -30,8 +30,12 @@ class RecipeController extends AbstractController
      */
     #[Route('/recipe', name: 'recipe.index')]
     #[IsGranted('ROLE_USER')]
-    public function index(RecipeRepository $repository, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function index(
+        RecipeRepository $repository,
+        PaginatorInterface $paginator,
+        TranslatorInterface $translator,
+        Request $request
+    ): Response {
         $recettes = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1)
@@ -39,6 +43,7 @@ class RecipeController extends AbstractController
 
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
+            'dateformat' => $translator->trans('app.dateFormat')
         ]);
     }
 

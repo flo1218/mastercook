@@ -39,7 +39,7 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-<div class="container mt-4">
+<div class="recipe_container container mt-4">
     <h1>{{ 'recipe.community.label'|trans }}</h1>
     <div class="card-deck d-flex justify-content-start flex-wrap">
         {% for recipe in recipes %}
@@ -51,7 +51,7 @@
                         <p class="card-text">{{ recipe.description }}</p>
                     </div>
                     <div class="card-footer">
-                      <small class="text-muted">Last updated {{ recipe.updatedAt | date('d/m/Y H:i') }}</small>
+                      <small class="text-muted">Last updated {{ recipe.updatedAt | format_datetime('short') }}</small>
                     </div>
                 </div>
 

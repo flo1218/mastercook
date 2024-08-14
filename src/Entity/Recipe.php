@@ -63,6 +63,7 @@ class Recipe
     private ?int $difficulty = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $description = null;
 

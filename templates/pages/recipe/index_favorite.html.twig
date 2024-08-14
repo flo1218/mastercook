@@ -12,12 +12,12 @@
     <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
-                <th scope="col">Numéro</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Nb Personne</th>
-                <th scope="col">Difficulté</th>
-                <th scope="col">Date de création</th>
+                <th scope="col"></th>
+                <th scope="col">{{ 'recipe.name.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.price.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
+                <th scope="col">{{ 'app.createdAt.label'|trans}}</th>
                 <th style="width: 5%" scope="col"></th>
                 <th style="width: 5%" scope="col"></th>
             </tr>
@@ -27,10 +27,10 @@
             <tr class="jsTableRow">
                 <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
                 <td>{{recette.name}}</td>
-                <td>{{recette.price is null ? 'Non renseigné' : recette.price}}</td>
-                <td>{{recette.nbPeople is null ? 'Non renseigné' : recette.nbPeople}}</td>
-                <td>{{recette.difficulty is null ? 'Non renseigné' : recette.difficulty}}</td>
-                <td>{{recette.createdAt | date('d/m/Y H:i')}}</td>
+                <td>{{recette.price is null ? '/' : recette.price}}</td>
+                <td>{{recette.nbPeople is null ? '/' : recette.nbPeople}}</td>
+                <td>{{recette.difficulty is null ? '/' : recette.difficulty}}</td>
+                <td>{{recette.createdAt | format_datetime('short')}}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i>

@@ -13,12 +13,12 @@
     <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
-                <th scope="col">Numéro</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Nb Personne</th>
-                <th scope="col">Difficulté</th>
-                <th scope="col">Dernières modifications</th>
+                <th scope="col"></th>
+                <th scope="col">{{ 'recipe.name.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.price.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
+                <th scope="col">{{ 'app.updatedAt.label'|trans}}</th>
                 <th style="width: 5%" scope="col"></th>
                 <th style="width: 5%" scope="col"></th>
             </tr>
@@ -31,7 +31,7 @@
                 <td>{{ recette.price }}</td>
                 <td>{{ recette.nbPeople }}</td>
                 <td>{{ recette.difficulty }}</td>
-                <td>{{ recette.updatedAt | date('d/m/Y H:i') }}</td>
+                <td>{{ recette.updatedAt | format_datetime('short') }}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i>

@@ -146,3 +146,5 @@ Error: Error
 'La difficulté doit être compris entre {{ min }} et {{ max }}': '__La difficulté doit être compris entre {{ min }} et {{ max }}'
 'Cet utilisateur a déjà noté cette recette': '__Cet utilisateur a déjà noté cette recette'
 'validators.notmatching-password.label': "The passwords doesn't match"
+'app.min.label' : 'The field must be at least {{ limit }} characters long'
+'app.max.label' : 'The field must be a maximum of {{ limit }} characters long'
