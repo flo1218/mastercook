@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -51,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[Assert\PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_WEAK, // Very strong password required
+    ])]
     private $plainPassword;
 
     #[ORM\OneToMany(targetEntity: Ingredient::class, mappedBy: 'user', orphanRemoval: true)]

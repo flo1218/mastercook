@@ -3,6 +3,7 @@ app.save.label : 'Save'
 app.cancel.label : 'Cancel'
 app.create.label : 'Create'
 app.edit.label : 'Update'
+app.delete.label : 'Delete'
 app.send.label : 'Send'
 app.updatedAt.label : 'Last updated at'
 app.createdBy.label : 'Created by'
@@ -49,6 +50,7 @@ header.favorite.label : "Favorites"
 header.recipes_public.label : "Community recipes"
 header.update-informations.label : 'Update my profile'
 header.update-password.label : 'Update my password'
+
 header.administration.label : 'Administration'
 header.chart.label : 'Chart'
 header.login.label : 'Login'

@@ -6,7 +6,7 @@
 {% block body %}
 <div class="recipe_container container mt-4 animate__animated animate__bounceInLeft">
     {% if not recipes.items is same as([]) %}
-        <h1>{{ 'recipe.community.label'|trans }}</h1>
+        <h3>{{ 'recipe.community.label'|trans }}</h3>
         <div class="d-flex justify-content-between flex-wrap">
         {% for recipe in recipes %}
         <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">

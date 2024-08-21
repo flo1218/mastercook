@@ -12,8 +12,8 @@
         {% if not is_granted('IS_AUTHENTICATED') %}
             <p>{{ 'home.start.description'|trans }}</p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg custom-btn bi bi-plus-square" href="{{ path('app_register')}}" role="button">{{ 'app.subscription.label'|trans }}</a>
                 <a class="btn btn-primary btn-lg custom-btn bi bi-door-open" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'header.register.label'|trans }}</a>
             </p>
         {% endif %}
     </div>
@@ -40,12 +40,15 @@
   </button>
 </div>
 <div class="recipe_container container mt-4">
-    <h1>{{ 'recipe.community.label'|trans }}</h1>
+    <h3>{{ 'recipe.community.label'|trans }}</h3>
     <div class="card-deck d-flex justify-content-start flex-wrap">
         {% for recipe in recipes %}
         <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
             <div class="card bg-light m-3" style="max-width: 18rem;">
                 <div class="card-header">{{ 'recipe.no.label'|trans }}{{ recipe.id }}</div>
+                    {% if recipe.imageName is defined and recipe.imageName is not null  %}
+                    <img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
+                    {% endif %}
                     <div class="card-body">
                         <h4 class="card-title">{{ recipe.name }}</h4>
                         <p class="card-text">{{ recipe.description }}</p>

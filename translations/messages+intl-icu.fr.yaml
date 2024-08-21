@@ -3,6 +3,7 @@ app.save.label : 'Sauvegarder'
 app.cancel.label : 'Annuler'
 app.create.label : 'Créer'
 app.edit.label : 'Mettre à jour'
+app.delete.label : 'Supprimer'
 app.send.label : 'Envoyer'
 app.updatedAt.label : 'Dernières modifications le'
 app.createdBy.label : 'Créé par'
@@ -41,7 +42,7 @@ home.title: 'Bienvenue sur MasterCook!'
 home.welcome: 'Accueil'
 home.hello: 'Bonjour'
 home.description: "MasterCook est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
-home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application or logguez vous"
+home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application ou logguez vous"
 
 # HEADER
 header.home.label: 'Accueil'

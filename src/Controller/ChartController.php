@@ -35,7 +35,7 @@ class ChartController extends AbstractController
         $monthRecipes = [];
         $year = ($year === null) ? date('Y') : $year;
         $recipesPerMonth = $repository->groupByMonth($year);
-        for ($i = 1; $i < 13; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             $found_key = array_search($i, array_column($recipesPerMonth, 'gBmonth'));
             $monthRecipes[] = ($found_key === false) ? 0 : $recipesPerMonth[$found_key]['gCount'];
         }
@@ -78,6 +78,7 @@ class ChartController extends AbstractController
         ]);
 
         $chart->setOptions([
+            'backgroundColor' => '#FFFFFF',
             'scales' => [
                 'y' => [
                     'suggestedMin' => 0,

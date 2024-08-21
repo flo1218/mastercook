@@ -15,7 +15,7 @@
         "jquery": "^3.7.1",
         "regenerator-runtime": "^0.14.1",
         "sass": "^1.77.8",
-        "sass-loader": "^15.0.0",
+        "sass-loader": "^14.0.0",
         "webpack": "^5.93.0",
         "webpack-cli": "^5.1.4",
         "webpack-notifier": "^1.15.0"
@@ -31,6 +31,7 @@
     },
     "dependencies": {
         "@floating-ui/dom": "^1.6.8",
+        "@popperjs/core": "^2.11.8",
         "animate.css": "^4.1.1",
         "bootbox": "^6.0.0",
         "bootstrap": "^5.3.3",
@@ -38,6 +39,7 @@
         "bootstrap-modal": "^2.2.1",
         "bootstrap-table": "^1.23.1",
         "bootswatch": "^5.3.3",
+        "chart.js": "^4.4.3",
         "popper.js": "^1.16.1"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

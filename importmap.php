@@ -55,4 +55,25 @@ return [
     'chart.js' => [
         'version' => '3.9.1',
     ],
+    '@swup/fade-theme' => [
+        'version' => '1.0.5',
+    ],
+    '@swup/slide-theme' => [
+        'version' => '1.0.5',
+    ],
+    '@swup/forms-plugin' => [
+        'version' => '2.0.1',
+    ],
+    '@swup/plugin' => [
+        'version' => '2.0.3',
+    ],
+    'swup' => [
+        'version' => '3.1.1',
+    ],
+    'delegate-it' => [
+        'version' => '6.0.1',
+    ],
+    '@swup/debug-plugin' => [
+        'version' => '3.0.0',
+    ],
 ];

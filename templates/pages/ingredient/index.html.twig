@@ -33,13 +33,20 @@
             </td>
             <td>{{ ingredient.createdAt | format_datetime('short') }}</td>
             <td>
-                <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" class="btn btn-info">
+                <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" 
+                    class="btn btn-info" 
+                    data-tooltip="tooltip" 
+                    data-placement="top" 
+                    title="{{'app.edit.label'|trans}}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
             </td>
             <td>
                 <a href="{{ path('ingredient.delete', { id : ingredient.id }) }}" 
                     class="btn btn-danger" 
+                    data-tooltip="tooltip" 
+                    data-placement="top" 
+                    title="{{'app.delete.label'|trans}}"
                     data-toggle="confirm"
                     data-title="{{ 'app.confirmation.label'|trans }}"
                     data-locale="{{ app.request.locale }}">

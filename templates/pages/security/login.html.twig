@@ -1,32 +1,39 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Log in!{% endblock %}
-
 {% block body %}
-<div class="container" data-controller="hello">
+<div class="container login-container" data-controller="hello">
     <form name="login" method="post">
         {% if app.user %}
             <div class="mb-3">
                 {{ 'app.logged.label'|trans }}&nbsp;{{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{{ 'app.logout.label'|trans }}</a>
             </div>
         {% else %}
-            <h1 class="mb-3 mt-4">{{ 'app.login.label'|trans }}</h1>
-            <label for="username">{{'contact.email.label'|trans}}</label>
-            
-            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-            <label for="password">{{'app.password.label'|trans}}</label>
-            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required value="password">
-            <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-            >
+            <h3 class="mb-3 mt-4">{{ 'app.login.label'|trans }}</h3>
+            <input required autofocus type="email" placeholder="login" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email">
+            <br/>
+            <div class="input-group">
+                <input required type="password" name="_password" placeholder="password" id="password" class="form-control" autocomplete="current-password">
+                <button type="button" id="togglePassword" class="btn btn-secondary bi bi-eye-slash"></button>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <input type="hidden" name="_target_path" value="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
-            <button class="btn btn-lg btn-primary mt-4 custom-btn bi bi-door-open" type="submit">
+            <button class="btn btn-primary mt-4 custom-btn bi bi-door-open" type="submit">
                 {{ 'app.login.label'|trans }}
             </button>
 
-            <a class="btn btn-lg btn-info mt-4" href="{{ path('app_forgot_password_request') }}">{{'contact.forgot-password.label'|trans}}</a>
+            <a class="btn btn-info mt-4" href="{{ path('app_forgot_password_request') }}">{{'contact.forgot-password.label'|trans}}</a>
         {% endif %}
     </form>
 </div>
+<script>
+    
+    document.querySelector("#togglePassword").addEventListener("click", function () {
+        const password = document.querySelector("#password");
+        // toggle the type attribute
+        password.setAttribute("type", password.getAttribute("type") === "password" ? "text" : "password");
+        // toggle the icon
+        this.classList.toggle("bi-eye");
+    });
+</script>
 {% endblock %}

@@ -25,12 +25,10 @@ class RegistrationType extends AbstractType
                     'minlength' => '2',
                     'maxlength' => '50',
                 ],
+                'required' => false,
                 'label' => 'registration.name.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
+                    'class' => 'form-label mt-4 required',
                 ],
             ])
             ->add('pseudo', TextType::class, [
@@ -51,9 +49,10 @@ class RegistrationType extends AbstractType
                     'minlength' => '2',
                     'maxlength' => '50',
                 ],
+                'required' => false,
                 'label' => 'registration.email.label',
                 'label_attr' => [
-                    'class' => 'form-label mt-4',
+                    'class' => 'form-label mt-4 required',
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -74,11 +73,12 @@ class RegistrationType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'password-field', 'toggle' => true]],
+                'required' => false,
                 'first_options' => [
                     'label' => 'registration.password.label',
                     'label_attr' => [
-                        'class' => 'form-label mt-4',
+                        'class' => 'form-label mt-4 required',
                     ],
                     'attr' => [
                         'class' => 'form-control',
@@ -91,6 +91,7 @@ class RegistrationType extends AbstractType
                     ],
                     'attr' => [
                         'class' => 'form-control',
+                        'toggle' => true,
                     ],
                 ],
                 'invalid_message' => 'validators.notmatching-password.label',
