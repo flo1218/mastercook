@@ -56,6 +56,7 @@ header.chart.label : 'Chart'
 header.login.label : 'Login'
 header.register.label : 'Register'
 header.logout.label : 'Logout'
+header.category.label : 'Categories'
 
 # RECIPE
 recipe.community.label : 'Community Recipes'
@@ -92,6 +93,7 @@ recipe:
       }"
 
 recipe.recipe-per-month.label : 'New recipes per month'
+recipe.category.label : 'Category'
 
 # INGREDIENT
 ingredient.new.label : 'Create an ingredient'
@@ -144,3 +146,16 @@ reset-password.email.subject: 'Your password reset request'
 
 # ADMINISTRATION
 admin.user.title : Users Administration
+
+# CATEGORIES
+category.my.label : 'My categories'
+category.new.label : 'New category'
+category.name.label : 'Name'
+category.edit.title : 'Update category'
+category.created.label : 'The category has been created with success'
+category:
+  count.label: "{count, plural,
+        =0 {Aucune catégories trouvées}
+        one {There is one category}
+        other {There are # categories}
+      }"

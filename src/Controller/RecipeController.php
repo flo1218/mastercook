@@ -34,16 +34,23 @@ class RecipeController extends AbstractController
         RecipeRepository $repository,
         PaginatorInterface $paginator,
         TranslatorInterface $translator,
-        Request $request
+        Request $request,
     ): Response {
+        $searchParameters = ['user' => $this->getUser()];
+
+        $recipeType = $request->query->get('type');
+        if ($recipeType) {
+            $searchParameters['category'] = $recipeType;
+        }
         $recettes = $paginator->paginate(
-            $repository->findBy(['user' => $this->getUser()]),
+            $repository->findBy($searchParameters),
             $request->query->getInt('page', 1)
         );
 
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
-            'dateformat' => $translator->trans('app.dateFormat')
+            'dateformat' => $translator->trans('app.dateFormat'),
+            'recipeType' => $recipeType
         ]);
     }
 

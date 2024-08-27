@@ -112,6 +112,9 @@ class Recipe
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
@@ -371,5 +374,17 @@ class Recipe
         $this->average = $total / count($marks);
 
         return $this->average;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.request.server.get('APP_NAME') }} - Mes catégories{% endblock %}
+
+{% block body %}
+<div class="container mt-4">        
+    <h1>{{'category.my.label'|trans}}</h1>
+        <a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('category.new') }}">
+            {{ 'category.new.label'|trans }}s
+        </a>
+    {% if not categories.items is same as([]) %}        
+        <div class="count mt-4">
+            <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
+        </div>
+        <table class="table table-hover table-striped mt-4">
+        <thead>
+            <tr>
+            <th style="width: 10%" scope="col"></th>
+            <th style="width: 35%" scope="col">{{ 'category.name.label'|trans }}</th>
+            <th style="width: 20%" scope="col">{{ 'app.createdAt.label'|trans }}</th>
+            <th style="width: 5%" scope="col"></th>
+            <th style="width: 5%" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}    
+            <tr class="jsTableRow">
+            <td scope="row"><a href="{{ path('category.edit', { id : category.id }) }}">{{ category.id }}</a></td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.createdAt | format_datetime('short') }}</td>
+            <td>
+                <a href="{{ path('category.edit', { id : category.id }) }}" 
+                    class="btn btn-info" 
+                    data-tooltip="tooltip" 
+                    data-placement="top" 
+                    title="{{'app.edit.label'|trans}}">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('category.delete', { id : category.id }) }}" 
+                    class="btn btn-danger" 
+                    data-tooltip="tooltip" 
+                    data-placement="top" 
+                    title="{{'app.delete.label'|trans}}"
+                    data-toggle="confirm"
+                    data-title="{{ 'app.confirmation.label'|trans }}"
+                    data-locale="{{ app.request.locale }}">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(categories) }}
+        </div>
+    {% else %}
+        <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
+    {% endif %}
+</div>
+
+{% endblock %}

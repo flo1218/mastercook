@@ -46,9 +46,9 @@ home.start.description: "Pour commencer, rendez-vous sur la page d'inscription p
 
 # HEADER
 header.home.label: 'Accueil'
-header.recipes.label : "Mes recettes"
-header.ingredient.label : "Mes ingrédients"
-header.favorite.label : "Mes favoris"
+header.recipes.label : "Recettes"
+header.ingredient.label : "Ingrédients"
+header.favorite.label : "Favoris"
 header.recipes_public.label : "Recettes de la communauté"
 header.update-informations.label : 'Modifier mes informations'
 header.update-password.label : 'Modifier mon mot de passe'
@@ -57,6 +57,7 @@ header.chart.label : 'Chart'
 header.login.label : 'Connexion'
 header.register.label : 'Inscription'
 header.logout.label : 'Se déconnecter'
+header.category.label : 'Catégories'
 
 # RECIPE
 recipe.community.label: 'Recettes de la communauté'
@@ -93,6 +94,7 @@ recipe:
       }"
 
 recipe.recipe-per-month.label : 'Nouvelles recettes par mois'
+recipe.category.label : 'Catégorie'
 
 # INGREDIENT
 ingredient.new.label : 'Créer un ingrédient'
@@ -145,3 +147,16 @@ reset-password.email.subject: 'Votre demande de réinitialisation de mot de pass
 
 # ADMINISTRATION
 admin.user.title : Administration des utilisateurs
+
+# CATEGORIES
+category.my.label : 'Catégories'
+category.new.label : 'Nouvelle catégorie'
+category.name.label : 'Nom'
+category.edit.title : 'Modification de la catégorie'
+category.created.label : 'La catégorie a été créé avec succès'
+category:
+  count.label: "{count, plural,
+        =0 {Aucune catégories trouvées}
+        one {Il y a une catégorie}
+        other {Il y a # catégories}
+      }"

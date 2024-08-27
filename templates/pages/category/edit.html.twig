@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">{{'category.edit.title'|trans}}</h1>
+
+    <form name="category" method="post">
+        <div class="form-group">                
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            <div class="form-error">
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+        {{ form_row(form._token) }}
+
+        
+        {{ form_widget(form.submit) }}
+        {{ form_widget(form.cancel) }}
+        
+        </button>        
+    </form>
+    </div>
+{% endblock %}

@@ -22,7 +22,7 @@ class HomeController extends AbstractController
             return $this->redirect('/' . strtolower($user->getLanguage()));
         }
 
-        return $this->redirect('/');
+        return $this->redirect('/' . $request->getLocale());
     }
 
     /**

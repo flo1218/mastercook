@@ -1,72 +1,81 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ app.request.server.get('APP_NAME') }} - Mes recettes{% endblock %}
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }}
+	- Mes recettes
+{% endblock %}
 {% block body %}
-<div class="container mt-4">    
-    <h1>{{ 'recipe.my.label'|trans }}</h1>
-    <a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('recipe.new') }}">
-        {{ 'recipe.create.label'|trans }}
-    </a>
-    {% if not recettes.items is same as([]) %}    
-    <div class="count mt-4">
-        <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
-    </div>
-    <table class="table table-hover table-striped mt-4">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">{{ 'recipe.name.label'|trans}}</th>
-                <th scope="col">{{ 'recipe.price.label'|trans}}</th>
-                <th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
-                <th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
-                <th scope="col">{{ 'app.updatedAt.label'|trans}}</th>
-                <th style="width: 5%" scope="col"></th>
-                <th style="width: 5%" scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for recette in recettes %}    
-            <tr class="jsTableRow">
-                <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
-                <td>{{ recette.name }}</td>
-                <td>{{ recette.price }}</td>
-                <td>{{ recette.nbPeople }}</td>
-                <td>{{ recette.difficulty }}</td>
-                <td>{{ recette.updatedAt | format_datetime('short') }}</td>
-                <td>
-                    <a href="{{ path('recipe.edit', { id : recette.id }) }}" 
-                        class="btn btn-info"
-                        data-tooltip="tooltip" 
-                        data-placement="top" 
-                        title="{{'app.edit.label'|trans}}"
-                    >
-                        <i class="bi bi-pencil-fill"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('recipe.delete', { id : recette.id }) }}" 
-                        class="btn btn-danger" 
-                        data-tooltip="tooltip" 
-                        data-placement="top" 
-                        title="{{'app.delete.label'|trans}}"
-                        data-toggle="confirm"
-                        data-locale="{{ app.request.locale }}"
-                        data-title="{{ 'app.confirmation.label'|trans }}"
-                    >
-                        <i class="bi bi-trash3-fill"></i>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="navigation d-flex justify-content-center mt-4">
-        {{ knp_pagination_render(recettes) }}
-    </div>
-{% else %}
-    <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
-{% endif %}
-</div>
-<script>
+	<div class="container mt-4">
+		<h1>{{ 'recipe.my.label'|trans }}</h1>
+		<a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('recipe.new') }}">
+			{{ 'recipe.create.label'|trans }}
+		</a>
+		<div class="count mt-4">
+			<h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5>
+		</div>
 
-</script>
+		<div class="row">
+			<div class="col">
+				<a class="btn {{ recipeType ==null ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}">Toutes</a>
+				{% for category in app.user.categories %}
+					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
+				{% endfor %}
+			</div>
+			<div class="col">
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Filtrer par nom" id="recipeFilter">
+                    <button type="button" id="recipeFilterReset" class="btn btn-secondary bi bi-x-circle"></button>
+                </div>
+
+			</div>
+		</div>
+
+		{% if not recettes.items is same as([]) %}
+			<table id="recipeTable" class="table table-hover table-striped mt-4">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">{{ 'recipe.name.label'|trans}}</th>
+						<th scope="col">{{ 'recipe.category.label'|trans}}</th>
+						<th scope="col">{{ 'recipe.price.label'|trans}}</th>
+						<th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
+						<th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
+						<th scope="col">{{ 'app.updatedAt.label'|trans}}</th>
+						<th style="width: 5%" scope="col"></th>
+						<th style="width: 5%" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for recette in recettes %}
+						<tr class="jsTableRow">
+							<td scope="row">
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a>
+							</td>
+							<td>{{ recette.name }}</td>
+							<td>{{ recette.category ? recette.category.name : ''  }}</td>
+							<td>{{ recette.price }}</td>
+							<td>{{ recette.nbPeople }}</td>
+							<td>{{ recette.difficulty }}</td>
+							<td>{{ recette.updatedAt | format_datetime('short') }}</td>
+							<td>
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" data-tooltip="tooltip" data-placement="top" title="{{'app.edit.label'|trans}}">
+									<i class="bi bi-pencil-fill"></i>
+								</a>
+							</td>
+							<td>
+								<a href="{{ path('recipe.delete', { id : recette.id }) }}" class="btn btn-danger" data-tooltip="tooltip" data-placement="top" title="{{'app.delete.label'|trans}}" data-toggle="confirm" data-locale="{{ app.request.locale }}" data-title="{{ 'app.confirmation.label'|trans }}">
+									<i class="bi bi-trash3-fill"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(recettes) }}
+			</div>
+		{% else %}
+			<h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5>
+		{% endif %}
+	</div>
 {% endblock %}
