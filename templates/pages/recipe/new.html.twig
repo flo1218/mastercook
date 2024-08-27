@@ -14,6 +14,13 @@
                 </div>
             </div>
             <div class="col">
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category) }}
+				<div class="form-error">
+					{{ form_errors(form.category) }}
+				</div>
+			</div>
+            <div class="col">
                 {{ form_label(form.time) }}
                 {{ form_widget(form.time) }}
                 <div class="form-error">

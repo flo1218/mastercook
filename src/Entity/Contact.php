@@ -66,7 +66,7 @@ class Contact
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email = null): static
     {
         $this->email = $email;
 
@@ -78,7 +78,7 @@ class Contact
         return $this->subject;
     }
 
-    public function setSubject(string $subject): static
+    public function setSubject(string $subject = null): static
     {
         $this->subject = $subject;
 
