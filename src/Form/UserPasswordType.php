@@ -14,11 +14,20 @@ class UserPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('plainPassword', RepeatedType::class, [
+        ->add('plainPassword', PasswordType::class, [
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'registration.password.label',
+            'label_attr' => [
+                'class' => 'form-label mt-4',
+            ],
+        ])
+        ->add('newPassword', RepeatedType::class, [
             'type' => PasswordType::class,
             'options' => ['attr' => ['class' => 'password-field']],
             'first_options' => [
-                'label' => 'registration.password.label',
+                'label' => 'registration.new-password.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -37,15 +46,6 @@ class UserPasswordType extends AbstractType
             ],
             'invalid_message' => 'validators.notmatching-password.label',
         ])
-            ->add('newPassword', PasswordType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'label' => 'registration.new-password.label',
-                'label_attr' => [
-                    'class' => 'form-label mt-4',
-                ],
-            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4 custom-btn mt-4 bi bi-floppy2',
@@ -53,12 +53,5 @@ class UserPasswordType extends AbstractType
                 'label' => 'registration.update-password.label',
             ])
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
     }
 }

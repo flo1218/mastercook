@@ -80,7 +80,7 @@ class Ingredient
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name = null): static
     {
         $this->name = $name;
 
@@ -92,7 +92,7 @@ class Ingredient
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(float $price = null): static
     {
         $this->price = $price;
 

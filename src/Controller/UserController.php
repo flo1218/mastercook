@@ -23,9 +23,6 @@ class UserController extends AbstractController
         subject: new Expression('args["choosenUser"]'),
         message: 'Access denied'
     )]
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
     public function edit(
         EntityManagerInterface $manager,
         Request $request,
@@ -44,17 +41,11 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $choosenUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($choosenUser, $form->getData()->getPlainPassword())) {
-                $user = $form->getData();
-                $manager->persist($user);
-                $manager->flush();
-
-                $this->addFlash('success', $translator->trans('registration.update.label'));
-
-                return $this->redirectToRoute('recipe.index');
-            } else {
-                $this->addFlash('warning', $translator->trans('registration.invalid-password.label'));
-            }
+            $user = $form->getData();
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash('success', $translator->trans('registration.update.label'));
+            return $this->redirectToRoute('recipe.index');
         }
 
         return $this->render('pages/user/edit.html.twig', [

@@ -56,14 +56,6 @@ class UserType extends AbstractType
                 'class' => 'form-label mt-4',
             ],
         ])
-        ->add('plainPassword', PasswordType::class, [
-            'attr' => [
-                'class' => 'form-control'],
-            'label' => 'registration.password.label',
-            'label_attr' => [
-                'class' => 'form-label mt-4',
-            ],
-        ])
         ->add('submit', SubmitType::class, [
             'attr' => [
                 'class' => 'btn btn-primary custom-btn mt-4 bi bi-floppy2',
