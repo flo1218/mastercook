@@ -149,7 +149,7 @@ admin.user.title : Users Administration
 
 # CATEGORIES
 category.my.label : 'My categories'
-category.new.label : 'New category'
+category.new.label : 'Create a category'
 category.name.label : 'Name'
 category.edit.title : 'Update category'
 category.created.label : 'The category has been created with success'
