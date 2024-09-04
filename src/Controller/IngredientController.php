@@ -126,14 +126,15 @@ class IngredientController extends AbstractController
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
-        Ingredient $ingredient
+        Ingredient $ingredient,
+        TranslatorInterface $translator,
     ): Response {
         if (!$ingredient) {
-            $this->addFlash('warning', 'Votre ingrédient n\'a pas été trouvé !');
+            $this->addFlash('warning', $translator->trans('ingredient.notfound.label'));
         } else {
             $manager->remove($ingredient);
             $manager->flush();
-            $this->addFlash('success', 'Votre ingrédient a été supprimé avec succès !');
+            $this->addFlash('success', $translator->trans('ingredient.deleted.label'));
         }
 
         return $this->redirectToRoute('ingredient.index');

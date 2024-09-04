@@ -102,7 +102,8 @@ ingredient.name.label : 'Name'
 ingredient.price.label : 'Price'
 ingredient.edit.title : 'Update ingredient'
 ingredient.saved.label : 'Your ingredient has been saved successfully'
-ingredient.created.label : "Your ingredient has been created successfully"
+ingredient.created.label : 'Your ingredient has been created successfully'
+ingredient.deleted.label : 'Your ingredient has been deleted successfully'
 ingredient.error.notunique.name : "An ingredient already exists with the same name"
 ingredient:
   count.label: "{count, plural,
@@ -159,7 +160,7 @@ category.confirm-delete.label : 'Are you sure you want to delete this category ?
 category.error.notunique.name : 'A category already exists with the same name'
 category:
   count.label: "{count, plural,
-        =0 {Aucune catégories trouvées}
+        =0 {No category found}
         one {There is one category}
         other {There are # categories}
       }"

@@ -102,8 +102,9 @@ ingredient.my.label : 'Mes ingrédients'
 ingredient.name.label : 'Nom'
 ingredient.price.label : 'Prix'
 ingredient.edit.title : 'Modification d''un ingrédient'
-ingredient.saved.label : "Votre ingrédient a été modifié avec succès"
-ingredient.created.label : "Votre ingrédient a été créé avec succès"
+ingredient.saved.label : 'Votre ingrédient a été modifié avec succès'
+ingredient.created.label : 'Votre ingrédient a été créé avec succès'
+ingredient.deleted.label : 'Votre ingrédient a été supprimé avec succès'
 ingredient.error.notunique.name : "Un ingrédient avec le même nom existe déjà"
 ingredient:
   count.label: "{count, plural,
