@@ -153,6 +153,7 @@ category.new.label : 'Create a category'
 category.name.label : 'Name'
 category.edit.title : 'Update category'
 category.created.label : 'The category has been created with success'
+category.saved.label : 'The category has been saved with success'
 category:
   count.label: "{count, plural,
         =0 {Aucune catégories trouvées}

@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Category
 {
@@ -152,5 +153,14 @@ class Category
         }
 
         return $this;
+    }
+
+    #[ORM\PreRemove]
+    public function clearRecipesCategory(): void
+    {
+        // Set category of all associated recipe to null
+        foreach ($this->getRecipes() as $recipe) {
+            $recipe->setCategory(null);
+        }
     }
 }

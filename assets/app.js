@@ -8,11 +8,9 @@ import $ from "jquery"
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import "bootswatch/dist/zephyr/bootstrap.min.css";
-import 'bootbox/dist/bootbox.locales.min.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
 window.$ = window.jQuery = $;
-global.bootbox = require('bootbox');
 
 const customCanvasBackgroundColor = {
     id: 'customCanvasBackgroundColor',

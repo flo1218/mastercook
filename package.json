@@ -7,14 +7,13 @@
         "@hotwired/turbo": "^8.0",
         "@symfony/stimulus-bridge": "^3.2.2",
         "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets",
-        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^4.7.0",
         "chartjs-plugin-zoom": "^2.0.1",
         "core-js": "^3.38.1",
         "dotenv-webpack": "^8.1.0",
         "jquery": "^3.7.1",
         "regenerator-runtime": "^0.14.1",
-        "sass": "^1.77.8",
+        "sass": "^1.78.0",
         "sass-loader": "^16.0.1",
         "webpack": "^5.94.0",
         "webpack-cli": "^5.1.4",
@@ -35,7 +34,6 @@
         "@floating-ui/dom": "^1.6.10",
         "@popperjs/core": "^2.11.8",
         "animate.css": "^4.1.1",
-        "bootbox": "^6.0.0",
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
         "bootstrap-modal": "^2.2.1",
@@ -44,5 +42,9 @@
         "chart.js": "^4.4.4",
         "popper.js": "^1.16.1"
     },
-    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/flo1218/mastercook.git",
+    "author": "Florian Estoppey <estoppey.florian@gmail.com>"
 }

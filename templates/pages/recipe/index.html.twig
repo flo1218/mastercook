@@ -63,9 +63,11 @@
 								</a>
 							</td>
 							<td>
-								<a href="{{ path('recipe.delete', { id : recette.id }) }}" class="btn btn-danger" data-tooltip="tooltip" data-placement="top" title="{{'app.delete.label'|trans}}" data-toggle="confirm" data-locale="{{ app.request.locale }}" data-title="{{ 'app.confirmation.label'|trans }}">
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+									data-href="{{ path('recipe.delete', { id : recette.id }) }}"
+									data-bs-target="#confirmDeleteModal">
 									<i class="bi bi-trash3-fill"></i>
-								</a>
+								</button>
 							</td>
 						</tr>
 					{% endfor %}
