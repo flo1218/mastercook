@@ -47,12 +47,7 @@
                     data-label=""
                     data-bs-target="#confirmDeleteModal">
                     <i class="bi bi-trash3-fill"></i>
-                <<a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('ingredient.new') }}">
-        {{ 'ingredient.new.label'|trans }}
-    </a>
-    <div class="count mt-4">
-        <h5>{{ 'ingredient.count.label'|trans({'count': ingredients.getTotalItemCount}) }}</h5>
-    </div>/button>
+                </button>
             </td>
             </tr>
         {% endfor %}
