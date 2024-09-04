@@ -5,13 +5,13 @@
 {% block body %}
 <div class="container mt-4">        
     <h1>{{'category.my.label'|trans}}</h1>
-        <a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('category.new') }}">
-            {{ 'category.new.label'|trans }}
-        </a>
+    <a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('category.new') }}">
+        {{ 'category.new.label'|trans }}
+    </a>
+    <div class="count mt-4">
+        <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
+    </div>
     {% if not categories.items is same as([]) %}        
-        <div class="count mt-4">
-            <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
-        </div>
         <table class="table table-hover table-striped mt-4">
         <thead>
             <tr>
@@ -53,8 +53,6 @@
         <div class="navigation d-flex justify-content-center mt-4">
             {{ knp_pagination_render(categories) }}
         </div>
-    {% else %}
-        <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
     {% endif %}
 </div>
 
