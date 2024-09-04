@@ -43,7 +43,7 @@ class IngredientController extends AbstractController
      * This function is used to add a new ingredients.
      * @var User user
      */
-    #[Route('/ingredient/nouveau', name: 'ingredient.new', methods: ['GET', 'POST'])]
+    #[Route('/ingredient/new', name: 'ingredient.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,

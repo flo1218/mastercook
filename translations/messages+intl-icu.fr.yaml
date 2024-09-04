@@ -155,7 +155,9 @@ category.name.label : 'Nom'
 category.edit.title : 'Modification de la catégorie'
 category.created.label : 'La catégorie a été créé avec succès'
 category.saved.label : 'La catégorie a été sauvegardée avec succès'
+category.deleted.label : 'La catégorie a été supprimée avec succès'
 category.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cette catégorie ?'
+category.error.notunique.name : 'Une catégorie avec le même nom existe déjà'
 category:
   count.label: "{count, plural,
         =0 {Aucune catégories trouvées}

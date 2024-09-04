@@ -15,7 +15,9 @@
 
 		<div class="row">
 			<div class="col">
-				<a class="btn {{ recipeType ==null ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}">Toutes</a>
+				{% if app.user.categories|length > 0 %}
+					<a class="btn {{ recipeType ==null ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}">Toutes</a>
+				{% endif %}
 				{% for category in app.user.categories %}
 					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
 				{% endfor %}
@@ -76,8 +78,6 @@
 			<div class="navigation d-flex justify-content-center mt-4">
 				{{ knp_pagination_render(recettes) }}
 			</div>
-		{% else %}
-			<h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5>
 		{% endif %}
 	</div>
 {% endblock %}

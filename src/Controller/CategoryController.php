@@ -39,7 +39,7 @@ class CategoryController extends AbstractController
      * This function is used to add a new Categorys.
      * @var User user
      */
-    #[Route('/category/nouveau', name: 'category.new', methods: ['GET', 'POST'])]
+    #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
@@ -86,7 +86,10 @@ class CategoryController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
+        CategoryRepository $repository,
+        UserInterface $user
     ): Response {
+        /** @var User $user **/
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -94,12 +97,13 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
-
-            $manager->persist($category);
-            $manager->flush();
-            $this->addFlash('success', $translator->trans('category.saved.label'));
-
-            return $this->redirectToRoute('category.index');
+            if ($repository->isNameUniquedByUser($category->getName(), $user->getId(), $category->getId())) {
+                $manager->persist($category);
+                $manager->flush();
+                $this->addFlash('success', $translator->trans('category.saved.label'));
+                return $this->redirectToRoute('category.index');
+            }
+            $this->addFlash('warning', $translator->trans('category.error.notunique.name'));
         }
 
         return $this->render('pages/category/edit.html.twig', [
@@ -122,14 +126,15 @@ class CategoryController extends AbstractController
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
+        TranslatorInterface $translator,
         Category $category
     ): Response {
         if (!$category) {
-            $this->addFlash('warning', 'Votre catégorie n\'a pas été trouvée !');
+            $this->addFlash('warning', $translator->trans('category.notfound.label'));
         } else {
             $manager->remove($category);
             $manager->flush();
-            $this->addFlash('success', 'Votre catégorie a été supprimée avec succès !');
+            $this->addFlash('success', $translator->trans('category.deleted.label'));
         }
 
         return $this->redirectToRoute('category.index');
