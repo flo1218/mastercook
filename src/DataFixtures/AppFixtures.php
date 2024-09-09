@@ -72,6 +72,7 @@ class AppFixtures extends Fixture
         $dateTimeImmutable = new DateTimeImmutable();
         for ($j = 1; $j <= 200; ++$j) {
             $recipe = new Recipe();
+            $user = $users[mt_rand(0, count($users) - 1)];
             $recipe->setName($this->faker->word())
                 ->setTime(mt_rand(1, 1440))
                 ->setPrice(mt_rand(1, 1000))
@@ -83,7 +84,8 @@ class AppFixtures extends Fixture
                 ->setCreatedAt(
                     $dateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years'))
                 )
-                ->setUser($users[mt_rand(0, count($users) - 1)]);
+                ->setCreatedBy($user->getFullName())
+                ->setUser($user);
 
             for ($k = 1; $k < mt_rand(5, 15); ++$k) {
                 $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);

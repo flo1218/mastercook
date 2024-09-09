@@ -115,6 +115,9 @@ class Recipe
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     private ?Category $category = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $createdBy = null;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
@@ -384,6 +387,18 @@ class Recipe
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): static
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }
