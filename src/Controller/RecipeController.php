@@ -49,7 +49,6 @@ class RecipeController extends AbstractController
 
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
-            'dateformat' => $translator->trans('app.dateFormat'),
             'recipeType' => $recipeType
         ]);
     }
@@ -69,10 +68,8 @@ class RecipeController extends AbstractController
             return $repository->findPublicRecipe();
         });
 
-        $recipes = $paginator->paginate($data, $request->query->getInt('page', 1));
-
         return $this->render('pages/recipe/index_public.html.twig', [
-            'recipes' => $recipes,
+            'recipes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
         ]);
     }
 
@@ -93,10 +90,8 @@ class RecipeController extends AbstractController
             return $repository->findFavoriteRecipe(0, $user->getId());
         });
 
-        $recettes = $paginator->paginate($data, $request->query->getInt('page', 1));
-
         return $this->render('pages/recipe/index_favorite.html.twig', [
-            'recettes' => $recettes,
+            'recettes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
         ]);
     }
 
