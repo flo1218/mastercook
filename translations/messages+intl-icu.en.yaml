@@ -83,7 +83,7 @@ recipe.no.label : 'Recipe n°'
 recipe.create.label : "Create a recipe"
 recipe.update.label : "Update a recipe"
 recipe.nodata.label : 'There is no public recipes'
-recipe.my.label: 'My Recipes'
+recipe.my.label: 'My recipes'
 recipe.favorite.label: 'My favorite recipes'
 recipe:
   count.label: "{count, plural,
