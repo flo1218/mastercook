@@ -174,6 +174,8 @@ class RecipeType extends AbstractType
                 'choice_label' => function (Category $category): string {
                     return $category->getName();
                 },
+                'placeholder' => '',
+                'required' => false,
                 'class' => Category::class,
                 'attr' => [
                     'class' => 'form-control',
@@ -187,7 +189,6 @@ class RecipeType extends AbstractType
                 'query_builder' => function (EntityRepository $r): QueryBuilder {
                     return $r->createQueryBuilder('i')
                         ->where('i.user = :user')
-                        ->orderBy('i.name', 'ASC')
                         ->setParameter('user', $this->security->getToken()->getUser());
                 },
             ])
