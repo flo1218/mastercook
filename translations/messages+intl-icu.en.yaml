@@ -85,6 +85,7 @@ recipe.update.label : "Update a recipe"
 recipe.nodata.label : 'There is no public recipes'
 recipe.my.label: 'My recipes'
 recipe.favorite.label: 'My favorite recipes'
+recipe.rating.label: 'Rating'
 recipe:
   count.label: "{count, plural,
         =0 {No recipes found}

@@ -18,6 +18,7 @@
                 <th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
                 <th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
                 <th scope="col">{{ 'app.createdAt.label'|trans}}</th>
+                <th scope="col">{{ 'recipe.rating.label'|trans}}</th>
                 <th style="width: 5%" scope="col"></th>
                 <th style="width: 5%" scope="col"></th>
             </tr>
@@ -31,6 +32,7 @@
                 <td>{{recette.nbPeople is null ? '/' : recette.nbPeople}}</td>
                 <td>{{recette.difficulty is null ? '/' : recette.difficulty}}</td>
                 <td>{{recette.createdAt | format_datetime('short')}}</td>
+                <td>{{recette.average|stars_rating(true)}}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info"
                         data-tooltip="tooltip" data-placement="top" title="{{'app.edit.label'|trans}}">

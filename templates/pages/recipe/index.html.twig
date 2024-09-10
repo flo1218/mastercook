@@ -43,6 +43,7 @@
 						<th scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
 						<th scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
 						<th scope="col">{{ 'app.updatedAt.label'|trans}}</th>
+						<th scope="col">{{ 'recipe.rating.label'|trans}}</th>
 						<th style="width: 5%" scope="col"></th>
 						<th style="width: 5%" scope="col"></th>
 					</tr>
@@ -59,6 +60,7 @@
 							<td>{{ recette.nbPeople }}</td>
 							<td>{{ recette.difficulty }}</td>
 							<td>{{ recette.updatedAt | format_datetime('short') }}</td>
+							<td>{{ recette.average|stars_rating}}</td>
 							<td>
 								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" data-tooltip="tooltip" data-placement="top" title="{{'app.edit.label'|trans}}">
 									<i class="bi bi-pencil-fill"></i>

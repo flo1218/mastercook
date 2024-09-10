@@ -11,13 +11,11 @@ use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -62,14 +60,10 @@ class RecipeController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        $cache = new FilesystemAdapter();
-        $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
-            $item->expiresAfter(10);
-            return $repository->findPublicRecipe();
-        });
+        $recipes = $paginator->paginate($repository->findPublicRecipe(), $request->query->getInt('page', 1));
 
         return $this->render('pages/recipe/index_public.html.twig', [
-            'recipes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
+            'recipes' => $recipes,
         ]);
     }
 
@@ -84,11 +78,7 @@ class RecipeController extends AbstractController
         UserInterface $user
     ): Response {
         /** @var User $user **/
-        $cache = new FilesystemAdapter();
-        $data = $cache->get('favorite_recipes', function (ItemInterface $item) use ($repository, $user) {
-            $item->expiresAfter(10);
-            return $repository->findFavoriteRecipe(0, $user->getId());
-        });
+        $data = $repository->findFavoriteRecipe(0, $user->getId());
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
             'recettes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
