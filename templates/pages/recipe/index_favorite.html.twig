@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ app.request.server.get('APP_NAME') }} - Mes recettes{% endblock %}
 {% block body %}
-<div class="container mt-4">    
-    {% if not recettes.items is same as([]) %}
+<div class="container">    
     <h1>{{ 'recipe.favorite.label'|trans }}</h1>
-
     <div class="count mt-4">
-        <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
+        <h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6> 
     </div>
-
-    <table class="table table-hover table-striped mt-4">
+    {% if not recettes.items is same as([]) %}
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col"></th>
@@ -34,8 +32,7 @@
                 <td>{{recette.createdAt | format_datetime('short')}}</td>
                 <td>{{recette.average|stars_rating(true)}}</td>
                 <td>
-                    <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info"
-                        data-tooltip="tooltip" data-placement="top" title="{{'app.edit.label'|trans}}">
+                    <a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
                         <i class="bi bi-pencil-fill"></i>
                     </a>
                 </td>
@@ -53,8 +50,6 @@
     <div class="navigation d-flex justify-content-center mt-4">
         {{ knp_pagination_render(recettes) }}
     </div>
-{% else %}
-    <h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5> 
 {% endif %}
 </div>
 {% endblock %}

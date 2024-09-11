@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-4">{{'category.edit.title'|trans}}</h1>
+        <h1>{{'category.edit.title'|trans}}</h1>
 
     <form name="category" method="post">
         <div class="form-group">                
@@ -17,8 +17,6 @@
         
         {{ form_widget(form.submit) }}
         {{ form_widget(form.cancel) }}
-        
-        </button>        
     </form>
     </div>
 {% endblock %}

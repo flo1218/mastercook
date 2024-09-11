@@ -69,7 +69,7 @@ recipe.price.label : 'Price'
 recipe.isPublic.label : 'Public'
 recipe.isFavorite.label : 'Favoris'
 recipe.image.label : 'Recipe Image'
-recipe.delete-image.label : "Delete picture ?"
+recipe.delete-image.label : "Delete picture ?\xA0"
 recipe.download-image.label : "Download picture"
 recipe.created.label : 'Your recipe has been created with success !'
 recipe.updated.label : 'Your recipe has been updated with success !'
@@ -127,6 +127,7 @@ registration.title.label : "Registration Form"
 registration.name.label : 'Name / Firstname'
 registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
+registration.avatar.label : 'Picture'
 registration.language.label: 'Language'
 registration.password.label : 'Password'
 registration.new-password.label : 'New Password'

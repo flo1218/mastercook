@@ -4,13 +4,13 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserType extends AbstractType
 {
@@ -55,6 +55,14 @@ class UserType extends AbstractType
             'label_attr' => [
                 'class' => 'form-label mt-4',
             ],
+        ])
+        ->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'delete_label' => "recipe.delete-image.label",
+            'download_uri' => false,
+            'asset_helper' => false,
+            'imagine_pattern' => 'my_thumb',
+            'label' => 'registration.avatar.label',
         ])
         ->add('submit', SubmitType::class, [
             'attr' => [

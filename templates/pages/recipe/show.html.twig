@@ -5,7 +5,7 @@
 {% endblock %}
 {% block body %}
 	<div class="container">
-		<h1 class="mt-4">{{ recipe.name}}</h1>
+		<h1>{{ recipe.name}}</h1>
 		<span class="badge bg-info rounded-pill mb-4">
 			{{ 'app.createdAt.label'|trans }} {{ recipe.createdAt|format_date('short') }} {{ 'app.by.label'|trans }} {{ recipe.user.fullName }}  
 		</span>

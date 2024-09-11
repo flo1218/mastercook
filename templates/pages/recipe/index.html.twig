@@ -4,13 +4,13 @@
 	- Mes recettes
 {% endblock %}
 {% block body %}
-	<div class="container mt-4">
+	<div class="container">
 		<h1>{{ 'recipe.my.label'|trans }}</h1>
 		<a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('recipe.new') }}">
 			{{ 'recipe.create.label'|trans }}
 		</a>
 		<div class="count mt-4">
-			<h5>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h5>
+			<h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6>
 		</div>
 
 		<div class="row">
@@ -26,14 +26,14 @@
 
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Filtrer par nom" id="recipeFilter">
-                    <button type="button" id="recipeFilterReset" class="btn btn-secondary bi bi-x-circle"></button>
+                    <button type="button" id="recipeFilterReset" style="border-bottom-right-radius:0" class="btn btn-secondary bi bi-x-circle "></button>
                 </div>
 
 			</div>
 		</div>
 
 		{% if not recettes.items is same as([]) %}
-			<table id="recipeTable" class="table table-hover table-striped mt-4">
+			<table id="recipeTable" class="table table-hover">
 				<thead>
 					<tr>
 						<th scope="col"></th>
@@ -62,13 +62,14 @@
 							<td>{{ recette.updatedAt | format_datetime('short') }}</td>
 							<td>{{ recette.average|stars_rating}}</td>
 							<td>
-								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" data-tooltip="tooltip" data-placement="top" title="{{'app.edit.label'|trans}}">
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
 									<i class="bi bi-pencil-fill"></i>
 								</a>
 							</td>
 							<td>
-								<button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" title="{{'app.delete.label'|trans}}"
 									data-href="{{ path('recipe.delete', { id : recette.id }) }}"
+									data-label = "{{'recipe.confirm-delete.label'|trans}}"
 									data-bs-target="#confirmDeleteModal">
 									<i class="bi bi-trash3-fill"></i>
 								</button>

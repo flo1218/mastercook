@@ -1,16 +1,14 @@
-body { 
-    margin: 0;    
+body {
+  margin: 0;
+}
+
+.custom-top-navbar {
+  padding: 5px 0px;
 }
 
 .carousel .carousel-item img {
   height: 400px !important;
   object-fit: cover;
-}
-
-label[for="recipe_imageFile_delete"] {
-  padding: 10px 10px 10px 0px;
-  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-  text-decoration: underline;
 }
 
 .custom-btn.bi::before {
@@ -29,18 +27,24 @@ h1 {
 .alert-container {
   position: relative;
 }
+
 .alert {
-position: absolute;
-margin-top:56px;
-width: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  top: 49px;
+  left: 50%;
+  position: absolute;
+  width: 50%;
+  z-index: 1000000000;
 }
+
 /* END ALERTS */
 
 .vich-image {
   padding-top: 10px;
 }
 
-.form-image img, 
+.form-image img,
 .vich-image img {
   width: 250px;
 }

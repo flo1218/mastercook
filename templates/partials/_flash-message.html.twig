@@ -11,7 +11,7 @@
 </svg>
 
 {% for message in app.flashes('success') %}
-    <div class="alert alert-dismissible alert-success fade show alert-container" role="alert">
+    <div class="alert alert-dismissible alert-success fade show alert-container float-right" role="alert">
     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         {{ message }}
@@ -39,5 +39,5 @@
     </div>
 {% endfor %}
 <script>
-$(".alert").fadeTo(5000, 1).fadeTo(500, 0);
+$(".alert").fadeTo(5000, 1).slideUp(500, 0);
 </script>

@@ -38,6 +38,7 @@ class RecipeType extends AbstractType
             ->add('name', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'autofocus' => null,
                 ],
                 'required' => false,
                 'label' => 'recipe.name.label',
@@ -146,16 +147,17 @@ class RecipeType extends AbstractType
                 'required' => false,
                 'download_label' => "recipe.download-image.label",
                 'delete_label' => "recipe.delete-image.label",
-                'download_uri' => true,
+                'allow_delete' => true,
+                'download_uri' => false,
                 'asset_helper' => true,
                 'imagine_pattern' => 'my_thumb',
                 'label' => 'recipe.image.label',
             ])
             ->add('ingredients', EntityType::class, [
+                'required' => false,
                 'choice_label' => function (Ingredient $ingredient): string {
-                    return $ingredient->getName() . ' (' . $ingredient->getPrice() . ' CHF)';
+                    return $ingredient->getName();
                 },
-                'row_attr' => ['class' => 'tinymce'],
                 'class' => Ingredient::class,
                 'multiple' => true,
                 'expanded' => true,

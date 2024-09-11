@@ -30,6 +30,7 @@ jQuery(function () {
     if (label) {
       $(".modal-body").text(label);
     }
+
     // Define link on confirm button
     var href = $(e.relatedTarget).data('href');
     $("#confirmDelete").on("click", (function (e) {

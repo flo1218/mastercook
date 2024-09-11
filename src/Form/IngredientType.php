@@ -19,6 +19,7 @@ class IngredientType extends AbstractType
             ->add('name', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'autofocus' => null,
                 ],
                 'required' => false,
                 'label' => 'ingredient.name.label',

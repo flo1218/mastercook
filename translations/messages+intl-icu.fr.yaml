@@ -70,7 +70,7 @@ recipe.price.label : 'Prix'
 recipe.isPublic.label : 'Public'
 recipe.isFavorite.label : 'Favoris'
 recipe.image.label : 'Image de la recette'
-recipe.delete-image.label : "Supprimer l'image ?"
+recipe.delete-image.label : "Supprimer l'image ?\xA0"
 recipe.download-image.label : "Télécharger l'image"
 recipe.created.label : 'Votre recette a été créé avec succès !'
 recipe.updated.label : 'Votre recette a été modifiée avec succès !'
@@ -87,6 +87,7 @@ recipe.nodata.label: "Il n'y a pas de recettes publiques"
 recipe.my.label: 'Mes recettes'
 recipe.favorite.label: 'Mes favoris'
 recipe.rating.label: 'Note'
+recipe.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cette recette ?'
 recipe:
   count.label: "{count, plural,
         =0 {Aucune recettes trouvées}
@@ -107,6 +108,7 @@ ingredient.saved.label : 'Votre ingrédient a été modifié avec succès'
 ingredient.created.label : 'Votre ingrédient a été créé avec succès'
 ingredient.deleted.label : 'Votre ingrédient a été supprimé avec succès'
 ingredient.error.notunique.name : "Un ingrédient avec le même nom existe déjà"
+ingredient.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cet ingrédient ?'
 ingredient:
   count.label: "{count, plural,
         =0 {Aucun ingrédients trouvé}
@@ -128,6 +130,7 @@ registration.title.label : "Formulaire d'inscription"
 registration.name.label : 'Nom / Prénom'
 registration.pseudo.label : 'Pseudo'
 registration.email.label : 'Email'
+registration.avatar.label : 'Photo de profile'
 registration.language.label: 'Language'
 registration.password.label : 'Mot de passe'
 registration.new-password.label : 'Nouveau Mot de passe'

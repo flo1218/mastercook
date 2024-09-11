@@ -3,16 +3,16 @@
 {% block title %}{{ app.request.server.get('APP_NAME') }} - Mes catégories{% endblock %}
 
 {% block body %}
-<div class="container mt-4">        
+<div class="container">        
     <h1>{{'category.my.label'|trans}}</h1>
     <a class="btn btn-primary mt-4 mb-4 custom-btn bi bi-plus-circle-fill" href="{{ path('category.new') }}">
         {{ 'category.new.label'|trans }}
     </a>
     <div class="count mt-4">
-        <h5>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h5> 
+        <h6>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h6> 
     </div>
     {% if not categories.items is same as([]) %}        
-        <table class="table table-hover table-striped mt-4">
+        <table class="table table-hover">
         <thead>
             <tr>
             <th style="width: 10%" scope="col"></th>
@@ -31,8 +31,6 @@
             <td>
                 <a href="{{ path('category.edit', { id : category.id }) }}" 
                     class="btn btn-info" 
-                    data-tooltip="tooltip" 
-                    data-placement="top" 
                     title="{{'app.edit.label'|trans}}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
@@ -40,6 +38,7 @@
             <td>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
                     data-href="{{ path('category.delete', { id : category.id }) }}"
+                    title="{{'app.delete.label'|trans}}"
                     data-label = "{{'category.confirm-delete.label'|trans}}"
                     data-bs-target="#confirmDeleteModal">
                     <i class="bi bi-trash3-fill"></i>
