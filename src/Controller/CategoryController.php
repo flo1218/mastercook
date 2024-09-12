@@ -27,7 +27,7 @@ class CategoryController extends AbstractController
     ): Response {
         $categories = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
-            $request->query->getInt('page', 1)
+            $request->query->getInt('page', 2)
         );
 
         return $this->render('pages/category/index.html.twig', [

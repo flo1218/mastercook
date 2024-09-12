@@ -14,7 +14,7 @@ class HomePageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Welcome to MasterCook!');
 
-        // Check homepage has 3 cards displaying public recipes
+        // Check homepage has 20 cards displaying public recipes
         $recipes = $crawler->filter('.card');
         $this->assertEquals(20, count($recipes));
 

@@ -43,6 +43,7 @@ yarn-error.log
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 
-
+###> public ###
 /public/images/recipe
 /public/images/user
+###< publics ###
