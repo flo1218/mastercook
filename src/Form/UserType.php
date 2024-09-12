@@ -63,6 +63,9 @@ class UserType extends AbstractType
             'asset_helper' => false,
             'imagine_pattern' => 'my_thumb',
             'label' => 'registration.avatar.label',
+            'label_attr' => [
+                'class' => 'form-label mt-4',
+            ],
         ])
         ->add('submit', SubmitType::class, [
             'attr' => [
