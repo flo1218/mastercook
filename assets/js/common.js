@@ -37,4 +37,7 @@ jQuery(function () {
       window.location.href = href;
     }))
   });
+
+  // Apply Bootstrap style to the vich-images checkbox
+  $('#user_imageFile_delete, #recipe_imageFile_delete').addClass("form-check-input");
 });

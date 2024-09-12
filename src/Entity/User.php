@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $createdAt = null;
 
     #[Assert\PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_WEAK, // Very strong password required
+        'minScore' => PasswordStrength::STRENGTH_WEAK
     ])]
     private $plainPassword;
 
