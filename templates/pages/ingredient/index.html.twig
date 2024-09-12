@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.request.server.get('APP_NAME') }} - Mes ingredients{% endblock %}
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{'ingredient.my.label'|trans}}{% endblock %}
 
 {% block body %}
 <div class="container">       

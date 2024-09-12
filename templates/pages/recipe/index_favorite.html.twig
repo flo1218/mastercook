@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ app.request.server.get('APP_NAME') }} - Mes recettes{% endblock %}
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{'recipe.favorite.label'|trans}}{% endblock %}
 {% block body %}
 <div class="container">    
     <h1>{{ 'recipe.favorite.label'|trans }}</h1>

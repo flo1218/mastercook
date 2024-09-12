@@ -154,7 +154,7 @@ reset-password.email.subject: 'Votre demande de réinitialisation de mot de pass
 admin.user.title : Administration des utilisateurs
 
 # CATEGORIES
-category.my.label : 'Catégories'
+category.my.label : 'Mes catégories'
 category.new.label : 'Create une catégorie'
 category.name.label : 'Nom'
 category.edit.title : 'Modification de la catégorie'
