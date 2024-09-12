@@ -23,7 +23,11 @@
                         <p class="card-text">{{ recipe.description }}</p>
                     </div>
                     <div class="card-footer">
-                      <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small><br/>
+                      <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small>
+                      {% if app.user.imageName %}
+                      <img src="/images/user/{{ app.user.imageName }}" class="rounded-circle" height="22" alt="Avatar" />
+                      {% endif %}
+                      <br/>
                       <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>
                     </div>
                 </div>
