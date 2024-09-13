@@ -24,8 +24,8 @@
                     </div>
                     <div class="card-footer">
                       <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small>
-                      {% if app.user.imageName %}
-                      <img src="/images/user/{{ app.user.imageName }}" class="rounded-circle" height="22" alt="Avatar" />
+                      {% if recipe.user.imageName %}
+                      <img src="/images/user/{{ recipe.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
                       {% endif %}
                       <br/>
                       <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>

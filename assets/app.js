@@ -9,6 +9,7 @@ import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import "bootswatch/dist/zephyr/bootstrap.min.css";
 import zoomPlugin from 'chartjs-plugin-zoom';
+import 'animate.css';
 
 window.$ = window.jQuery = $;
 
