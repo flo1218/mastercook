@@ -11,11 +11,13 @@ use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -60,10 +62,14 @@ class RecipeController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        $recipes = $paginator->paginate($repository->findPublicRecipe(), $request->query->getInt('page', 1));
+        $cache = new FilesystemAdapter();
+        $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
+            $item->expiresAfter(60);
+            return $repository->findPublicRecipe();
+        });
 
         return $this->render('pages/recipe/index_public.html.twig', [
-            'recipes' => $recipes,
+            'recipes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
         ]);
     }
 
@@ -208,11 +214,11 @@ class RecipeController extends AbstractController
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.updated.label'));
 
-            if ($request->attributes->get('_route') == 'recipe.edit') {
-                return $this->redirectToRoute('recipe.index');
-            } else {
-                return $this->redirectToRoute('recipe.favorite');
+            if ($request->query->get('redirect')) {
+                return $this->redirect($request->query->get('redirect'));
             }
+
+            return $this->redirectToRoute('recipe.index');
         }
 
         return $this->render('pages/recipe/edit.html.twig', [
@@ -243,6 +249,10 @@ class RecipeController extends AbstractController
             $manager->remove($recipe);
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.deleted.label'));
+        }
+
+        if ($request->query->get('redirect')) {
+            return $this->redirect($request->query->get('redirect'));
         }
 
         return $this->redirectToRoute('recipe.index');
