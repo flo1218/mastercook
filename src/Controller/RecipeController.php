@@ -10,6 +10,7 @@ use DateTimeImmutable;
 use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\ViewRecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -31,16 +32,16 @@ class RecipeController extends AbstractController
     #[Route('/recipe', name: 'recipe.index')]
     #[IsGranted('ROLE_USER')]
     public function index(
-        RecipeRepository $repository,
+        ViewRecipeRepository $repository,
         PaginatorInterface $paginator,
         TranslatorInterface $translator,
         Request $request,
     ): Response {
-        $searchParameters = ['user' => $this->getUser()];
+        $searchParameters = ['user_id' => $this->getUser()->getId()];
 
         $recipeType = $request->query->get('type');
         if ($recipeType) {
-            $searchParameters['category'] = $recipeType;
+            $searchParameters['category_id'] = $recipeType;
         }
         $recettes = $paginator->paginate(
             $repository->findBy($searchParameters),
@@ -58,14 +59,14 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/public', 'recipe.community', methods: ['GET'])]
     public function indexPublic(
-        RecipeRepository $repository,
+        ViewRecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request
     ): Response {
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(60);
-            return $repository->findPublicRecipe();
+            return $repository->findAllPublicRecipes();
         });
 
         return $this->render('pages/recipe/index_public.html.twig', [
@@ -78,13 +79,13 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/favorite', 'recipe.favorite', methods: ['GET'])]
     public function indexFavorite(
-        RecipeRepository $repository,
+        ViewRecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request,
         UserInterface $user
     ): Response {
         /** @var User $user **/
-        $data = $repository->findFavoriteRecipe(0, $user->getId());
+        $data = $repository->findAllFavoriteRecipes($user->getId());
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
             'recettes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
@@ -133,6 +134,10 @@ class RecipeController extends AbstractController
             }
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.vote.success'));
+
+            // Invalid cache
+            $cache = new FilesystemAdapter();
+            $cache->delete('public_recipes');
 
             return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
         }

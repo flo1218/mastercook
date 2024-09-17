@@ -14,12 +14,8 @@
 		</div>
 		<div class="row">
 			<div class="col-8">
-				{% if recipe.average %}
-					<p>{{ 'recipe.average.label'|trans }} {{ recipe.average|number_format(2, '.', ',') }}/5</p>
-				{% endif %}
-
 				{% if recipe.time %}
-					<p class="form-label mt-4">
+					<p class="form-label">
 						{{ 'recipe.time.label'|trans }}: {{ recipe.time|min_to_hour }}</p>
 				{% endif %}
 
@@ -46,6 +42,9 @@
 			</div>
 			{% if app.user %}
 				<div class="col-4">
+				{% if recipe.average %}
+					<p>{{ 'recipe.average.label'|trans }} {{ recipe.average|stars_rating(true) }}</p>
+				{% endif %}
 					{{ form(form) }}
 					{% if app.user is same as(recipe.user) %}
 						<a href="{{ path('recipe.edit', {'id': recipe.id } )}}">

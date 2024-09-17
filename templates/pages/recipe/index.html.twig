@@ -54,7 +54,7 @@
 								<a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a>
 							</td>
 							<td>{{ recette.name }}</td>
-							<td>{{ recette.category ? recette.category.name : ''  }}</td>
+							<td>{{ recette.categoryName }}</td>
 							<td>{{ recette.price }}</td>
 							<td>{{ recette.nbPeople }}</td>
 							<td>{{ recette.difficulty }}</td>

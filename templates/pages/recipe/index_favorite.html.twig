@@ -27,12 +27,12 @@
             <tr class="jsTableRow">
                 <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
                 <td>{{recette.name}}</td>
-                <td>{{ recette.category ? recette.category.name : ''  }}</td>
+                <td>{{recette.categoryName }}</td>
                 <td>{{recette.price is null ? '/' : recette.price}}</td>
                 <td>{{recette.nbPeople is null ? '/' : recette.nbPeople}}</td>
                 <td>{{recette.difficulty is null ? '/' : recette.difficulty}}</td>
                 <td>{{recette.createdAt | format_datetime('short')}}</td>
-                <td>{{recette.average|stars_rating(true)}}</td>
+                <td>{{recette.average|stars_rating()}}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id, redirect : path('recipe.favorite') }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
                         <i class="bi bi-pencil-fill"></i>

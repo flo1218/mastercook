@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
-{% block title %}Log in!{% endblock %}
+{% block title %}{{'app.login.label'|trans}}{% endblock %}
 {% block body %}
-<div class="container login-container" data-controller="hello">
+<div class="container login-container mt-5" data-controller="hello">
     <form name="login" method="post">
         {% if app.user %}
             <div class="mb-3">

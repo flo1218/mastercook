@@ -48,7 +48,7 @@
 					<div class="card bg-light m-3" style="max-width: 18rem;">
 						<div class="card-header">
 							{{ 'recipe.no.label'|trans }}{{ recipe.id }}
-							{{recipe.average|stars_rating(true)}}
+							{{recipe.average|stars_rating()}}
 						</div>
 						{% if recipe.imageName is defined and recipe.imageName is not null  %}
 							<img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">

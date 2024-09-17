@@ -13,7 +13,7 @@
             <div class="card bg-light m-3" style="max-width: 20rem;">
                 <div class="card-header">
                     {{ 'recipe.no.label'|trans }}{{ recipe.id }}
-                    {{recipe.average|stars_rating(true)}}
+                    {{recipe.average|stars_rating()}}
                 </div>
                     {% if recipe.imageName is defined and recipe.imageName is not null  %}
                     <img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
@@ -24,8 +24,8 @@
                     </div>
                     <div class="card-footer">
                       <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small>
-                      {% if recipe.user.imageName %}
-                      <img src="/images/user/{{ recipe.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
+                      {% if recipe.imageName %}
+                      <img src="/images/user/{{ recipe.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
                       {% endif %}
                       <br/>
                       <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>

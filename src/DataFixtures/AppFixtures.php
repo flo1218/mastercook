@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
         $users[] = $admin;
         $manager->persist($admin);
 
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 9; ++$i) {
             $user = new User();
             $user->setFullName($this->faker->name())
                 ->setPseudo(1 === mt_rand(0, 1) ? $this->faker->firstName() : null)
