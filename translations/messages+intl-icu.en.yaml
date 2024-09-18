@@ -9,12 +9,14 @@ app.updatedAt.label : 'Last updated'
 app.createdBy.label : 'Created by'
 app.createdAt.label : 'Created at'
 app.by.label : 'by'
+
 app.yes.label : 'Yes'
 app.no.label : 'No'
 app.or.label : 'or'
 app.try-again.label : 'try again'
 app.hi.label: 'Hi'
 app.greeting.label: 'Greetings'
+
 app.confirmation.label : 'Are you sure ?'
 app.login.label : 'Login'
 app.password.label: 'Password'
@@ -50,13 +52,17 @@ header.favorite.label : "Favorites"
 header.recipes_public.label : "Community recipes"
 header.update-informations.label : 'Update my profile'
 header.update-password.label : 'Update my password'
-
 header.administration.label : 'Administration'
 header.chart.label : 'Chart'
 header.login.label : 'Login'
 header.register.label : 'Register'
 header.logout.label : 'Logout'
 header.category.label : 'Categories'
+
+# CATEGORY
+category.default.starter: 'Starter'
+category.default.main: 'Main course'
+category.default.dessert: 'Dessert'
 
 # RECIPE
 recipe.community.label : 'Community Recipes'
@@ -86,6 +92,7 @@ recipe.nodata.label : 'There is no public recipes'
 recipe.my.label: 'My recipes'
 recipe.favorite.label: 'My favorite recipes'
 recipe.rating.label: 'Rating'
+recipe.confirm-delete.label : 'Are you sure you want to delete this recipe ?'
 recipe:
   count.label: "{count, plural,
         =0 {No recipes found}
@@ -106,6 +113,7 @@ ingredient.saved.label : 'Your ingredient has been saved successfully'
 ingredient.created.label : 'Your ingredient has been created successfully'
 ingredient.deleted.label : 'Your ingredient has been deleted successfully'
 ingredient.error.notunique.name : "An ingredient already exists with the same name"
+ingredient.confirm-delete.label : 'Are you sure you want to delete this ingredient ?'
 ingredient:
   count.label: "{count, plural,
         =0 {No ingredients found}

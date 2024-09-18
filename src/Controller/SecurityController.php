@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use LogicException;
 use App\Entity\User;
 use App\Form\RegistrationType;
@@ -62,11 +63,26 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $manager->persist($user);
+
+            // Add default categories
+            $locale = strtoupper($user->getLanguage()) == 'FR' ? 'fr_FR' : 'en_EN';
+            $defaultCategories = [
+                $translator->trans('category.default.starter', [], null, $locale),
+                $translator->trans('category.default.main', [], null, $locale),
+                $translator->trans('category.default.dessert', [], null, $locale),
+            ];
+
+            foreach ($defaultCategories as $defaultCategory) {
+                $category = new Category();
+                $category->setUser($user)
+                    ->setName($defaultCategory);
+                $manager->persist($category);
+            }
             $manager->flush();
 
             $this->addFlash('success', $translator->trans('registration.success.label'));
 
-            return $this->redirectToRoute('ingredient.index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('pages/security/registration.html.twig', [

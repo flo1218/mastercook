@@ -59,6 +59,11 @@ header.register.label : 'Inscription'
 header.logout.label : 'Se déconnecter'
 header.category.label : 'Catégories'
 
+# CATEGORY
+category.default.starter: 'Entrée'
+category.default.main: 'Plat'
+category.default.dessert: 'Dessert'
+
 # RECIPE
 recipe.community.label: 'Recettes de la communauté'
 recipe.name.label : 'Nom'

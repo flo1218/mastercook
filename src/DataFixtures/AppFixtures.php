@@ -22,6 +22,7 @@ class AppFixtures extends Fixture
     {
         $factory = new Factory();
         $this->faker = $factory::create('fr_FR');
+        $this->faker->addProvider(new \FakerRestaurant\Provider\fr_FR\Restaurant($this->faker));
         $this->hasher = $hasher;
     }
 
@@ -46,7 +47,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 9; ++$i) {
             $user = new User();
             $user->setFullName($this->faker->name())
-                ->setPseudo(1 === mt_rand(0, 1) ? $this->faker->firstName() : null)
+                ->setPseudo($this->faker->boolean() ? $this->faker->firstName() : null)
                 ->setEmail($this->faker->email())
                 ->setLanguage('en')
                 ->setRoles(['ROLE_USER'])
@@ -57,10 +58,18 @@ class AppFixtures extends Fixture
         }
 
         // Ingredients
+        $ingredientFakerList = [
+            'dairyName',
+            'vegetableName',
+            'fruitName',
+            'meatName'
+        ];
+
         $ingredients = [];
         for ($i = 1; $i <= 50; ++$i) {
+            $method = $ingredientFakerList[mt_rand(0, 3)];
             $ingredient = new Ingredient();
-            $ingredient->setName($this->faker->word())
+            $ingredient->setName($this->faker->$method())
                 ->setPrice(mt_rand(0, 100))
                 ->setUser($users[mt_rand(0, count($users) - 1)]);
 
@@ -73,14 +82,14 @@ class AppFixtures extends Fixture
         for ($j = 1; $j <= 200; ++$j) {
             $recipe = new Recipe();
             $user = $users[mt_rand(0, count($users) - 1)];
-            $recipe->setName($this->faker->word())
+            $recipe->setName($this->faker->foodName())
                 ->setTime(mt_rand(1, 1440))
                 ->setPrice(mt_rand(1, 1000))
-                ->setNbPeople(1 == mt_rand(0, 1) ? mt_rand(1, 50) : null)
-                ->setDifficulty(1 == mt_rand(0, 1) ? mt_rand(1, 5) : null)
-                ->setDescription($this->faker->text(300))
-                ->setIsFavorite(1 == mt_rand(0, 1) ? true : false)
-                ->setIsPublic(1 == mt_rand(0, 1) ? true : false)
+                ->setNbPeople($this->faker->boolean() ? mt_rand(1, 10) : null)
+                ->setDifficulty($this->faker->boolean() ? mt_rand(1, 5) : null)
+                ->setDescription($this->faker->paragraphs(3, true))
+                ->setIsFavorite($this->faker->boolean())
+                ->setIsPublic($this->faker->boolean())
                 ->setCreatedAt(
                     $dateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years'))
                 )

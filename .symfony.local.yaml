@@ -1,0 +1,10 @@
+http:
+    document_root: public/ # Path to the project document root
+    passthru: index.php # Project passthru index
+    port: 8000 # Force the port that will be used to run the server
+    preferred_port: 8001 # Preferred sHTTP port [default: 8000]
+    allow_http: false # Prevent auto-redirection from HTTP to HTTPS
+    no_tls: false # Use HTTP instead of HTTPS
+    daemon: true # Run the server in the background
+    use_gzip: true # Toggle GZIP compression
+    no_workers: true # Do not start workers

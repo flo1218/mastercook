@@ -16,6 +16,7 @@
         "doctrine/orm": "^3.0",
         "easycorp/easyadmin-bundle": "^4.9",
         "friendsofsymfony/ckeditor-bundle": "^2.5",
+        "jzonta/faker-restaurant": "*",
         "karser/karser-recaptcha3-bundle": "^0.1.26",
         "knplabs/knp-paginator-bundle": "^6.1.1",
         "liip/imagine-bundle": "^2.12",
