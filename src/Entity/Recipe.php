@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(['name', 'user'])]
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
-    securityMessage: 'Sorry, but you are not the book owner.',
+    securityMessage: 'Sorry, but you are not the recipe owner.',
     operations: [
         new Get(normalizationContext: ['groups' => 'recipe:item']),
         new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
