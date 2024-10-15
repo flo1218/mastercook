@@ -4,7 +4,8 @@ jQuery(function () {
     let link = $(location).attr('href');
     let position = link.indexOf("?");
     link = link.substring(0, position != -1 ? position : link.length);
-    $(location).attr('href', link + '/edit/' + $(this).closest('tr').children('td:first').text());
+    let textContent = $(this).closest('tr').children('td:first').text();
+    $(location).attr('href', link + '/edit/' + encodeURIComponent(textContent));
   });
 
   // Manage table filters
