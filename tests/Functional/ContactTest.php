@@ -9,6 +9,7 @@ class ContactTest extends WebTestCase
 {
     public function testSomething(): void
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $urlGenerator = $client->getContainer()->get('router');
 

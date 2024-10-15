@@ -3,20 +3,31 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields:['name', 'user'])]
-#[ApiResource]
+#[ApiResource(
+    security: "is_granted('ROLE_USER')",
+    operations: [
+        new Get(normalizationContext: ['groups' => 'category:item']),
+        new GetCollection(normalizationContext: ['groups' => 'category:list']),
+        new Delete(),
+    ],
+    //order: ['id' => 'DESC'],
+    paginationEnabled: false,
+)]
 class Category
 {
     #[ORM\Id]
@@ -38,12 +49,12 @@ class Category
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    #[Groups(['ingredient:list', 'ingredient:item'])]
+    #[Groups(['category:list', 'category:item'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Ignore]
+    #[Groups(['category:list', 'category:item'])]
     private ?User $user = null;
 
     /**

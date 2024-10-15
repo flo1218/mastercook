@@ -9,6 +9,7 @@ class LoginTest extends WebTestCase
 {
     public function testIfLoginIsSuccessful(): void
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
 
         $urlGenerator = $client->getContainer()->get('router');

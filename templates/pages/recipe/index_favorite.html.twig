@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ app.request.server.get('APP_NAME') }} - {{'recipe.favorite.label'|trans}}{% endblock %}
 {% block body %}
-<div class="container">    
+<div class="container-lg">    
     <h1>{{ 'recipe.favorite.label'|trans }}</h1>
     <div class="count mt-4">
         <h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6> 

@@ -121,6 +121,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "liip/functional-test-bundle": {
+        "version": "4.12.0"
+    },
     "liip/imagine-bundle": {
         "version": "2.12",
         "recipe": {
@@ -159,6 +162,9 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
+    },
+    "pontedilana/weasyprint-bundle": {
+        "version": "2.2.0"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.9",

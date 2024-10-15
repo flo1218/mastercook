@@ -11,31 +11,27 @@
 </svg>
 
 {% for message in app.flashes('success') %}
-    <div class="alert alert-dismissible alert-success fade alert-container float-right" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        {{ message }}
+    <div class="alert alert-success fade alert-container float-right" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="14" height="14" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    {{ message }}
     </div>
 {% endfor %}
 {% for message in app.flashes('warning') %}
-    <div class="alert alert-dismissible alert-warning fade alert-container" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        {{ message }}
+    <div class="alert alert-warning fade alert-container" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="14" height="14" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    {{ message }}
     </div>
 {% endfor %}
 {% for message in app.flashes('notice') %}
-    <div class="alert alert-dismissible alert-success fade alert-container" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        {{ message }}
+    <div class="alert alert-success fade alert-container" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="14" height="14" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+    {{ message }}
     </div>
 {% endfor %}
 {% for message in app.flashes('error') %}
-    <div class="alert alert-dismissible alert-danger fade alert-container" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        {{ error.messageKey|trans(error.messageData, 'security') }}
+    <div class="alert alert-danger fade alert-container" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="14" height="14" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    {{ error.messageKey|trans(error.messageData, 'security') }}
     </div>
 {% endfor %}
 <script>

@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container">
+	<div class="container-lg">
+		
+		<div class="float-end">
+			<a href="{{ path('recipe.print', {'id': recipe.id } )}}">
+				<button class="btn btn-lg btn-success custom-btn bi bi-printer-fill">
+				</button>
+			</a>
+		</div>
 		<h1>{{ 'recipe.update.label'|trans }}</h1>
-
 		{{ form_start(form) }}
-
 		<div class="row">
 			<div class="col">
 				{{ form_label(form.name) }}
@@ -100,7 +105,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col">
+			<div class="col mb-4">
 				{{ form_label(form.submit) }}
 				{{ form_widget(form.submit) }}
 

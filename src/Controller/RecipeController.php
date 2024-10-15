@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use Pontedilana\PhpWeasyPrint\Pdf;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
 use App\Entity\Mark;
 use App\Entity\User;
+use Twig\Environment;
 use App\Entity\Recipe;
 use App\Form\MarkType;
 use DateTimeImmutable;
@@ -20,12 +23,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
+
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly Pdf $weasyPrint,
+    ) {
+    }
     /**
      * This function is used to display the list of recipes.
      */
@@ -84,7 +94,7 @@ class RecipeController extends AbstractController
         Request $request,
         UserInterface $user
     ): Response {
-        /** @var User $user **/
+        /** @var \App\Entity\User $user **/
         $data = $repository->findAllFavoriteRecipes($user->getId());
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
@@ -112,8 +122,10 @@ class RecipeController extends AbstractController
         Request $request,
         MarkRepository $markRepository,
         EntityManagerInterface $manager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        Pdf $knpSnappyPdf
     ) {
+        
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
         $form->handleRequest($request);
@@ -148,6 +160,25 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    #[Route('recipe/print/{id}', 'recipe.print', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function print(Recipe $recipe)
+    {
+        $pdfContent = $this->weasyPrint->getOutputFromHtml(
+            $this->twig->render('pages/recipe/print.html.twig', [
+                'recipe' => $recipe,
+            ])
+        );
+
+        return new PdfResponse(
+            content: $pdfContent,
+            fileName: "recipe-{$recipe->getId()}.pdf",
+            contentType: 'application/pdf',
+            contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            status: 200,
+            headers: []
+        );
+    }
+
     /**
      * This function is used to add a new recipe.
      */
@@ -170,8 +201,6 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
-            $recipe->setUser($this->getUser());
-            $recipe->setCreatedBy($this->getUser()->getFullName());
             $manager->persist($recipe);
             $manager->flush();
 
@@ -213,8 +242,6 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
-            $recipe->setUpdatedAt(new DateTimeImmutable());
-
             $manager->persist($recipe);
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.updated.label'));
@@ -228,6 +255,7 @@ class RecipeController extends AbstractController
 
         return $this->render('pages/recipe/edit.html.twig', [
             'form' => $form->createView(),
+            'recipe' => $recipe,
         ]);
     }
 

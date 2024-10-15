@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(normalizationContext: ['groups' => 'mark:list']),
         new Delete(),
     ],
-    order: ['id' => 'DESC'],
+    //order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 #[ORM\Entity(repositoryClass: MarkRepository::class)]

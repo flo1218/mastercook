@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     #[Route('/language', 'home.language', methods: ['GET'])]
     public function language(RecipeRepository $recipeRepository, Request $request): Response
     {
-        /** @var User $user **/
+        /** @var \App\Entity\User $user **/
         $user = $this->getUser();
         if ($user && $request->getLocale() != strtolower($user->getLanguage())) {
             return $this->redirect('/' . strtolower($user->getLanguage()));
@@ -39,7 +39,7 @@ class HomeController extends AbstractController
             $item->expiresAfter(60);
             return $recipeRepository->findAllPublicRecipes(20);
         });
-        
+
         return $this->render('pages/home.html.twig', [
             'recipes' => $data,
         ]);

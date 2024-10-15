@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(normalizationContext: ['groups' => 'ingredient:list']),
         new Delete(),
     ],
-    order: ['id' => 'DESC'],
+    //order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 class Ingredient
@@ -59,10 +59,10 @@ class Ingredient
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Ignore]
+    #[Groups(['ingredient:list', 'ingredient:item'])]
     private ?User $user = null;
 
-    /**
+    /** 
      * Constructor.
      */
     public function __construct()

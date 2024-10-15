@@ -34,7 +34,7 @@ class ContactController extends AbstractController
 
         // Prefill fields if user is connected
         if ($this->getUser()) {
-            /** @var User $user **/
+            /** @var \App\Entity\User $user **/
             $user = $this->getUser();
             $contact->setFullName($user->getFullName());
             $contact->setEmail($user->getEmail());

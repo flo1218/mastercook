@@ -3,11 +3,12 @@
 {% block title %}{{ app.request.server.get('APP_NAME') }} - {{'category.my.label'|trans}}{% endblock %}
 
 {% block body %}
-<div class="container">      
-        <h1>{{'category.my.label'|trans}}</h1>
-        <a class="btn btn-primary float-end" href="{{ path('category.new') }}">
-            {{ 'category.new.label'|trans }}
-        </a>
+<div class="container-lg">      
+    <a class="btn btn-primary float-end custom-btn bi bi-plus-circle-fill" href="{{ path('category.new') }}">
+        {{ 'category.new.label'|trans }}
+    </a>
+    <h1>{{'category.my.label'|trans}}</h1>
+    <div class="clearfix"></div>
     <div class="count mt-4">
         <h6>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h6> 
     </div>

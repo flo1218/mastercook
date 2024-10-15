@@ -32,10 +32,12 @@ h1 {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   top: 49px;
-  left: 50%;
+  left: 0%;
   position: absolute;
-  width: 50%;
-  z-index: 1000;
+  width: 100%;
+  z-index: 10000;
+  padding: 5px;
+  font-weight: bold;
 }
 
 /* END ALERTS */

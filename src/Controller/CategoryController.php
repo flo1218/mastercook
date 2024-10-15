@@ -48,7 +48,7 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var User $user **/
+        /** @var \App\Entity\User $user **/
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -89,7 +89,7 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var User $user **/
+        /** @var \App\Entity\User $user **/
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }

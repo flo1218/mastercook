@@ -54,7 +54,7 @@ class RecipeType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'required' => false,
-                'label' => 'recipe.time.label',
+                'label' => 'recipe.time-minute.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],

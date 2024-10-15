@@ -71,7 +71,7 @@ class ChartController extends AbstractController
             'datasets' => [
                 [
                     'label' => "$year",
-                    'backgroundColor' => '#ea5421',
+                    'backgroundColor' => '#3459e6',
                     'data' => $monthRecipes,
                 ],
             ],

@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use App\State\RecipeProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,17 +21,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[ORM\EntityListeners(['App\EntityListener\RecipeListener'])]
 #[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
-#[UniqueEntity(['name', 'user'])]
+#[UniqueEntity(fields: ['name', 'user'], entityClass: Recipe::class, groups: ["recipe:item", 'recipe:list'])]
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
     securityMessage: 'Sorry, but you are not the recipe owner.',
     operations: [
+        new Delete(security: 'is_granted("ROLE_USER") and object.getUser() == user'),
         new Get(normalizationContext: ['groups' => 'recipe:item']),
         new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
+        new Post(normalizationContext: ['groups' => 'recipe:item'], processor: RecipeProcessor::class),
     ],
-    order: ['id' => 'DESC'],
+    //order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 class Recipe
@@ -41,16 +47,16 @@ class Recipe
 
     #[Assert\NotBlank()]
     #[ORM\Column(length: 50)]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?int $time = null;
 
     #[Assert\LessThan(51)]
     #[ORM\Column(nullable: true)]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?int $nbPeople = null;
 
     #[Assert\Range(
@@ -64,21 +70,21 @@ class Recipe
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?string $description = null;
 
     #[Assert\GreaterThan(0)]
     #[Assert\LessThan(1000)]
     #[ORM\Column(nullable: true)]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?float $price = null;
 
     #[ORM\Column]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?bool $isFavorite = false;
 
     #[ORM\Column]
-    #[Groups(['recipe:list', 'recipe:item'])]
+    #[Groups(['recipe:list', 'recipe:item', 'recipe:write'])]
     private ?bool $isPublic = false;
 
     #[ORM\Column]
@@ -97,11 +103,9 @@ class Recipe
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['recipe:list', 'recipe:item'])]
     private ?User $user = null;
 
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'recipe', orphanRemoval: true)]
-    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $marks;
 
     private ?float $average = null;
@@ -113,9 +117,11 @@ class Recipe
     private ?string $imageName = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?Category $category = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $createdBy = null;
 
     public function __construct()
@@ -161,7 +167,6 @@ class Recipe
         return $this->imageName;
     }
 
-    #[ORM\PrePersist]
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new DateTimeImmutable();
@@ -384,6 +389,11 @@ class Recipe
         return $this->category;
     }
 
+    public function getCategoryName(): ?string
+    {
+        return $this->category?->getName();
+    }
+
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
@@ -399,6 +409,18 @@ class Recipe
     public function setCreatedBy(string $createdBy): static
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

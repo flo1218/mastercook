@@ -26,4 +26,6 @@ return [
     Symfonycasts\SassBundle\SymfonycastsSassBundle::class => ['all' => true],
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    Pontedilana\WeasyprintBundle\WeasyprintBundle::class => ['all' => true],
+    Liip\FunctionalTestBundle\LiipFunctionalTestBundle::class => ['dev' => true, 'test' => true],
 ];

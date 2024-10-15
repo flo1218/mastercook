@@ -1,0 +1,59 @@
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }}
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<h1>{{ recipe.name}}</h1>
+		<span class="badge bg-info rounded-pill mb-4">
+			{{ 'app.createdAt.label'|trans }}
+			{{ recipe.createdAt|format_date('short') }}
+			{{ 'app.by.label'|trans }}
+			{{ recipe.user.fullName }}
+		</span>
+		<div class="row">
+			<div class="col-8">
+				{% if recipe.time %}
+					<p class="form-label">
+						{{ 'recipe.time.label'|trans }}:
+						{{ recipe.time|min_to_hour }}
+					</p>
+				{% endif %}
+				{% if recipe.nbPeople %}
+					<p class="form-label mt-4">
+						{{ 'recipe.nbPeople.label'|trans }}:
+						{{ recipe.nbPeople }}
+					</p>
+				{% endif %}
+				{% if recipe.difficulty %}
+					<p class="form-label mt-4">
+						{{ 'recipe.difficulty.label'|trans }}:
+						{{ recipe.difficulty }}/5
+					</p>
+				{% endif %}
+				<p class="form-label mt-4">
+					{{ 'recipe.description.label'|trans }}:
+				</p>
+				<div>
+					{{ recipe.description| raw}}
+				</div>
+				<p class="form-label mt-4">
+					{{ 'recipe.price.label'|trans }}: {{ recipe.price }}
+				</p>
+				{% if recipe.category %}
+				<p class="form-label mt-4">
+					{{ 'recipe.category.label'|trans }}: {{ recipe.categoryName }}
+				</p>
+				{% endif %}
+				<p class="form-label mt-4">Ingredients:</p>
+				{{ recipe.ingredients|join(', ') }}
+			</div>
+			<div class="col-4">
+				{% if recipe.average %}
+					<p>{{ 'recipe.average.label'|trans }}
+						{{ recipe.average|round(2, 'ceil') }}
+					</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ app.request.server.get('APP_NAME') }} - {{ 'recipe.create.label'|trans }}{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container-lg">
         <h1>{{ 'recipe.create.label'|trans }}</h1>
         
         {{ form_start(form) }}

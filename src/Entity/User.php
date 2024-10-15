@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use App\Entity\Ingredient;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,6 +21,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
+#[ApiResource(
+    security: "is_granted('ROLE_USER')",
+    operations: [],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

@@ -47,4 +47,19 @@ class ViewRecipeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return ViewRecipe[] Returns an array of ViewRecipe objects
+     */
+    public function findDuplicateRecipe($userId, $name): array
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.name = :name')
+            ->setParameter('name', $name)
+            ->andWhere('v.user_id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

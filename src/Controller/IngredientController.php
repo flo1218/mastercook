@@ -52,7 +52,7 @@ class IngredientController extends AbstractController
         IngredientRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var User $user **/
+        /** @var \App\Entity\User $user **/
         if (isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
