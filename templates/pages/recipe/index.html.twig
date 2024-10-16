@@ -37,7 +37,7 @@
 
 			<table id="recipeTable" class="table table-hover">
 				<thead>
-					<tr class="d-flex">
+					<tr>
 						<th class="col-1" scope="col"></th>
 						<th class="col-2" scope="col">{{ 'recipe.name.label'|trans}}</th>
 						<th class="col-2" scope="col">{{ 'recipe.category.label'|trans}}</th>
@@ -50,7 +50,7 @@
 				</thead>
 				<tbody>
 					{% for recette in recettes %}
-						<tr class="jsTableRow d-flex">
+						<tr class="jsTableRow">
 							<td class="col-1" scope="row">
 								<a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a>
 							</td>
