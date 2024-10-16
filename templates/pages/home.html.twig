@@ -51,7 +51,7 @@
 							{{recipe.average|stars_rating()}}
 						</div>
 						{% if recipe.imageName is defined and recipe.imageName is not null  %}
-							<img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
+							<img src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
 						{% endif %}
 						<div class="card-body">
 							<h4 class="card-title">{{ recipe.name }}</h4>

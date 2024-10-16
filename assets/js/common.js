@@ -46,4 +46,12 @@ jQuery(function () {
   if ($('.alert').length) {
     $('.alert').fadeTo(250, 1).delay(5000).slideUp(500, 0);
   }
+
+  // Set active to current menu link
+  jQuery.find(".nav-link").forEach((link) => {
+    if (link.href === window.location.href) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+    }
+});
 });
