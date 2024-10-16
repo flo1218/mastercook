@@ -25,7 +25,7 @@ class MarkType extends AbstractType
                     '5' => 5,
                 ],
                 'attr' => [
-                    'class' => 'form-select',
+                    'class' => 'form-control form-select',
                     'aria-label' => 'test',
                 ],
                 'label' => 'recipe.vote.label',

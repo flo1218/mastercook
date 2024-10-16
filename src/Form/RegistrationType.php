@@ -64,7 +64,7 @@ class RegistrationType extends AbstractType
                     'Anglais' => 'en',
                 ],
                 'attr' => [
-                    'class' => 'form-select',
+                    'class' => 'form-control form-select',
                 ],
                 'label' => 'registration.language.label',
                 'label_attr' => [

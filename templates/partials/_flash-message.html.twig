@@ -34,8 +34,3 @@
     {{ error.messageKey|trans(error.messageData, 'security') }}
     </div>
 {% endfor %}
-<script>
-if ($('.alert').length) {
-  $('.alert').fadeTo(250, 1).delay(5000).slideUp(500, 0);
-}
-</script>
