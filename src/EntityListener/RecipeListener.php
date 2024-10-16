@@ -17,9 +17,12 @@ class RecipeListener
 
     public function prePersist(Recipe $recipe, LifecycleEventArgs $event): void
     {
-        if ($this->security->getUser()) {
+        if ($user = $this->security->getUser()) {
+            /**
+            * @var \App\Entity\User $user
+            */
             $recipe->setUser($this->security->getUser());
-            $recipe->setCreatedBy($this->security->getUser()->getFullName());
+            $recipe->setCreatedBy($user->getFullName());
         }
     }
 

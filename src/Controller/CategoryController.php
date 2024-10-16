@@ -37,7 +37,7 @@ class CategoryController extends AbstractController
 
     /**
      * This function is used to add a new Categorys.
-     * @var User user
+     * @var \App\Entity\User user
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]

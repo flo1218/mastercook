@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IngredientRepository;
 use Symfony\Component\Serializer\Attribute\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -55,14 +54,14 @@ class Ingredient
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['ingredient:list', 'ingredient:item'])]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['ingredient:list', 'ingredient:item'])]
     private ?User $user = null;
 
-    /** 
+    /**
      * Constructor.
      */
     public function __construct()
@@ -99,12 +98,12 @@ class Ingredient
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 

@@ -50,7 +50,7 @@ class Category
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['category:list', 'category:item'])]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]

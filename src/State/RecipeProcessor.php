@@ -11,11 +11,7 @@ use App\Repository\ViewRecipeRepository;
 use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * @implements ProcessorInterface<UserResetPasswordDto, User>
- */
 final class RecipeProcessor implements ProcessorInterface
 {
     public function __construct(
@@ -46,8 +42,12 @@ final class RecipeProcessor implements ProcessorInterface
         if ($data->getTime() > 1440) {
             throw new DuplicateException('Time must be < 1440');
         }
-        $data = $data->setUser($this->security->getUser());
-        $response = $this->recipeRepository->findDuplicateRecipe($this->security->getUser()->getId(), $data->getName());
+        $user = $this->security->getUser();
+        /**
+         * @var \App\Entity\User $user
+         */
+        $data = $data->setUser($user);
+        $response = $this->recipeRepository->findDuplicateRecipe($user->getId(), $data->getName());
         if (count($response) == 0) {
             $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
             return $result;
