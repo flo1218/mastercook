@@ -9,10 +9,8 @@ use App\Entity\User;
 use Twig\Environment;
 use App\Entity\Recipe;
 use App\Form\MarkType;
-use DateTimeImmutable;
 use App\Form\RecipeType;
 use App\Repository\MarkRepository;
-use App\Repository\RecipeRepository;
 use App\Repository\ViewRecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -30,7 +28,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
-
     public function __construct(
         private readonly Environment $twig,
         private readonly Pdf $weasyPrint,
@@ -44,10 +41,13 @@ class RecipeController extends AbstractController
     public function index(
         ViewRecipeRepository $repository,
         PaginatorInterface $paginator,
-        TranslatorInterface $translator,
         Request $request,
     ): Response {
-        $searchParameters = ['user_id' => $this->getUser()->getId()];
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $searchParameters = ['user_id' => $user->getId()];
 
         $recipeType = $request->query->get('type');
         if ($recipeType) {
@@ -125,7 +125,6 @@ class RecipeController extends AbstractController
         TranslatorInterface $translator,
         Pdf $knpSnappyPdf
     ) {
-        
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
         $form->handleRequest($request);

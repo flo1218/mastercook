@@ -87,7 +87,7 @@ recipe.notfound.label : "Your recipe has not been found !"
 recipe.vote.success : 'Your rating has been taken into account'
 recipe.vote.label : 'Rate this recipe'
 recipe.vote.placeholder : 'Please select a rating'
-recipe.average.label: 'The average rating for this recipe is'
+recipe.average.label: 'Average recipe rating:'
 recipe.no.label : 'Recipe n°'
 recipe.create.label : "Create a recipe"
 recipe.update.label : "Update a recipe"

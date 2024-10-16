@@ -87,7 +87,7 @@ recipe.notfound.label : "Votre recette n'a pas été trouvée !"
 recipe.vote.success : 'Votre note a bien été prise en compte'
 recipe.vote.label : 'Noter la recette'
 recipe.vote.placeholder : 'Veuillez sélectionnez une note'
-recipe.average.label: 'La moyenne de cette recette est de'
+recipe.average.label: 'Note moyenne de la recette:'
 recipe.no.label: 'Recette n°'
 recipe.create.label : 'Créer une recette'
 recipe.update.label : "Modification d'une recette"

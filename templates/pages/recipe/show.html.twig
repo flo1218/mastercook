@@ -61,7 +61,7 @@
 				</div>
 				
 			{% if recipe.average %}
-				<p>{{ 'recipe.average.label'|trans }} {{ recipe.average|stars_rating(true, '#3459e6') }}</p>
+				<p>{{ 'recipe.average.label'|trans }}{{ recipe.average|stars_rating(true, '#3459e6') }}</p>
 			{% endif %}
 				{{ form_start(form) }}
 					<div class="form-group">                

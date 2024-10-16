@@ -25,6 +25,9 @@ class ChartController extends AbstractController
         string $year = null,
         string $type = null
     ): Response {
+        /**
+         * @var \Doctrine\ORM\EntityManager $em
+         */
         $em = $doctrine->getManager();
         $emConfig = $em->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');

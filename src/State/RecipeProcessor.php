@@ -4,7 +4,6 @@ namespace App\State;
 
 use Exception;
 use App\Entity\Recipe;
-use App\Dto\UserResetPasswordDto;
 use ApiPlatform\Metadata\Operation;
 use App\Exception\DuplicateException;
 use App\Repository\ViewRecipeRepository;
@@ -40,12 +39,11 @@ final class RecipeProcessor implements ProcessorInterface
     ) {
         /** @var Recipe $data **/
         if ($data->getTime() > 1440) {
-            throw new DuplicateException('Time must be < 1440');
+            throw new Exception('Time must be < 1440');
         }
+
+        /** @var \App\Entity\User $user */
         $user = $this->security->getUser();
-        /**
-         * @var \App\Entity\User $user
-         */
         $data = $data->setUser($user);
         $response = $this->recipeRepository->findDuplicateRecipe($user->getId(), $data->getName());
         if (count($response) == 0) {
