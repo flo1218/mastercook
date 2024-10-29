@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container-lg">
+		
+		<div class="float-end">
+			<a href="{{ path('recipe.print', {'id': recipe.id } )}}">
+				<button class="btn btn-lg btn-success custom-btn bi bi-printer-fill">
+				</button>
+			</a>
+		</div>
+		<h1>{{ 'recipe.update.label'|trans }}</h1>
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.name) }}
+				</div>
+			</div>
+			<div class="col">
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.category) }}
+				</div>
+			</div>
+			<div class="col">
+				{{ form_label(form.time) }}
+				{{ form_widget(form.time) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.time) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				{{ form_label(form.nbPeople) }}
+				{{ form_widget(form.nbPeople) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.nbPeople) }}
+				</div>
+			</div>
+
+			<div class="col">
+				{{ form_label(form.difficulty) }}
+				{{ form_widget(form.difficulty) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.difficulty) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				{{ form_label(form.price) }}
+				{{ form_widget(form.price) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.price) }}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.description) }}
+			{{ form_widget(form.description) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.description) }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div class="form-label mt-4">Options</div>
+				<div class="form-check form-switch mt-4">
+					<input class="form-check-input" type="checkbox" id="recipe_isPublic" value="recipe_isPublic" name="{{ field_name(form.isPublic) }}" {% if form.isPublic.vars.checked %} checked="" {% endif %}>
+					<label class="form-check-label" for="recipe_isPublic">
+						{{ field_label(form.isPublic) }}
+					</label>
+				</div>
+
+				<div class="form-check form-switch mt-4">
+					<input class="form-check-input" type="checkbox" id="recipe_isFavorite" value="recipe_isFavorite" name="{{ field_name(form.isFavorite) }}" {% if form.isFavorite.vars.checked %} checked="" {% endif %}>
+					<label class="form-check-label" for="recipe_isFavorite">
+						{{ field_label(form.isFavorite) }}
+					</label>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="form-label">{{ form_label(form.ingredients) }}</div>
+				{% for ingredient in form.ingredients %}
+					{{ form_widget(ingredient, { 'attr': {'class': 'form-check-input'} }) }}
+					{{ form_label(ingredient) }}
+					<br>
+				{% endfor %}
+			</div>
+			<div class="col">
+				<div class="form-label mt-4">Image</div>
+				{{ form_widget(form.imageFile) }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col mb-4">
+				{{ form_label(form.submit) }}
+				{{ form_widget(form.submit) }}
+
+				{{ form_label(form.cancel) }}
+				{{ form_widget(form.cancel) }}
+			</div>
+		</div>
+		{{ form_row(form._token) }}
+	</div>
+{% endblock %}

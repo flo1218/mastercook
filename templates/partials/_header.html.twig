@@ -1,0 +1,130 @@
+<nav class="navbar navbar-expand-lg bg-primary fixed-top sticky-top" data-bs-theme="dark">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="nav-link" title="{{ 'home.welcome'|trans }}" href="{{ path('home.index')}}">
+						<i class="bi bi-house-door-fill"></i>
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				{% if app.user %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('category.index')}}">
+						{{ 'header.category.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('ingredient.index')}}">
+						{{ 'header.ingredient.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('recipe.index')}}">
+						{{ 'header.recipes.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('recipe.favorite')}}">
+						{{ 'header.favorite.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('recipe.community')}}">
+						{{ 'header.recipes_public.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app.contact')}}">
+						{{ 'contact.title.label'|trans}}
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+			</ul>
+			<div class="d-flex align-content-around flex-wrap">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle align-items-center" href="#" id="dropdown-language" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{ app.request.locale|upper }}
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-language">
+							<li>
+								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
+									English
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}">
+									Français
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% if app.user %}
+					<li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+						<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+						<hr class="d-lg-none my-2 text-white-50">
+					</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle align-items-center" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+								<span class="px-1">{{ app.user.fullName }}</span>
+								{% if app.user.imageName %}
+									<img src="/images/user/{{ app.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar"/>
+								{% endif %}
+							</a>
+
+							<div class="dropdown-menu dropdown-menu-end dropdown-right">
+								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">
+									<i class="bi bi-info-circle m-2"></i>
+									{{ 'header.update-informations.label'|trans }}
+								</a>
+								<a class="dropdown-item" href="{{ path('user_edit-password', {id : app.user.id}) }}">
+									<i class="bi bi-file-person m-2"></i>
+									{{ 'header.update-password.label'|trans }}
+								</a>
+								{% if 'ROLE_ADMIN' in app.user.roles %}
+									<a class="dropdown-item" href="{{ path('admin') }}">
+										<i class="bi bi-speedometer m-2"></i>
+										{{ 'header.administration.label'|trans }}
+									</a>
+									<a class="dropdown-item" href="{{ path('app_chart_recipe_per_year') }}">
+										<i class="bi bi-bar-chart m-2"></i>
+										{{ 'header.chart.label'|trans }}
+									</a>
+								{% endif %}
+									<a class="dropdown-item" href="/api">
+										<i class="bi bi bi-gear m-2"></i>
+										{{ 'header.api.label'|trans }}
+									</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{{ path('app_logout') }}">
+									<i class="bi bi-door-closed m-2"></i>
+									{{ 'header.logout.label'|trans }}</a>
+							</div>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_login') }}">
+								{{ 'header.login.label'|trans }}
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_register') }}">
+								{{ 'header.register.label'|trans }}
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>

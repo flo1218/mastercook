@@ -1,0 +1,179 @@
+# APP
+app.save.label : 'Save'
+app.cancel.label : 'Cancel'
+app.create.label : 'Create'
+app.edit.label : 'Update'
+app.delete.label : 'Delete'
+app.send.label : 'Send'
+app.updatedAt.label : 'Last updated'
+app.createdBy.label : 'Created by'
+app.createdAt.label : 'Created at'
+app.by.label : 'by'
+app.print.label : 'Print'
+
+app.yes.label : 'Yes'
+app.no.label : 'No'
+app.or.label : 'or'
+app.try-again.label : 'try again'
+app.hi.label: 'Hi'
+app.greeting.label: 'Greetings'
+
+app.confirmation.label : 'Are you sure ?'
+app.login.label : 'Login'
+app.password.label: 'Password'
+app.logout.label: 'Logout'
+app.logged.label: 'You are logged in as'
+app.subscription.label : 'Subscription'
+
+app.january.label: 'January'
+app.february.label: 'February'
+app.march.label: 'March'
+app.april.label: 'April'
+app.may.label: 'May'
+app.june.label: 'June'
+app.july.label: 'July'
+app.august.label: 'August'
+app.september.label: 'September'
+app.october.label: 'October'
+app.november.label: 'November'
+app.december.label: 'December'
+
+# HOME
+home.title: 'Welcome to MasterCook!'
+home.welcome : 'Welcome'
+home.hello: 'Hello'
+home.description: "MasterCook is an application that will allow you to create recipes based on ingredients that you create yourself. You can share your recipes with the site's community, or keep them private."
+home.start.description : "To get started, go to the registration page to use the application or log in"
+
+# HEADER
+header.ingredient.label : "Ingredients"
+header.recipes.label : "Recipes"
+header.home.label: 'Home'
+header.favorite.label : "Favorites"
+header.recipes_public.label : "Community recipes"
+header.update-informations.label : 'Update my profile'
+header.update-password.label : 'Update my password'
+header.administration.label : 'Administration'
+header.chart.label : 'Chart'
+header.login.label : 'Login'
+header.register.label : 'Register'
+header.logout.label : 'Logout'
+header.category.label : 'Categories'
+header.api.label : 'API'
+
+# CATEGORY
+category.default.starter: 'Starter'
+category.default.main: 'Main course'
+category.default.dessert: 'Dessert'
+
+# RECIPE
+recipe.community.label : 'Community Recipes'
+recipe.name.label : 'Name'
+recipe.time-minute.label : 'Time (minutes)'
+recipe.time.label : 'Time'
+recipe.nbPeople.label : 'Nb People'
+recipe.difficulty.label : 'Difficulty'
+recipe.description.label : 'Description'
+recipe.price.label : 'Price'
+recipe.isPublic.label : 'Public'
+recipe.isFavorite.label : 'Favoris'
+recipe.image.label : 'Recipe Image'
+recipe.delete-image.label : "Delete picture ?\xA0"
+recipe.download-image.label : "Download picture"
+recipe.created.label : 'Your recipe has been created with success !'
+recipe.updated.label : 'Your recipe has been updated with success !'
+recipe.deleted.label : 'Your recipe has been deleted with success !'
+recipe.notfound.label : "Your recipe has not been found !"
+recipe.vote.success : 'Your rating has been taken into account'
+recipe.vote.label : 'Rate this recipe'
+recipe.vote.placeholder : 'Please select a rating'
+recipe.average.label: 'Average recipe rating:'
+recipe.no.label : 'Recipe n°'
+recipe.create.label : "Create a recipe"
+recipe.update.label : "Update a recipe"
+recipe.nodata.label : 'There is no public recipes'
+recipe.my.label: 'My recipes'
+recipe.favorite.label: 'My favorite recipes'
+recipe.rating.label: 'Rating'
+recipe.confirm-delete.label : 'Are you sure you want to delete this recipe ?'
+recipe:
+  count.label: "{count, plural,
+        =0 {No recipes found}
+        one {There is one recipe}
+        other {There are # recipes}
+      }"
+
+recipe.recipe-per-month.label : 'New recipes per month'
+recipe.category.label : 'Category'
+
+# INGREDIENT
+ingredient.new.label : 'Create an ingredient'
+ingredient.my.label : 'My ingredients'
+ingredient.name.label : 'Name'
+ingredient.price.label : 'Price'
+ingredient.edit.title : 'Update ingredient'
+ingredient.saved.label : 'Your ingredient has been saved successfully'
+ingredient.created.label : 'Your ingredient has been created successfully'
+ingredient.deleted.label : 'Your ingredient has been deleted successfully'
+ingredient.error.notunique.name : "An ingredient already exists with the same name"
+ingredient.confirm-delete.label : 'Are you sure you want to delete this ingredient ?'
+ingredient:
+  count.label: "{count, plural,
+        =0 {No ingredients found}
+        one {There is one ingredient}
+        other {There are # ingredients}
+      }"
+
+# CONTACT
+contact.title.label: 'Contact Us'
+contact.fullname.label : 'Firstname / Lastname'
+contact.email.label : 'Email'
+contact.subject.label : 'Subject'
+contact.message.label : 'Message'
+contact.success.message : 'Your request has been sent successfully'
+contact.forgot-password.label : 'Forgot my password'
+
+# REGISTRATION
+registration.title.label : "Registration Form"
+registration.name.label : 'Name / Firstname'
+registration.pseudo.label : 'Pseudo'
+registration.email.label : 'Email'
+registration.avatar.label : 'Picture'
+registration.language.label: 'Language'
+registration.password.label : 'Password'
+registration.new-password.label : 'New Password'
+registration.repeat-password.label : 'Confirm your password'
+registration.submit.label : 'Submit'
+registration.success.label : 'Your user has been created with success !'
+registration.update.label : 'Your user has been updated with success !'
+registration.invalid-password.label : 'The specified password is invalid !'
+registration.update-password.label : 'Update my password'
+
+reset-password.title.label : 'Reset my password'
+reset-password.description.label : 'Enter your email address, and we will send you a link to reset your password.'
+reset-password.sent.title : 'Password Reset Email Sent'
+reset-password.sent.description : 'If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in ' 
+reset-password.not-received.description : "If you don't receive an email please check your spam folder"
+reset-password.link.label: 'To reset your password, please visit the following link'
+reset-password.link-expire.label: 'This link will expire in'
+reset-password.email.subject: 'Your password reset request'
+
+# ADMINISTRATION
+admin.user.title : Users Administration
+
+# CATEGORIES
+category.my.label : 'My categories'
+category.new.label : 'Create a category'
+category.name.label : 'Name'
+category.edit.title : 'Update category'
+category.created.label : 'The category has been created with success'
+category.saved.label : 'The category has been saved with success'
+category.deleted.label : 'The category has been deleted with success'
+category.confirm-delete.label : 'Are you sure you want to delete this category ?'
+category.error.notunique.name : 'A category already exists with the same name'
+category:
+  count.label: "{count, plural,
+        =0 {No category found}
+        one {There is one category}
+        other {There are # categories}
+      }"

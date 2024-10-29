@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{'ingredient.my.label'|trans}}{% endblock %}
+
+{% block body %}
+<div class="container-lg">     
+    <a class="btn btn-primary float-end custom-btn bi bi-plus-circle-fill" href="{{ path('ingredient.new') }}">
+        {{ 'ingredient.new.label'|trans }}
+    </a>  
+    <h1>{{'ingredient.my.label'|trans}}</h1>
+    <div class="clearfix"></div>
+    <div class="count mt-4">
+        <h6>{{ 'ingredient.count.label'|trans({'count': ingredients.getTotalItemCount}) }}</h6>
+    </div>
+    {% if not ingredients.items is same as([]) %}        
+        <table class="table table-hover">
+        <thead>
+            <tr>
+            <th style="width: 10%" scope="col"></th>
+            <th style="width: 35%" scope="col">{{ 'ingredient.name.label'|trans }}</th>
+            <th style="width: 25%" scope="col">{{ 'ingredient.price.label'|trans }}</th>
+            <th style="width: 20%" scope="col">{{ 'app.createdAt.label'|trans }}</th>
+            <th style="width: 5%" scope="col"></th>
+            <th style="width: 5%" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ingredient in ingredients %}    
+            <tr class="jsTableRow">
+            <td scope="row"><a href="{{ path('ingredient.edit', { id : ingredient.id }) }}">{{ ingredient.id }}</a></td>
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.price|number_format(2, '.', ',') }}
+            CHF
+            </td>
+            <td>{{ ingredient.createdAt | format_datetime('short') }}</td>
+            <td>
+                <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" 
+                    class="btn btn-info" 
+                    title="{{'app.edit.label'|trans}}">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+                    data-href="{{ path('ingredient.delete', { id : ingredient.id }) }}"
+                    title="{{'app.delete.label'|trans}}"
+                    data-label = "{{'ingredient.confirm-delete.label'|trans}}"
+                    data-bs-target="#confirmDeleteModal">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(ingredients) }}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

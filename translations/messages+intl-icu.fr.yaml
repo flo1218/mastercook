@@ -1,0 +1,179 @@
+# APP
+app.save.label : 'Sauvegarder'
+app.cancel.label : 'Annuler'
+app.create.label : 'Créer'
+app.edit.label : 'Mettre à jour'
+app.delete.label : 'Supprimer'
+app.send.label : 'Envoyer'
+app.updatedAt.label : 'Modifié le'
+app.createdBy.label : 'Créé par'
+app.createdAt.label : 'Créé le'
+app.by.label : 'par'
+app.print.label : 'Imprimer'
+
+app.yes.label : 'Oui'
+app.no.label : 'Non'
+app.or.label : 'ou'
+app.try-again.label : 'réessayez'
+app.hi.label: 'Bonjour'
+app.greeting.label: 'Salutations'
+
+app.confirmation.label : 'Etes-vous sûr ?'
+app.login.label: 'Se connecter'
+app.password.label: 'Mot de passe'
+app.logout.label: 'Se déconnecter'
+app.logged.label: 'Vous êtes connecté en tant que'
+app.subscription.label: Inscription
+
+app.january.label: 'Janvier'
+app.february.label: 'Février'
+app.march.label: 'Mars'
+app.april.label: 'Avril'
+app.may.label: 'Mai'
+app.june.label: 'Juin'
+app.july.label: 'Juillet'
+app.august.label: 'Août'
+app.september.label: 'Septembre'
+app.october.label: 'Octobre'
+app.november.label: 'Novembre'
+app.december.label: 'Décembre'
+
+# HOME
+home.title: 'Bienvenue sur MasterCook!'
+home.welcome: 'Accueil'
+home.hello: 'Bonjour'
+home.description: "MasterCook est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées."
+home.start.description: "Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application ou logguez vous"
+
+# HEADER
+header.home.label: 'Accueil'
+header.recipes.label : "Recettes"
+header.ingredient.label : "Ingrédients"
+header.favorite.label : "Favoris"
+header.recipes_public.label : "Recettes de la communauté"
+header.update-informations.label : 'Modifier mes informations'
+header.update-password.label : 'Modifier mon mot de passe'
+header.administration.label : 'Administration'
+header.chart.label : 'Chart'
+header.login.label : 'Connexion'
+header.register.label : 'Inscription'
+header.logout.label : 'Se déconnecter'
+header.category.label : 'Catégories'
+header.api.label : 'REST API'
+
+# CATEGORY
+category.default.starter: 'Entrée'
+category.default.main: 'Plat'
+category.default.dessert: 'Dessert'
+
+# RECIPE
+recipe.community.label: 'Recettes de la communauté'
+recipe.name.label : 'Nom'
+recipe.time-minute.label : 'Temps (minutes)'
+recipe.time.label : 'Temps'
+recipe.nbPeople.label : 'Nb personne'
+recipe.difficulty.label : 'Difficulté'
+recipe.description.label : 'Description'
+recipe.price.label : 'Prix'
+recipe.isPublic.label : 'Public'
+recipe.isFavorite.label : 'Favoris'
+recipe.image.label : 'Image de la recette'
+recipe.delete-image.label : "Supprimer l'image ?\xA0"
+recipe.download-image.label : "Télécharger l'image"
+recipe.created.label : 'Votre recette a été créé avec succès !'
+recipe.updated.label : 'Votre recette a été modifiée avec succès !'
+recipe.deleted.label : 'Votre recette a été supprimée avec succès !'
+recipe.notfound.label : "Votre recette n'a pas été trouvée !"
+recipe.vote.success : 'Votre note a bien été prise en compte'
+recipe.vote.label : 'Noter la recette'
+recipe.vote.placeholder : 'Veuillez sélectionnez une note'
+recipe.average.label: 'Note moyenne de la recette:'
+recipe.no.label: 'Recette n°'
+recipe.create.label : 'Créer une recette'
+recipe.update.label : "Modification d'une recette"
+recipe.nodata.label: "Il n'y a pas de recettes publiques"
+recipe.my.label: 'Mes recettes'
+recipe.favorite.label: 'Mes favoris'
+recipe.rating.label: 'Note'
+recipe.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cette recette ?'
+recipe:
+  count.label: "{count, plural,
+        =0 {Aucune recettes trouvées}
+        one {Il y a une recette}
+        other {Il y a # recettes}
+      }"
+
+recipe.recipe-per-month.label : 'Nouvelles recettes par mois'
+recipe.category.label : 'Catégorie'
+
+# INGREDIENT
+ingredient.new.label : 'Créer un ingrédient'
+ingredient.my.label : 'Mes ingrédients'
+ingredient.name.label : 'Nom'
+ingredient.price.label : 'Prix'
+ingredient.edit.title : 'Modification d''un ingrédient'
+ingredient.saved.label : 'Votre ingrédient a été modifié avec succès'
+ingredient.created.label : 'Votre ingrédient a été créé avec succès'
+ingredient.deleted.label : 'Votre ingrédient a été supprimé avec succès'
+ingredient.error.notunique.name : "Un ingrédient avec le même nom existe déjà"
+ingredient.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cet ingrédient ?'
+ingredient:
+  count.label: "{count, plural,
+        =0 {Aucun ingrédients trouvé}
+        one {Il y a un ingrédient}
+        other {Il y a # ingrédients}
+      }"
+
+# CONTACT
+contact.title.label: 'Contactez-nous'
+contact.fullname.label : 'Prénom / Nom'
+contact.email.label : 'Email'
+contact.subject.label : 'Sujet'
+contact.message.label : 'Message'
+contact.success.message : 'Votre demande a bien été envoyée.'
+contact.forgot-password.label : 'Mot de passe oublié'
+
+# REGISTRATION
+registration.title.label : "Formulaire d'inscription"
+registration.name.label : 'Nom / Prénom'
+registration.pseudo.label : 'Pseudo'
+registration.email.label : 'Email'
+registration.avatar.label : 'Photo de profile'
+registration.language.label: 'Language'
+registration.password.label : 'Mot de passe'
+registration.new-password.label : 'Nouveau Mot de passe'
+registration.repeat-password.label : 'Confirmation du mot de passe'
+registration.submit.label : 'Soumettre'
+registration.success.label : 'Votre utilisateur a été créé avec succès !'
+registration.update.label : 'Votre utilisateur a été modifié avec succès !'
+registration.invalid-password.label : 'le mot de passe renseigné est incorrect !'
+registration.update-password.label : 'Mettre à jour mon mot de passe'
+
+reset-password.title.label: 'Réinitialiser mon mot de passe'
+reset-password.description.label: 'Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.'
+reset-password.sent.title: 'E-mail de réinitialisation du mot de passe envoyé'
+reset-password.sent.description: "S'il existe un compte correspondant à votre adresse e-mail, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans " 
+reset-password.not-received.description: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam"
+reset-password.link.label: 'Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant'
+reset-password.link-expire.label: 'Ce lien expirera dans'
+reset-password.email.subject: 'Votre demande de réinitialisation de mot de passe'
+
+# ADMINISTRATION
+admin.user.title : Administration des utilisateurs
+
+# CATEGORIES
+category.my.label : 'Mes catégories'
+category.new.label : 'Create une catégorie'
+category.name.label : 'Nom'
+category.edit.title : 'Modification de la catégorie'
+category.created.label : 'La catégorie a été créé avec succès'
+category.saved.label : 'La catégorie a été sauvegardée avec succès'
+category.deleted.label : 'La catégorie a été supprimée avec succès'
+category.confirm-delete.label : 'Etes-vous sûr de vouloir supprimer cette catégorie ?'
+category.error.notunique.name : 'Une catégorie avec le même nom existe déjà'
+category:
+  count.label: "{count, plural,
+        =0 {Aucune catégories trouvées}
+        one {Il y a une catégorie}
+        other {Il y a # catégories}
+      }"

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{'recipe.favorite.label'|trans}}{% endblock %}
+{% block body %}
+<div class="container-lg">    
+    <h1>{{ 'recipe.favorite.label'|trans }}</h1>
+    <div class="count mt-4">
+        <h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6> 
+    </div>
+    {% if not recettes.items is same as([]) %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 5%" scope="col"></th>
+                <th style="width: 15%" scope="col">{{ 'recipe.name.label'|trans}}</th>
+                <th style="width: 10%" scope="col">{{ 'recipe.category.label'|trans}}</th>
+                <th style="width: 5%" scope="col">{{ 'recipe.price.label'|trans}}</th>
+                <th style="width: 15%" scope="col">{{ 'recipe.nbPeople.label'|trans}}</th>
+                <th style="width: 10%" scope="col">{{ 'recipe.difficulty.label'|trans}}</th>
+                <th style="width: 20%" scope="col">{{ 'app.updatedAt.label'|trans}}</th>
+                <th style="width: 10%" scope="col">{{ 'recipe.rating.label'|trans}}</th>
+                <th style="width: 5%" scope="col"></th>
+                <th style="width: 5%" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}    
+            <tr class="jsTableRow">
+                <td scope="row"><a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a></td>
+                <td>{{recette.name}}</td>
+                <td>{{recette.categoryName }}</td>
+                <td>{{recette.price is null ? '/' : recette.price}}</td>
+                <td>{{recette.nbPeople is null ? '/' : recette.nbPeople}}</td>
+                <td>{{recette.difficulty is null ? '/' : recette.difficulty}}</td>
+                <td>{{recette.createdAt | format_datetime('short')}}</td>
+                <td>{{recette.average|stars_rating()}}</td>
+                <td>
+                    <a href="{{ path('recipe.edit', { id : recette.id, redirect : path('recipe.favorite') }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                </td>
+                <td>
+                    <button class="btn btn-danger" data-bs-toggle="modal" title="{{'app.delete.label'|trans}}"
+                        data-href="{{ path('recipe.delete', { id : recette.id, redirect : path('recipe.favorite') }) }}"
+                        data-label = "{{'recipe.confirm-delete.label'|trans}}"
+                        data-bs-target="#confirmDeleteModal">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex justify-content-center mt-4">
+        {{ knp_pagination_render(recettes) }}
+    </div>
+{% endif %}
+</div>
+{% endblock %}

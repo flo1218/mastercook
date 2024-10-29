@@ -1,0 +1,9 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+
+#Disable email sendings during tests
+when@test:
+    framework:
+        mailer:
+            dsn: 'null://null'

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ app.request.server.get('APP_NAME') }} - {{ 'ingredient.new.label'|trans }}
+{% endblock %}
+{% block body %}
+    <div class="container-lg">
+        <h1>{{ 'ingredient.new.label'|trans }}</h1>
+
+        {{ form_start(form) }}
+            <div class="form-group">                
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <div class="form-error text-danger">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="form-group">                
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price) }}
+                <div class="form-error text-danger">
+                    {{ form_errors(form.price) }}
+                </div>
+            </div>
+            {{ form_widget(form.submit) }}
+            {{ form_widget(form.cancel) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

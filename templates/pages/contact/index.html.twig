@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }}
+	- Contact
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-lg form-error">
+		<h1>{{'contact.title.label'|trans}}</h1>
+		{{ form_start(form) }}
+		<div class="row">
+			{{ form_label(form.fullName) }}
+			{{ form_widget(form.fullName) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.fullName) }}
+			</div>
+		</div>
+		<div class="row">
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.email) }}
+			</div>
+		</div>
+		<div class="row">
+			{{ form_label(form.subject) }}
+			{{ form_widget(form.subject) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.subject) }}
+			</div>
+		</div>
+		<div class="col">
+			{{ form_label(form.message) }}
+			{{ form_widget(form.message) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.message) }}
+			</div>
+		</div>
+        {{ form_rest(form) }}
+
+	</div>
+	
+</div>{% endblock %}

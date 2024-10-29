@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+}
+
+.carousel .carousel-item img {
+  height: 400px !important;
+  object-fit: cover;
+}
+
+.custom-btn.bi::before {
+  padding-right: 5px;
+}
+
+h1 {
+  font-weight: bold;
+
+  &.big-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* ALERTS */
+.alert-container {
+  position: relative;
+}
+.alert {
+  border-radius: 0;
+  top: 66px;
+  left: 0%;
+  position: absolute;
+  width: 100%;
+  padding: 8px;
+}
+/* END ALERTS */
+
+.vich-image {
+  padding-top: 10px;
+}
+
+.form-image img,
+.vich-image img {
+  width: 250px;
+}
+
+.recipe_container .card-header {
+  font-weight: bold;
+}
+
+label.required:after {
+  content: ' *';
+}
+
+.login-container {
+  position: relative;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 40px;
+  box-shadow: #aaa 0px 7px 29px 0px;
+  border-radius: 5px;
+}
+
+.nav-link.active {
+  text-shadow: 0px 2px 6px rgba(255,255,255,.2);
+}

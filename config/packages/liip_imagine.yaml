@@ -1,0 +1,15 @@
+liip_imagine:
+    twig:
+        mode: lazy
+    resolvers:
+        default:
+            web_path: ~
+
+    filter_sets:
+        cache: ~
+        my_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [120, 90], mode: outbound }
+                # 4px larger to create a 2px border around the final image
+                background: { size: [124, 94], position: center, color: '#000000' }

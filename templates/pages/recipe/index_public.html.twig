@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.request.server.get('APP_NAME') }} - {{ 'recipe.community.label'|trans }}
+{% endblock %}
+
+{% block body %}
+<div class="recipe_container container-lg animate__animated animate__bounceInLeft">
+    {% if not recipes.items is same as([]) %}
+        <h1>{{ 'recipe.community.label'|trans }}</h1>
+        <div class="d-flex justify-content-between flex-wrap">
+        {% for recipe in recipes %}
+        <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
+            <div class="card bg-light m-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    {{ 'recipe.no.label'|trans }}{{ recipe.id }}
+                    {{recipe.average|stars_rating()}}
+                </div>
+                    {% if recipe.imageName is defined and recipe.imageName is not null  %}
+                    <img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h4 class="card-title">{{ recipe.name }}</h4>
+                        <p class="card-text">{{ recipe.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small>
+                      {% if recipe.imageName %}
+                      <img src="/images/user/{{ recipe.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
+                      {% endif %}
+                      <br/>
+                      <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>
+                    </div>
+                </div>
+        </a>
+        {% endfor %}
+        </div>
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(recipes) }}
+        </div>
+    {% else %}
+        <h4> {{ 'recipe.nodata.label'|trans }}</h4>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }}
+	-
+	{{ 'home.welcome'|trans }}
+{% endblock %}
+
+{% block body  %}
+	<div class="container">
+		<div class="jumbotron">
+			<h1 class="big-title">{{ 'home.title'|trans }}</h1>
+			<p class="lead">{{ 'home.description'|trans }}
+			</p>
+			<hr class="my-4">
+
+			{% if not is_granted('IS_AUTHENTICATED') %}
+				<p>{{ 'home.start.description'|trans }}</p>
+				<p class="lead">
+					<a class="btn btn-primary btn-lg custom-btn bi bi-door-open" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
+					<a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'header.register.label'|trans }}</a>
+				</p>
+			{% endif %}
+		</div>
+	</div>
+	<div id="carouselExample" class="carousel slide carousel-fade mt-4" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="../images/raclette.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="../images/poulet_au_four.jpg" class="d-block w-100" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+	<div class="recipe_container container mt-4">
+		<h3>{{ 'recipe.community.label'|trans }}</h3>
+		<div class="card-deck d-flex justify-content-start flex-wrap">
+			{% for recipe in recipes %}
+				<a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
+					<div class="card bg-light m-3" style="max-width: 18rem;">
+						<div class="card-header">
+							{{ 'recipe.no.label'|trans }}{{ recipe.id }}
+							{{recipe.average|stars_rating()}}
+						</div>
+						{% if recipe.imageName is defined and recipe.imageName is not null  %}
+							<img src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
+						{% endif %}
+						<div class="card-body">
+							<h4 class="card-title">{{ recipe.name }}</h4>
+							<p class="card-text">{{ recipe.description }}</p>
+						</div>
+						<div class="card-footer">
+							<small class="text-muted">Last updated
+								{{ recipe.updatedAt | format_datetime('short') }}</small>
+						</div>
+					</div>
+
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

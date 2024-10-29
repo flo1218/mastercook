@@ -1,0 +1,27 @@
+api_platform:
+    title: 'MasterCook REST API'
+    description: 'API for Mastercook'
+    version: '1.0.0'
+    show_webby: false
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    swagger:
+        versions: [3]
+    patch_formats:
+        json: ['application/json']
+    eager_loading:
+        force_eager: false
+    use_symfony_listeners: true
+    formats:
+        jsonld:
+            mime_types: ['application/ld+json']
+        json:
+            mime_types: ['application/json']
+        html:
+            mime_types: ['text/html']
+    collection:
+        pagination:
+            enabled: false
+    graphql:
+        graphql_playground: false
+    keep_legacy_inflector: false

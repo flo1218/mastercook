@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ app.request.server.get('APP_NAME') }} - {{'recipe.my.label'|trans}}
+{% endblock %}
+{% block body %}
+	<div class="container-lg">
+		<a class="btn btn-primary float-end custom-btn bi bi-plus-circle-fill" href="{{ path('recipe.new') }}">
+			{{ 'recipe.create.label'|trans }}
+		</a>
+		<h1>{{ 'recipe.my.label'|trans }}</h1>
+		<div class="clearfix"></div>
+		<div class="count mt-4">
+			<h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				{% if app.user.categories|length > 0 %}
+					<a class="btn {{ recipeType ==null ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}">Toutes</a>
+				{% endif %}
+				{% for category in app.user.categories %}
+					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
+				{% endfor %}
+			</div>
+			<div class="col">
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Filtrer par nom" id="recipeFilter">
+                    <button type="button" id="recipeFilterReset" style="border-bottom-right-radius:0" class="btn btn-secondary bi bi-x-circle "></button>
+                </div>
+
+			</div>
+		</div>
+
+		{% if not recettes.items is same as([]) %}
+		<div class="table-responsive">
+
+			<table id="recipeTable" class="table table-hover">
+				<thead>
+					<tr>
+						<th class="col-1" scope="col"></th>
+						<th class="col-2" scope="col">{{ 'recipe.name.label'|trans}}</th>
+						<th class="col-2" scope="col">{{ 'recipe.category.label'|trans}}</th>
+						<th class="col-1" scope="col">{{ 'recipe.price.label'|trans}}</th>
+						<th class="col-2" scope="col">{{ 'app.updatedAt.label'|trans}}</th>
+						<th class="col-2" scope="col">{{ 'recipe.rating.label'|trans}}</th>
+						<th class="col-1" scope="col"></th>
+						<th class="col-1" scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for recette in recettes %}
+						<tr class="jsTableRow">
+							<td class="col-1" scope="row">
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}">{{recette.id}}</a>
+							</td>
+							<td class="col-2">{{ recette.name }}</td>
+							<td class="col-2">{{ recette.categoryName }}</td>
+							<td class="col-1">{{ recette.price }}</td>
+							<td class="col-2">{{ recette.updatedAt | format_datetime('short') }}</td>
+							<td class="col-2">{{ recette.average|stars_rating}}</td>
+							<td class="col-1">
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
+									<i class="bi bi-pencil-fill"></i>
+								</a>
+							</td>
+							<td class="col-1">
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" title="{{'app.delete.label'|trans}}"
+									data-href="{{ path('recipe.delete', { id : recette.id }) }}"
+									data-label = "{{'recipe.confirm-delete.label'|trans}}"
+									data-bs-target="#confirmDeleteModal">
+									<i class="bi bi-trash3-fill"></i>
+								</button>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(recettes) }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
