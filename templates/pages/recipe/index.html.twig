@@ -9,17 +9,13 @@
 		</a>
 		<h1>{{ 'recipe.my.label'|trans }}</h1>
 		<div class="clearfix"></div>
-		<div class="count mt-4">
-			<h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6>
-		</div>
-
 		<div class="row">
 			<div class="col">
 				{% if app.user.categories|length > 0 %}
-					<a class="btn {{ recipeType ==null ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}">Toutes</a>
+					<a class="btn {{ recipeType ==null ? 'btn-primary' : 'btn-secondary' }}" href="{{ path('recipe.index') }}">Toutes</a>
 				{% endif %}
 				{% for category in app.user.categories %}
-					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
+					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'btn-secondary' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
 				{% endfor %}
 			</div>
 			<div class="col">
@@ -28,8 +24,10 @@
                     <input type="text" class="form-control" placeholder="Filtrer par nom" id="recipeFilter">
                     <button type="button" id="recipeFilterReset" style="border-bottom-right-radius:0" class="btn btn-secondary bi bi-x-circle "></button>
                 </div>
-
 			</div>
+		</div>
+		<div class="count mt-4">
+			<h6>{{ 'recipe.count.label'|trans({'count': recettes.getTotalItemCount}) }}</h6>
 		</div>
 
 		{% if not recettes.items is same as([]) %}
