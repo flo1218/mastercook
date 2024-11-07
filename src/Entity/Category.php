@@ -2,22 +2,21 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Delete;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\CategoryRepository;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity(fields:['name', 'user'])]
+#[UniqueEntity(fields: ['name', 'user'])]
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
     operations: [
@@ -25,7 +24,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(normalizationContext: ['groups' => 'category:list']),
         new Delete(),
     ],
-    //order: ['id' => 'DESC'],
+    // order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 class Category
@@ -50,7 +49,7 @@ class Category
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['category:list', 'category:item'])]
-    private ?DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
@@ -63,13 +62,12 @@ class Category
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category')]
     private Collection $recipes;
 
-
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable();
         $this->recipes = new ArrayCollection();
     }
 
@@ -79,7 +77,7 @@ class Category
     }
 
     /**
-     * Get the value of name
+     * Get the value of name.
      */
     public function getName()
     {
@@ -87,9 +85,9 @@ class Category
     }
 
     /**
-     * Set the value of name
+     * Set the value of name.
      *
-     * @return  self
+     * @return self
      */
     public function setName($name)
     {
@@ -99,7 +97,7 @@ class Category
     }
 
     /**
-     * Get the value of created_at
+     * Get the value of created_at.
      */
     public function getCreatedAt()
     {
@@ -107,9 +105,9 @@ class Category
     }
 
     /**
-     * Set the value of created_at
+     * Set the value of created_at.
      *
-     * @return  self
+     * @return self
      */
     public function setCreatedAt($created_at)
     {
@@ -119,7 +117,7 @@ class Category
     }
 
     /**
-     * Get the value of user
+     * Get the value of user.
      */
     public function getUser()
     {
@@ -127,9 +125,9 @@ class Category
     }
 
     /**
-     * Set the value of user
+     * Set the value of user.
      *
-     * @return  self
+     * @return self
      */
     public function setUser($user)
     {

@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Ingredient;
+use App\Entity\User;
 use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IngredientController extends AbstractController
 {
@@ -41,6 +41,7 @@ class IngredientController extends AbstractController
 
     /**
      * This function is used to add a new ingredients.
+     *
      * @var User user
      */
     #[Route('/ingredient/new', name: 'ingredient.new', methods: ['GET', 'POST'])]
@@ -52,7 +53,7 @@ class IngredientController extends AbstractController
         IngredientRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user **/
+        /* @var \App\Entity\User $user */
         if (isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
@@ -66,6 +67,7 @@ class IngredientController extends AbstractController
                 $manager->persist($ingredient);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('ingredient.created.label'));
+
                 return $this->redirectToRoute('ingredient.index');
             }
             $this->addFlash('warning', $translator->trans('ingredient.error.notunique.name'));

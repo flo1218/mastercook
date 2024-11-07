@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Contact;
+use App\Entity\User;
 use App\Form\ContactType;
 use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
@@ -22,7 +22,7 @@ class ContactController extends AbstractController
      */
     #[Route(path: [
         'en' => '/contact-us',
-        'fr' => '/contactez-nous'
+        'fr' => '/contactez-nous',
     ], name: 'app.contact')]
     public function index(
         Request $request,
@@ -34,7 +34,7 @@ class ContactController extends AbstractController
 
         // Prefill fields if user is connected
         if ($this->getUser()) {
-            /** @var \App\Entity\User $user **/
+            /** @var User $user */
             $user = $this->getUser();
             $contact->setFullName($user->getFullName());
             $contact->setEmail($user->getEmail());

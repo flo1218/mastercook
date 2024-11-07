@@ -21,7 +21,7 @@ class IngredientRepository extends ServiceEntityRepository
         parent::__construct($registry, Ingredient::class);
     }
 
-    public function isNameUniquedByUser(string $name, int $userId, int $excludedId = null): bool
+    public function isNameUniquedByUser(string $name, int $userId, ?int $excludedId = null): bool
     {
         $qb = $this->createQueryBuilder('i')
             ->where('i.name = :name')
@@ -34,6 +34,7 @@ class IngredientRepository extends ServiceEntityRepository
 
         $qb->setParameter('userId', $userId);
         $qb->setParameter('name', $name);
-        return count($qb->getQuery()->getResult()) === 0 ? true : false ;
+
+        return 0 === count($qb->getQuery()->getResult()) ? true : false;
     }
 }

@@ -3,8 +3,8 @@
 namespace App\EntityListener;
 
 use App\Entity\Recipe;
-use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class RecipeListener
 {
@@ -18,9 +18,9 @@ class RecipeListener
     public function prePersist(Recipe $recipe, LifecycleEventArgs $event): void
     {
         if ($user = $this->security->getUser()) {
-            /**
-            * @var \App\Entity\User $user
-            */
+            /*
+             * @var \App\Entity\User $user
+             */
             $recipe->setUser($this->security->getUser());
             $recipe->setCreatedBy($user->getFullName());
         }

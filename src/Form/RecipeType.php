@@ -2,26 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Recipe;
 use App\Entity\Category;
 use App\Entity\Ingredient;
-use Doctrine\ORM\QueryBuilder;
+use App\Entity\Recipe;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
@@ -145,8 +144,8 @@ class RecipeType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
-                'download_label' => "recipe.download-image.label",
-                'delete_label' => "recipe.delete-image.label",
+                'download_label' => 'recipe.download-image.label',
+                'delete_label' => 'recipe.delete-image.label',
                 'allow_delete' => true,
                 'download_uri' => false,
                 'asset_helper' => true,
@@ -198,7 +197,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary custom-btn mt-4 bi bi-floppy2',
                 ],
-                'label' => 'app.save.label'
+                'label' => 'app.save.label',
             ])
             ->add('cancel', SubmitType::class, [
                 'attr' => [

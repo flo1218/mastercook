@@ -2,29 +2,28 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
-use App\State\RecipeProcessor;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\RecipeRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
+use ApiPlatform\Metadata\Post;
+use App\Repository\RecipeRepository;
+use App\State\RecipeProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\RecipeListener'])]
 #[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
-#[UniqueEntity(fields: ['name', 'user'], entityClass: Recipe::class, groups: ["recipe:item", 'recipe:list'])]
+#[UniqueEntity(fields: ['name', 'user'], entityClass: Recipe::class, groups: ['recipe:item', 'recipe:list'])]
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
     securityMessage: 'Sorry, but you are not the recipe owner.',
@@ -34,7 +33,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
         new Post(normalizationContext: ['groups' => 'recipe:item'], processor: RecipeProcessor::class),
     ],
-    //order: ['id' => 'DESC'],
+    // order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 class Recipe
@@ -90,12 +89,12 @@ class Recipe
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['recipe:list', 'recipe:item'])]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['recipe:list', 'recipe:item'])]
-    private ?DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class)]
     #[Groups(['recipe:list', 'recipe:item'])]
@@ -128,8 +127,8 @@ class Recipe
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
         $this->marks = new ArrayCollection();
     }
 
@@ -149,7 +148,7 @@ class Recipe
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
@@ -170,7 +169,7 @@ class Recipe
 
     public function setUpdatedAtValue()
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -262,24 +261,24 @@ class Recipe
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
@@ -415,9 +414,9 @@ class Recipe
     }
 
     /**
-     * Set the value of id
+     * Set the value of id.
      *
-     * @return  self
+     * @return self
      */
     public function setId($id)
     {

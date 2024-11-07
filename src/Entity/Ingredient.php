@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Delete;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\IngredientRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[UniqueEntity(['name', 'user'])]
@@ -22,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(normalizationContext: ['groups' => 'ingredient:list']),
         new Delete(),
     ],
-    //order: ['id' => 'DESC'],
+    // order: ['id' => 'DESC'],
     paginationEnabled: false,
 )]
 class Ingredient
@@ -54,7 +53,7 @@ class Ingredient
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Groups(['ingredient:list', 'ingredient:item'])]
-    private ?DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
@@ -66,7 +65,7 @@ class Ingredient
      */
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -79,7 +78,7 @@ class Ingredient
         return $this->name;
     }
 
-    public function setName(string $name = null): static
+    public function setName(?string $name = null): static
     {
         $this->name = $name;
 
@@ -91,19 +90,19 @@ class Ingredient
         return $this->price;
     }
 
-    public function setPrice(float $price = null): static
+    public function setPrice(?float $price = null): static
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 

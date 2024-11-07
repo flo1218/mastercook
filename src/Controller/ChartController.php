@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
-use Symfony\UX\Chartjs\Model\Chart;
 use App\Repository\RecipeRepository;
-use App\Service\UxPackageRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 class ChartController extends AbstractController
 {
@@ -22,8 +21,8 @@ class ChartController extends AbstractController
         RecipeRepository $repository,
         ManagerRegistry $doctrine,
         TranslatorInterface $translator,
-        string $year = null,
-        string $type = null
+        ?string $year = null,
+        ?string $type = null
     ): Response {
         /**
          * @var \Doctrine\ORM\EntityManager $em
@@ -36,11 +35,11 @@ class ChartController extends AbstractController
 
         // Get datas for chart
         $monthRecipes = [];
-        $year = ($year === null) ? date('Y') : $year;
+        $year = (null === $year) ? date('Y') : $year;
         $recipesPerMonth = $repository->groupByMonth($year);
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 1; $i <= 12; ++$i) {
             $found_key = array_search($i, array_column($recipesPerMonth, 'gBmonth'));
-            $monthRecipes[] = ($found_key === false) ? 0 : $recipesPerMonth[$found_key]['gCount'];
+            $monthRecipes[] = (false === $found_key) ? 0 : $recipesPerMonth[$found_key]['gCount'];
         }
 
         // Building chart
@@ -69,7 +68,7 @@ class ChartController extends AbstractController
                 $translator->trans('app.september.label'),
                 $translator->trans('app.october.label'),
                 $translator->trans('app.november.label'),
-                $translator->trans('app.december.label')
+                $translator->trans('app.december.label'),
             ],
             'datasets' => [
                 [
@@ -94,17 +93,17 @@ class ChartController extends AbstractController
                     'text' => $translator->trans('recipe.recipe-per-month.label'),
                     'fullSize' => true,
                     'font' => [
-                        'size' =>  20,
-                    ]
+                        'size' => 20,
+                    ],
                 ],
                 'zoom' => [
                     'zoom' => [
                         'wheel' => ['enabled' => true],
                         'pinch' => ['enabled' => true],
                         'mode' => 'x',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ]);
 
         return $this->render('pages/chart/index.html.twig', [

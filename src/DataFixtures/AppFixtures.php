@@ -2,16 +2,15 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
-use App\Entity\Mark;
-use App\Entity\User;
-use Faker\Generator;
-use App\Entity\Recipe;
-use DateTimeImmutable;
 use App\Entity\Contact;
 use App\Entity\Ingredient;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\Mark;
+use App\Entity\Recipe;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -62,7 +61,7 @@ class AppFixtures extends Fixture
             'dairyName',
             'vegetableName',
             'fruitName',
-            'meatName'
+            'meatName',
         ];
 
         $ingredients = [];
@@ -78,7 +77,7 @@ class AppFixtures extends Fixture
         }
 
         // Recipes
-        $dateTimeImmutable = new DateTimeImmutable();
+        $dateTimeImmutable = new \DateTimeImmutable();
         for ($j = 1; $j <= 200; ++$j) {
             $recipe = new Recipe();
             $user = $users[mt_rand(0, count($users) - 1)];

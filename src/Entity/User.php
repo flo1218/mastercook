@@ -2,20 +2,18 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
-use App\Entity\Ingredient;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[UniqueEntity('email')]
 #[Vich\Uploadable]
@@ -59,10 +57,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[Assert\PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_WEAK
+    #[PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_WEAK,
     ])]
     private $plainPassword;
 
@@ -184,12 +182,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -218,7 +216,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
         $this->ingredients = new ArrayCollection();
         $this->recipes = new ArrayCollection();
         $this->marks = new ArrayCollection();
@@ -376,7 +374,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->createdAt = (new DateTimeImmutable())->setTimestamp($this->createdAt->getTimestamp());
+            $this->createdAt = (new \DateTimeImmutable())->setTimestamp($this->createdAt->getTimestamp());
         }
     }
 
@@ -384,6 +382,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imageFile;
     }
+
     public function __serialize(): array
     {
         return [

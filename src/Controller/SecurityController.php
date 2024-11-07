@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use LogicException;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -43,7 +42,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
-        throw new LogicException('It will be intercepted by the logout key on your firewall.');
+        throw new \LogicException('It will be intercepted by the logout key on your firewall.');
     }
 
     /**
@@ -65,7 +64,7 @@ class SecurityController extends AbstractController
             $manager->persist($user);
 
             // Add default categories
-            $locale = strtoupper($user->getLanguage()) == 'FR' ? 'fr_FR' : 'en_EN';
+            $locale = 'FR' == strtoupper($user->getLanguage()) ? 'fr_FR' : 'en_EN';
             $defaultCategories = [
                 $translator->trans('category.default.starter', [], null, $locale),
                 $translator->trans('category.default.main', [], null, $locale),

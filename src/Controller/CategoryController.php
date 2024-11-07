@@ -7,14 +7,14 @@ use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoryController extends AbstractController
 {
@@ -37,6 +37,7 @@ class CategoryController extends AbstractController
 
     /**
      * This function is used to add a new Categorys.
+     *
      * @var \App\Entity\User user
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
@@ -48,7 +49,7 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user **/
+        /* @var \App\Entity\User $user */
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -62,6 +63,7 @@ class CategoryController extends AbstractController
                 $manager->persist($category);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('category.created.label'));
+
                 return $this->redirectToRoute('category.index');
             }
             $this->addFlash('warning', $translator->trans('category.error.notunique.name'));
@@ -89,7 +91,7 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user **/
+        /* @var \App\Entity\User $user */
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -101,6 +103,7 @@ class CategoryController extends AbstractController
                 $manager->persist($category);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('category.saved.label'));
+
                 return $this->redirectToRoute('category.index');
             }
             $this->addFlash('warning', $translator->trans('category.error.notunique.name'));

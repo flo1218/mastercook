@@ -4,7 +4,7 @@ jQuery(function () {
     let link = $(location).attr('href');
     let position = link.indexOf("?");
     link = link.substring(0, position != -1 ? position : link.length);
-    let textContent = $(this).closest('tr').children('td:first').text();
+    let textContent = $(this).closest('tr').children('td:first').text().trim();
     $(location).attr('href', link + '/edit/' + encodeURIComponent(textContent));
   });
 

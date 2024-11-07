@@ -4,22 +4,22 @@ namespace App\Controller;
 
 use App\Repository\RecipeRepository;
 use App\Repository\ViewRecipeRepository;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class HomeController extends AbstractController
 {
     /**
-     * Used autoswitch to the right locale
+     * Used autoswitch to the right locale.
      */
     #[Route('/language', 'home.language', methods: ['GET'])]
     public function language(RecipeRepository $recipeRepository, Request $request): Response
     {
-        /** @var \App\Entity\User $user **/
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
         if ($user && $request->getLocale() != strtolower($user->getLanguage())) {
             return $this->redirect('/' . strtolower($user->getLanguage()));
@@ -37,6 +37,7 @@ class HomeController extends AbstractController
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($recipeRepository) {
             $item->expiresAfter(60);
+
             return $recipeRepository->findAllPublicRecipes(20);
         });
 

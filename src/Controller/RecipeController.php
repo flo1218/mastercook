@@ -2,29 +2,29 @@
 
 namespace App\Controller;
 
-use Pontedilana\PhpWeasyPrint\Pdf;
-use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
 use App\Entity\Mark;
-use App\Entity\User;
-use Twig\Environment;
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Form\MarkType;
 use App\Form\RecipeType;
 use App\Repository\MarkRepository;
 use App\Repository\ViewRecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Pontedilana\PhpWeasyPrint\Pdf;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class RecipeController extends AbstractController
 {
@@ -33,6 +33,7 @@ class RecipeController extends AbstractController
         private readonly Pdf $weasyPrint,
     ) {
     }
+
     /**
      * This function is used to display the list of recipes.
      */
@@ -60,7 +61,7 @@ class RecipeController extends AbstractController
 
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
-            'recipeType' => $recipeType
+            'recipeType' => $recipeType,
         ]);
     }
 
@@ -76,6 +77,7 @@ class RecipeController extends AbstractController
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(60);
+
             return $repository->findAllPublicRecipes();
         });
 
@@ -94,7 +96,7 @@ class RecipeController extends AbstractController
         Request $request,
         UserInterface $user
     ): Response {
-        /** @var \App\Entity\User $user **/
+        /** @var User $user */
         $data = $repository->findAllFavoriteRecipes($user->getId());
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
@@ -114,7 +116,7 @@ class RecipeController extends AbstractController
         ],
         message: 'Access denied'
     )]
-     /**
+    /**
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function show(
@@ -188,7 +190,6 @@ class RecipeController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
-
         if (isset($request->get('recipe')['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }

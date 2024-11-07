@@ -22,7 +22,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
-        Operation $operation = null,
+        ?Operation $operation = null,
         array $context = []
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
@@ -33,7 +33,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         array $identifiers,
-        Operation $operation = null,
+        ?Operation $operation = null,
         array $context = []
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
@@ -46,9 +46,9 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
                 Recipe::class,
                 Ingredient::class,
                 Category::class,
-            ]) ||
-            $this->security->isGranted('ROLE_ADMIN') ||
-            null === $user = $this->security->getUser()
+            ])
+            || $this->security->isGranted('ROLE_ADMIN')
+            || null === $user = $this->security->getUser()
         ) {
             return;
         }

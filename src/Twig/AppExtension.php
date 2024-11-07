@@ -35,7 +35,7 @@ class AppExtension extends AbstractExtension
     public function starsRating($value, $showNumeric = false, $color = 'orange')
     {
         $rawString = '<span class="ms-2 inline" style="color: ' . $color . ';">';
-        for ($i = 0; $i <= 4; $i++) {
+        for ($i = 0; $i <= 4; ++$i) {
             if ($value - $i >= 0.8) {
                 $rawString .= '<i class="bi bi-star-fill"></i>';
             } elseif ($value - $i <= 0.2) {
@@ -49,6 +49,7 @@ class AppExtension extends AbstractExtension
         }
 
         $rawString .= '</span>';
+
         return new Markup($rawString, 'UTF-8');
     }
 }
