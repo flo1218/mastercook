@@ -1,5 +1,6 @@
 # APP
 app.save.label : 'Save'
+app.find.label : 'Find'
 app.cancel.label : 'Cancel'
 app.create.label : 'Create'
 app.edit.label : 'Update'
@@ -60,6 +61,7 @@ header.register.label : 'Register'
 header.logout.label : 'Logout'
 header.category.label : 'Categories'
 header.api.label : 'API'
+header.suggest.label: 'Recipe suggestion'
 
 # CATEGORY
 category.default.starter: 'Starter'

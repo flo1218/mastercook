@@ -12,30 +12,36 @@
 					</a>
 				</li>
 				{% if app.user %}
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('category.index')}}">
-						{{ 'header.category.label'|trans}}
-						<span class="visually-hidden">(current)</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('ingredient.index')}}">
-						{{ 'header.ingredient.label'|trans}}
-						<span class="visually-hidden">(current)</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('recipe.index')}}">
-						{{ 'header.recipes.label'|trans}}
-						<span class="visually-hidden">(current)</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('recipe.favorite')}}">
-						{{ 'header.favorite.label'|trans}}
-						<span class="visually-hidden">(current)</span>
-					</a>
-				</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('category.index')}}">
+							{{ 'header.category.label'|trans}}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('ingredient.index')}}">
+							{{ 'header.ingredient.label'|trans}}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('recipe.index')}}">
+							{{ 'header.recipes.label'|trans}}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('recipe.favorite')}}">
+							{{ 'header.favorite.label'|trans}}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('recipe.suggest')}}">
+							{{ 'header.suggest.label'|trans}}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
 				{% endif %}
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('recipe.community')}}">
@@ -70,10 +76,10 @@
 						</ul>
 					</li>
 					{% if app.user %}
-					<li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-						<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-						<hr class="d-lg-none my-2 text-white-50">
-					</li>
+						<li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+							<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+							<hr class="d-lg-none my-2 text-white-50">
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle align-items-center" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
 								<span class="px-1">{{ app.user.fullName }}</span>
@@ -81,7 +87,6 @@
 									<img src="/images/user/{{ app.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar"/>
 								{% endif %}
 							</a>
-
 							<div class="dropdown-menu dropdown-menu-end dropdown-right">
 								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">
 									<i class="bi bi-info-circle m-2"></i>
@@ -101,10 +106,10 @@
 										{{ 'header.chart.label'|trans }}
 									</a>
 								{% endif %}
-									<a class="dropdown-item" href="/api">
-										<i class="bi bi bi-gear m-2"></i>
-										{{ 'header.api.label'|trans }}
-									</a>
+								<a class="dropdown-item" href="/api">
+									<i class="bi bi bi-gear m-2"></i>
+									{{ 'header.api.label'|trans }}
+								</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ path('app_logout') }}">
 									<i class="bi bi-door-closed m-2"></i>

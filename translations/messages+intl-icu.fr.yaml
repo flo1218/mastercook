@@ -1,5 +1,6 @@
 # APP
 app.save.label : 'Sauvegarder'
+app.find.label : 'Rechercher'
 app.cancel.label : 'Annuler'
 app.create.label : 'Créer'
 app.edit.label : 'Mettre à jour'
@@ -60,6 +61,7 @@ header.register.label : 'Inscription'
 header.logout.label : 'Se déconnecter'
 header.category.label : 'Catégories'
 header.api.label : 'REST API'
+header.suggest.label: 'Suggestion de recettes'
 
 # CATEGORY
 category.default.starter: 'Entrée'
@@ -105,6 +107,7 @@ recipe:
 
 recipe.recipe-per-month.label : 'Nouvelles recettes par mois'
 recipe.category.label : 'Catégorie'
+recipe.suggest.label : 'Veuillez sélectionner les ingrédients dont vous disposez.'
 
 # INGREDIENT
 ingredient.new.label : 'Créer un ingrédient'

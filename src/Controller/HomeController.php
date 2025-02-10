@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\RecipeRepository;
 use App\Repository\ViewRecipeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -19,7 +20,7 @@ class HomeController extends AbstractController
     #[Route('/language', 'home.language', methods: ['GET'])]
     public function language(RecipeRepository $recipeRepository, Request $request): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $this->getUser();
         if ($user && $request->getLocale() != strtolower($user->getLanguage())) {
             return $this->redirect('/' . strtolower($user->getLanguage()));

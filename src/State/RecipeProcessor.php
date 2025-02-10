@@ -2,11 +2,12 @@
 
 namespace App\State;
 
-use ApiPlatform\Metadata\Operation;
-use ApiPlatform\State\ProcessorInterface;
+use App\Entity\User;
 use App\Entity\Recipe;
+use ApiPlatform\Metadata\Operation;
 use App\Exception\DuplicateException;
 use App\Repository\ViewRecipeRepository;
+use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -36,7 +37,7 @@ final class RecipeProcessor implements ProcessorInterface
             throw new \Exception('Time must be < 1440');
         }
 
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $this->security->getUser();
         $data = $data->setUser($user);
         $response = $this->recipeRepository->findDuplicateRecipe($user->getId(), $data->getName());

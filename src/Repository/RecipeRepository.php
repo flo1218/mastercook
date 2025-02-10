@@ -61,4 +61,23 @@ class RecipeRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findRecipesByIngredients($ingredients, $user): array
+    {
+        $arrayId = [];
+        foreach ($ingredients as $ingredient) {
+            $arrayId[] = $ingredient->getId();
+        }
+
+        $qb = $this->createQueryBuilder('r')
+            ->addSelect('count(i.id) AS HIDDEN ingredients_count')
+            ->join('r.ingredients', 'i')
+            ->orderBy('ingredients_count', 'DESC')
+            ->groupBy('r.id');
+
+        return $qb->where($qb->expr()->in('i.id', y: implode(',', $arrayId)))
+            ->andWhere('r.isPublic = 1 or r.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()->getResult();
+    }
 }

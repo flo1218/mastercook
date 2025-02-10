@@ -3,36 +3,38 @@
 namespace App\Controller;
 
 use App\Entity\Mark;
-use App\Entity\Recipe;
 use App\Entity\User;
+use Twig\Environment;
+use App\Entity\Recipe;
 use App\Form\MarkType;
 use App\Form\RecipeType;
+use App\Form\RecipeSearchType;
 use App\Repository\MarkRepository;
+use Pontedilana\PhpWeasyPrint\Pdf;
+use App\Repository\RecipeRepository;
+use App\Repository\IngredientRepository;
 use App\Repository\ViewRecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Pontedilana\PhpWeasyPrint\Pdf;
-use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Cache\ItemInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
     public function __construct(
         private readonly Environment $twig,
         private readonly Pdf $weasyPrint,
-    ) {
-    }
+    ) {}
 
     /**
      * This function is used to display the list of recipes.
@@ -289,5 +291,40 @@ class RecipeController extends AbstractController
         }
 
         return $this->redirectToRoute('recipe.index');
+    }
+
+    #[Route('recipe/suggest', 'recipe.suggest', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function suggest(
+        Request $request,
+        EntityManagerInterface $manager,
+        PaginatorInterface $paginator,
+        IngredientRepository $repository,
+        RecipeRepository $recipeRepo,
+        TranslatorInterface $translator
+    ): Response {
+        if (isset($request->get('recipe_search')['cancel'])) {
+            return $this->redirectToRoute('recipe.suggest');
+        }
+
+        $recipes = null;
+        $form = $this->createForm(RecipeSearchType::class, null);
+        $form->handleRequest($request);
+        $ingredients = $form->getData();
+        if ($form->isSubmitted() && count($ingredients['ingredients']) > 0) {
+            $user = $this->getUser();
+            $recipes = $recipeRepo->findRecipesByIngredients($ingredients['ingredients'], $user);
+        }
+
+        $ingredients = $paginator->paginate(
+            $repository->findBy(['user' => $this->getUser()]),
+            $request->query->getInt('page', 1)
+        );
+
+        return $this->render('pages/recipe/suggest.html.twig', [
+            'form' => $form->createView(),
+            'ingredients' => $ingredients,
+            'recettes' => $recipes,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +50,6 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /* @var \App\Entity\User $user */
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -58,6 +58,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
+            /** @var User $user */
             if ($repository->isNameUniquedByUser($category->getName(), $user->getId())) {
                 $category->setUser($this->getUser());
                 $manager->persist($category);
@@ -91,7 +92,6 @@ class CategoryController extends AbstractController
         CategoryRepository $repository,
         UserInterface $user
     ): Response {
-        /* @var \App\Entity\User $user */
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
@@ -99,6 +99,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
+            /** @var User $user */
             if ($repository->isNameUniquedByUser($category->getName(), $user->getId(), $category->getId())) {
                 $manager->persist($category);
                 $manager->flush();
