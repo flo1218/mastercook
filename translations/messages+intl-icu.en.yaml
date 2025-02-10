@@ -107,6 +107,7 @@ recipe:
 
 recipe.recipe-per-month.label : 'New recipes per month'
 recipe.category.label : 'Category'
+recipe.suggest.label : 'Please select the ingredients you have available.'
 
 # INGREDIENT
 ingredient.new.label : 'Create an ingredient'
