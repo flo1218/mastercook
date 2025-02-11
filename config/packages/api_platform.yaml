@@ -7,6 +7,10 @@ api_platform:
         paths: ['%kernel.project_dir%/src/Entity']
     swagger:
         versions: [3]
+        api_keys:
+                JWT:
+                    name: Authorization
+                    type: header
     patch_formats:
         json: ['application/json']
     eager_loading:
