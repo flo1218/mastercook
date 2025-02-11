@@ -2,29 +2,31 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginTest extends WebTestCase
 {
     public function testIfLoginIsSuccessful(): void
     {
-        self::ensureKernelShutdown();
+        // Create a client to simulate a browser
         $client = static::createClient();
 
+        // Get the URL generator service
         $urlGenerator = $client->getContainer()->get('router');
+        $userRepository = self::getContainer()->get(UserRepository::class);
 
-        $crawler = $client->request('GET', $urlGenerator->generate('app_login'));
+        // Find the test user in the database
+        $testUser = $userRepository->findOneByEmail('admin@mastercook.ch');
+        $this->assertNotNull($testUser, 'Test user not found in the database.');
 
-        // Form
-        $form = $crawler->filter('form[name=login]')->form([
-            '_username' => 'admin@mastercook.ch',
-        ]);
+        // Log in the test user
+        $client->loginUser($testUser);
 
-        $client->submit($form);
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
-
-        $client->followRedirect();
+        // User is now logged in, so you can test protected resources
+        $client->request('GET', $urlGenerator->generate('recipe.index'));
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Mes recettes');
     }
 }
