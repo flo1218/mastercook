@@ -73,6 +73,11 @@
 									Français
 								</a>
 							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'it'})) }}">
+									Italian
+								</a>
+							</li>
 						</ul>
 					</li>
 					{% if app.user %}

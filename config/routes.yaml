@@ -4,10 +4,11 @@ controllers:
         namespace: App\Controller
     type: attribute
     requirements:
-        _locale: 'fr|en'
+        _locale: 'fr|en|it'
     prefix:
         fr: /fr
         en: /en
+        it: /it
 
 home_fallback:
     path: /

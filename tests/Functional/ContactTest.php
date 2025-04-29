@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testContactFormSubmission(): void
     {
         self::ensureKernelShutdown();
         $client = static::createClient();
@@ -34,13 +34,6 @@ class ContactTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         // Verifier l'envoi de l'email
-        // $this->assertEmailCount(1);
-        // $client->followRedirect();
-
-        // // Verifier la présence du message de succès
-        // $this->assertSelectorTextContains(
-        //     'div.alert.alert-success.mt-4',
-        //     'Votre demande a bien été envoyée.'
-        // );
+        $this->assertEmailCount(1);
     }
 }

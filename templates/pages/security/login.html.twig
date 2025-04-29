@@ -1,19 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{'app.login.label'|trans}}{% endblock %}
 {% block body %}
-<div class="container-lg login-container mt-5">
+<div class="container-lg login-container mt-5 ">
     <form name="login" method="post">
+    <input type="hidden" name="_target_path" value="{{ back_to_your_page }}"/>
         {% if app.user %}
             <div class="mb-3">
                 {{ 'app.logged.label'|trans }}&nbsp;{{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{{ 'app.logout.label'|trans }}</a>
             </div>
         {% else %}
             <h3 class="mb-3 mt-4">{{ 'app.login.label'|trans }}</h3>
-            <input required autofocus type="email" placeholder="login" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email">
-            <br/>
-            <div class="input-group">
-                <input required type="password" name="_password" placeholder="password" id="password" class="form-control" autocomplete="current-password">
-                <button type="button" id="togglePassword" class="btn btn-secondary bi bi-eye-slash"></button>
+            <div class="form-floating mb-3">
+                <input required 
+                    type="email" 
+                    placeholder="login" 
+                    class="form-control" 
+                    id="username" 
+                    name="_username" 
+                    autocomplete="email" 
+                    placeholder="name@example.com" 
+                    value="{{ last_username }}">
+                <label for="floatingInput">Login</label>
+            </div>
+            <div class="form-floating input-group">
+                <input required type="password" 
+                       class="form-control" 
+                       id="password" 
+                       name="_password"
+                       autocomplete="current-password"
+                       placeholder="Password">
+                       <button type="button" id="togglePassword" class="btn btn-secondary bi bi-eye-slash"></button>
+                <label for="floatingPassword">Password</label>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

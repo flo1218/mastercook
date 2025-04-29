@@ -47,6 +47,7 @@ class UserType extends AbstractType
             'choices' => [
                 'Français' => 'fr',
                 'Anglais' => 'en',
+                'Italien' => 'it',
             ],
             'attr' => [
                 'class' => 'form-control form-select',

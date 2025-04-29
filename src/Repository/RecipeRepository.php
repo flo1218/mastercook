@@ -64,10 +64,11 @@ class RecipeRepository extends ServiceEntityRepository
 
     public function findRecipesByIngredients($ingredients, $user): array
     {
-        $arrayId = [];
+        $ingredientNamesArray = [];
         foreach ($ingredients as $ingredient) {
-            $arrayId[] = $ingredient->getId();
+            $ingredientNamesArray[] = $ingredient->getName();
         }
+        $ingredientNames = "'" . implode("','", $ingredientNamesArray) . "'";
 
         $qb = $this->createQueryBuilder('r')
             ->addSelect('count(i.id) AS HIDDEN ingredients_count')
@@ -75,7 +76,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->orderBy('ingredients_count', 'DESC')
             ->groupBy('r.id');
 
-        return $qb->where($qb->expr()->in('i.id', y: implode(',', $arrayId)))
+        return $qb->where($qb->expr()->in('i.name', y: $ingredientNames))
             ->andWhere('r.isPublic = 1 or r.user = :user')
             ->setParameter('user', $user)
             ->getQuery()->getResult();

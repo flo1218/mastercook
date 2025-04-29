@@ -19,7 +19,7 @@ class SecurityController extends AbstractController
      * This function manage the connexion process.
      */
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -33,6 +33,7 @@ class SecurityController extends AbstractController
         return $this->render('pages/security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'back_to_your_page' => $request->headers->get('referer')
         ]);
     }
 

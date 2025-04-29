@@ -23,6 +23,7 @@ class ContactController extends AbstractController
     #[Route(path: [
         'en' => '/contact-us',
         'fr' => '/contactez-nous',
+        'it' => '/contattaci',
     ], name: 'app.contact')]
     public function index(
         Request $request,

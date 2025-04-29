@@ -7,6 +7,7 @@ use App\Entity\Recipe;
 use App\Repository\UserRepository;
 use App\Repository\RecipeRepository;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class RecipeTest extends ApiTestCase
 {
@@ -119,6 +120,29 @@ class RecipeTest extends ApiTestCase
         );
 
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testPostRecipesFailed(): void
+    {
+        static::createAuthenticatedClient()->request(
+            method: 'POST',
+            url: '/api/recipes',
+            options: [ 'body' => json_encode([
+                "time" => 1440,
+                "nbPeople" => 50,
+                "difficulty" => 1,
+                "description" => "Description",
+                "price" => 1,
+                "isFavorite" => true,
+                "isPublic" => true
+             ]),
+                'headers' => [
+                    'Content-Type' => 'application/ld+json',
+                ],
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**

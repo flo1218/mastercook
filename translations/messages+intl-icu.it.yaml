@@ -1,0 +1,183 @@
+# APP
+app.save.label : 'Salvare'
+app.find.label : 'Cercare'
+app.cancel.label : 'Annullare'
+app.create.label : 'Creare'
+app.edit.label : 'Aggiornare'
+app.delete.label : 'Eliminare'
+app.send.label : 'Inviare'
+app.updatedAt.label : 'Modificato il'
+app.createdBy.label : 'Creato da'
+app.createdAt.label : 'Creato il'
+app.by.label : 'da'
+app.print.label : 'Stampare'
+
+app.yes.label : 'Sì'
+app.no.label : 'No'
+app.or.label : 'o'
+app.try-again.label : 'riprova'
+app.hi.label: 'Ciao'
+app.greeting.label: 'Saluti'
+
+app.confirmation.label : 'Sei sicuro?'
+app.login.label: 'Accedi'
+app.password.label: 'Password'
+app.logout.label: 'Disconnettersi'
+app.logged.label: 'Sei connesso come'
+app.subscription.label: 'Iscrizione'
+
+app.january.label: 'Gennaio'
+app.february.label: 'Febbraio'
+app.march.label: 'Marzo'
+app.april.label: 'Aprile'
+app.may.label: 'Maggio'
+app.june.label: 'Giugno'
+app.july.label: 'Luglio'
+app.august.label: 'Agosto'
+app.september.label: 'Settembre'
+app.october.label: 'Ottobre'
+app.november.label: 'Novembre'
+app.december.label: 'Dicembre'
+
+# HOME
+home.app.title: 'MasterCook'
+home.title: 'Benvenuto su MasterCook!'
+home.welcome: 'Benvenuto'
+home.hello: 'Ciao'
+home.description: "MasterCook è un'applicazione che ti permetterà di creare ricette a base di ingredienti che avrai creato tu stesso. Potrai condividere le tue ricette con la comunità del sito, oppure tenerle private."
+home.start.description: "Per iniziare, vai alla pagina di iscrizione per utilizzare l'applicazione o accedi"
+
+# HEADER
+header.home.label: 'Home'
+header.recipes.label : "Ricette"
+header.ingredient.label : "Ingredienti"
+header.favorite.label : "Preferiti"
+header.recipes_public.label : "Ricette della comunità"
+header.update-informations.label : 'Modifica le mie informazioni'
+header.update-password.label : 'Modifica la mia password'
+header.administration.label : 'Amministrazione'
+header.chart.label : 'Grafico'
+header.login.label : 'Accesso'
+header.register.label : 'Iscrizione'
+header.logout.label : 'Disconnettersi'
+header.category.label : 'Categorie'
+header.api.label : 'REST API'
+header.suggest.label: 'Suggerimento di ricette'
+
+# CATEGORY
+category.default.starter: 'Antipasto'
+category.default.main: 'Piatto principale'
+category.default.dessert: 'Dessert'
+
+# RECIPE
+recipe.community.label: 'Ricette della comunità'
+recipe.name.label : 'Nome'
+recipe.time-minute.label : 'Tempo (minuti)'
+recipe.time.label : 'Tempo'
+recipe.nbPeople.label : 'Numero di persone'
+recipe.difficulty.label : 'Difficoltà'
+recipe.description.label : 'Descrizione'
+recipe.price.label : 'Prezzo'
+recipe.isPublic.label : 'Pubblico'
+recipe.isFavorite.label : 'Preferiti'
+recipe.image.label : 'Immagine della ricetta'
+recipe.delete-image.label : "Eliminare l'immagine?\xA0"
+recipe.download-image.label : "Scaricare l'immagine"
+recipe.created.label : 'La tua ricetta è stata creata con successo!'
+recipe.updated.label : 'La tua ricetta è stata modificata con successo!'
+recipe.deleted.label : 'La tua ricetta è stata eliminata con successo!'
+recipe.notfound.label : "La tua ricetta non è stata trovata!"
+recipe.vote.success : 'Il tuo voto è stato registrato con successo'
+recipe.vote.label : 'Vota la ricetta'
+recipe.vote.placeholder : 'Seleziona un voto'
+recipe.average.label: 'Voto medio della ricetta:'
+recipe.no.label: 'Ricetta n°'
+recipe.create.label : 'Crea una ricetta'
+recipe.update.label : "Modifica una ricetta"
+recipe.nodata.label: "Non ci sono ricette pubbliche"
+recipe.my.label: 'Le mie ricette'
+recipe.favorite.label: 'I miei preferiti'
+recipe.rating.label: 'Voto'
+recipe.confirm-delete.label : 'Sei sicuro di voler eliminare questa ricetta?'
+recipe:
+  count.label: "{count, plural,
+        =0 {Nessuna ricetta trovata}
+        one {C'è una ricetta}
+        other {Ci sono # ricette}
+      }"
+
+recipe.recipe-per-month.label : 'Nuove ricette per mese'
+recipe.category.label : 'Categoria'
+recipe.suggest.label : 'Seleziona gli ingredienti di cui disponi.'
+
+# INGREDIENT
+ingredient.new.label : 'Crea un ingrediente'
+ingredient.my.label : 'I miei ingredienti'
+ingredient.name.label : 'Nome'
+ingredient.price.label : 'Prezzo'
+ingredient.edit.title : 'Modifica un ingrediente'
+ingredient.saved.label : 'Il tuo ingrediente è stato modificato con successo'
+ingredient.created.label : 'Il tuo ingrediente è stato creato con successo'
+ingredient.deleted.label : 'Il tuo ingrediente è stato eliminato con successo'
+ingredient.error.notunique.name : "Esiste già un ingrediente con lo stesso nome"
+ingredient.confirm-delete.label : 'Sei sicuro di voler eliminare questo ingrediente?'
+ingredient:
+  count.label: "{count, plural,
+        =0 {Nessun ingrediente trovato}
+        one {C'è un ingrediente}
+        other {Ci sono # ingredienti}
+      }"
+
+# CONTACT
+contact.title.label: 'Contattaci'
+contact.fullname.label : 'Nome / Cognome'
+contact.email.label : 'Email'
+contact.subject.label : 'Oggetto'
+contact.message.label : 'Messaggio'
+contact.success.message : 'La tua richiesta è stata inviata con successo.'
+contact.forgot-password.label : 'Password dimenticata'
+
+# REGISTRATION
+registration.title.label : "Modulo di iscrizione"
+registration.name.label : 'Nome / Cognome'
+registration.pseudo.label : 'Pseudonimo'
+registration.email.label : 'Email'
+registration.avatar.label : 'Foto del profilo'
+registration.language.label: 'Lingua'
+registration.password.label : 'Password'
+registration.new-password.label : 'Nuova Password'
+registration.repeat-password.label : 'Conferma Password'
+registration.submit.label : 'Invia'
+registration.success.label : 'Il tuo utente è stato creato con successo!'
+registration.update.label : 'Il tuo utente è stato modificato con successo!'
+registration.invalid-password.label : 'La password inserita non è corretta!'
+registration.update-password.label : 'Aggiorna la mia password'
+
+reset-password.title.label: 'Reimposta la mia password'
+reset-password.description.label: 'Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la tua password.'
+reset-password.sent.title: 'Email di reimpostazione della password inviata'
+reset-password.sent.description: "Se esiste un account corrispondente al tuo indirizzo email, è stata inviata un'email contenente un link che puoi utilizzare per reimpostare la tua password. Questo link scadrà in "
+reset-password.not-received.description: "Se non ricevi un'email, controlla la tua cartella spam"
+reset-password.link.label: 'Per reimpostare la tua password, visita il seguente link'
+reset-password.link-expire.label: 'Questo link scadrà in'
+reset-password.email.subject: 'Richiesta di reimpostazione della password'
+
+# ADMINISTRATION
+admin.user.title : Amministrazione degli utenti
+
+# CATEGORIES
+category.my.label : 'Le mie categorie'
+category.new.label : 'Crea una categoria'
+category.name.label : 'Nome'
+category.edit.title : 'Modifica la categoria'
+category.created.label : 'La categoria è stata creata con successo'
+category.saved.label : 'La categoria è stata salvata con successo'
+category.deleted.label : 'La categoria è stata eliminata con successo'
+category.confirm-delete.label : 'Sei sicuro di voler eliminare questa categoria?'
+category.error.notunique.name : 'Esiste già una categoria con lo stesso nome'
+category:
+  count.label: "{count, plural,
+        =0 {Nessuna categoria trovata}
+        one {C'è una categoria}
+        other {Ci sono # categorie}
+      }"

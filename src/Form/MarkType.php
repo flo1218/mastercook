@@ -24,6 +24,10 @@ class MarkType extends AbstractType
                     '4' => 4,
                     '5' => 5,
                 ],
+                'choice_attr' => [
+                    '1' => ['style' => 'color:red'],
+                    '5' => ['style' => 'color:green'],
+                ],
                 'attr' => [
                     'class' => 'form-control form-select',
                     'aria-label' => 'test',

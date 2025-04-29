@@ -16,5 +16,10 @@ class BasicTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Bienvenue sur MasterCook');
+
+        // Nouvelles assertions
+        $this->assertSelectorExists('nav'); // Vérifie la présence de la barre de navigation
+        $this->assertSelectorTextContains('title', 'MasterCook'); // Vérifie le titre de la page
+        $this->assertSelectorExists('footer'); // Vérifie la présence du pied de page
     }
 }

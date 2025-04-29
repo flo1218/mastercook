@@ -28,5 +28,8 @@ class LoginTest extends WebTestCase
         $client->request('GET', $urlGenerator->generate('recipe.index'));
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Mes recettes');
+        // Nouvelles assertions
+        $this->assertSelectorExists('nav'); // Vérifie la présence de la barre de navigation
+        $this->assertSelectorTextContains('h1', 'Mes recettes'); // Vérifie le titre de la page
     }
 }

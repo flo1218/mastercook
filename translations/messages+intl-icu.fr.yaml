@@ -40,6 +40,7 @@ app.november.label: 'Novembre'
 app.december.label: 'Décembre'
 
 # HOME
+home.app.title: 'MasterCook'
 home.title: 'Bienvenue sur MasterCook!'
 home.welcome: 'Accueil'
 home.hello: 'Bonjour'
