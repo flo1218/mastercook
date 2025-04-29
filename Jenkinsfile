@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                // Installer les dépendances
+                // Vérifier si Composer est installé et l'utiliser
+                sh 'php -r "copy(\'https://getcomposer.org/installer\', \'composer-setup.php\');"'
+                sh 'php composer-setup.php --install-dir=/usr/local/bin --filename=composer'
+                sh 'php -r "unlink(\'composer-setup.php\');"'
                 sh 'composer install'
             }
         }
