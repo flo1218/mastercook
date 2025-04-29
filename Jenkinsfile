@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Install PHP') { 
+            steps {
+                // Installer PHP dans le conteneur Docker
+                sh 'apt-get update && apt-get install -y php-cli'
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 // Vérifier si Composer est installé et l'utiliser
