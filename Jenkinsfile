@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Install PHP') { 
             steps {
-                // Installer PHP dans le conteneur Docker
-                sh 'apt-get update && apt-get install -y php-cli'
+                // Installer PHP dans le conteneur Docker avec des privilèges sudo
+                sh 'sudo apt-get update && sudo apt-get install -y php-cli'
             }
         }
         stage('Install Dependencies') {
