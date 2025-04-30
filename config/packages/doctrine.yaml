@@ -1,9 +1,12 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-        server_version: '10.6.11-MariaDB'
+        server_version: '8.0' # Force Doctrine à utiliser MySQL 8.0 comme version de la plateforme
         use_savepoints: true
-        schema_filter: ~^(?!view_)~
+        schema_filter: ~^(?!view_)~ # Exclut les vues des schémas analysés par Doctrine
+        options:
+            # Ajout pour éviter les erreurs liées aux métadonnées
+            1002: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
