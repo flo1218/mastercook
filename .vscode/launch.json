@@ -8,16 +8,16 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9012
+            "port": 9003
         },
         {
             "name": "Xdebug for Docker",
             "type": "php",
             "request": "launch",
-            "port": 9012,
+            "port": 9003,
             "cwd": "${workspaceFolder}",
             "pathMappings": {
-                "/var/www" : "${workspaceRoot}"
+                "/var/www/symrecipe" : "${workspaceRoot}"
             }
         },
         {
@@ -26,7 +26,7 @@
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 9012
+            "port": 9003
         }
     ]
 }

@@ -8,10 +8,14 @@ services:
     container_name: symrecipe_app
     volumes:
       - .:/var/www/symrecipe
+      - /var/www/symrecipe/node_modules # Monte le dossier node_modules
     ports:
       - "9000:9000"
     depends_on:
       - db
+    environment:
+      - XDEBUG_MODE=debug
+      - XDEBUG_CONFIG=client_host=host.docker.internal client_port=9003
 
   db:
     image: mysql:8.0

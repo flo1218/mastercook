@@ -17,10 +17,11 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && docker-php-ext-install pdo pdo_mysql intl zip gd
 
+# Installer Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-# Installer Node.js et npm
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+# Configurer Xdebug
+COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -33,15 +34,6 @@ COPY . .
 
 # Installer les dépendances PHP
 RUN composer install --optimize-autoloader
-
-# Installer les dépendances npm
-RUN npm install --legacy-peer-deps --no-audit --no-fund
-
-# Construire les assets (si applicable)
-RUN npm run build
-
-# Donner les permissions nécessaires
-# RUN chown -R www-data:www-data /var/www/symrecipe
 
 # Exposer le port 9000 pour PHP-FPM
 EXPOSE 9000

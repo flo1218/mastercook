@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class HomeController extends AbstractController
 {
@@ -23,10 +24,20 @@ class HomeController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if ($user && $request->getLocale() != strtolower($user->getLanguage())) {
-            return $this->redirect('/' . strtolower($user->getLanguage()));
+            return $this->redirect($this->generateUrl('home.index', [
+                '_locale' => strtolower($user->getLanguage()),
+            ]));
         }
 
-        return $this->redirect('/' . $request->getLocale());
+        return $this->redirect($this->generateUrl('home.index', [
+            '_locale' => $request->getLocale(),
+        ]));
+    }
+
+    #[Route('/login/success', 'login.success', methods: ['GET'])]
+    public function loginSuccess(): Response
+    {
+        return $this->redirectToRoute('home.language');
     }
 
     /**
