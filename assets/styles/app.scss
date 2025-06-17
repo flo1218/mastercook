@@ -40,7 +40,24 @@ h1 {
 
 .form-image img,
 .vich-image img {
-  width: 250px;
+  width: 250px;  
+}
+
+
+.ts-control:focus {
+  border-color: #9aacf3 !important;
+}
+
+.ts-wrapper {
+  border: 1px #dee2e6 solid !important;
+}
+
+.ts-control {
+  padding: .5rem 1rem !important;
+}
+
+.ts-wrapper.multi .ts-control > div {
+  padding: 1px 15px !important;
 }
 
 .recipe_container .card-header {

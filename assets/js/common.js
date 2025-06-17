@@ -1,6 +1,12 @@
 jQuery(function () {
   // Manage dbl click to edit page
   $(".jsTableRow").on("dblclick", function () {
+    //debugger;
+    // Vérifier si la catégorie est interne
+    if ($(this).data('is-internal') === true) {
+      return; // Ne pas rediriger si isInternal est true
+    }
+
     let link = $(location).attr('href');
     let position = link.indexOf("?");
     link = link.substring(0, position != -1 ? position : link.length);

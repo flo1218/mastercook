@@ -12,7 +12,8 @@ services:
     ports:
       - "9000:9000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy # Ajout pour attendre que le service MySQL soit prêt
     environment:
       - XDEBUG_MODE=debug
       - XDEBUG_CONFIG=client_host=host.docker.internal client_port=9003
@@ -29,6 +30,11 @@ services:
       - "5555:3306" # Expose le port 3306 de MySQL sur le port 5555 de l'hôte
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck: # Ajout d'un healthcheck pour vérifier que MySQL est prêt
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   nginx:
     image: nginx:latest

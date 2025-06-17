@@ -26,8 +26,14 @@ class CategoryController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
+        $userCategories = $repository->findBy(['user' => $this->getUser()]);
+        $internalCategories = $repository->findBy(['is_internal' => 1]);
+
+        // Fusionner les catégories internes et celles de l'utilisateur
+        $allCategories = array_merge($internalCategories, $userCategories);
+
         $categories = $paginator->paginate(
-            $repository->findBy(['user' => $this->getUser()]),
+            $allCategories,
             $request->query->getInt('page', 1)
         );
 
@@ -61,6 +67,7 @@ class CategoryController extends AbstractController
             /** @var User $user */
             if ($repository->isNameUniquedByUser($category->getName(), $user->getId())) {
                 $category->setUser($this->getUser());
+                $category->setIsInternal(false);
                 $manager->persist($category);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('category.created.label'));

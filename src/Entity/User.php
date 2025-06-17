@@ -79,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Category::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $categories;
 
     #[Vich\UploadableField(mapping: 'user_images', fileNameProperty: 'imageName')]

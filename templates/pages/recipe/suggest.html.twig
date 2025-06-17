@@ -13,7 +13,7 @@
 			<div class="col">
 
 				{% if not ingredients.items is same as([]) %}
-				<h5>{{ 'recipe.suggest.label'|trans }}</h5>
+					<h5>{{ 'recipe.suggest.label'|trans }}</h5>
 					{% for ingredient in form.ingredients %}
 						{{ form_widget(ingredient, { 'attr': {'class': 'form-check-input'} }) }}
 						{{ form_label(ingredient) }}
@@ -44,9 +44,9 @@
 							<div class="card-body">
 								<h4 class="card-title">{{ recipe.name }}</h4>
 								<p class="card-text">{{ recipe.description }}</p>
-							{% for ingredient in recipe.ingredients %}
-								<span class="badge bg-info">{{ ingredient.name }}</span>
-							{% endfor %}
+								{% for ingredient in recipe.ingredients %}
+									<span class="badge bg-info">{{ ingredient.name }}</span>
+								{% endfor %}
 							</div>
 							<div class="card-footer">
 								<small class="text-muted">{{ 'app.createdBy.label'|trans }}
@@ -62,4 +62,6 @@
 					</a>
 				{% endfor %}
 			</div>
-		{% endblock %}
+		</div>
+	</div>
+{% endblock %}

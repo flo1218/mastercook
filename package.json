@@ -26,11 +26,13 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
+        "@symfony/ux-autocomplete": "^2.24.0",
         "animate.css": "^4.1.1",
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
         "bootswatch": "^5.3.3",
-        "chart.js": "^4.4.7"
+        "chart.js": "^4.4.7",
+        "tom-select": "^2.4.3"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
     "version": "1.0.0",

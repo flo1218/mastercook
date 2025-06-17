@@ -7,6 +7,7 @@ use App\Entity\Ingredient;
 use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Entity\User;
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -38,6 +39,16 @@ class AppFixtures extends Fixture
             ->setPlainPassword('password');
 
         $manager->persist($admin);
+
+        // Catégories internes
+        $internalCategories = ['Entrée', 'Plat', 'Dessert'];
+        foreach ($internalCategories as $categoryName) {
+            $category = new Category();
+            $category->setName($categoryName)
+                ->setIsInternal(true);
+
+            $manager->persist($category);
+        }
 
         for ($i = 0; $i < 5; ++$i) {
             $user = new User();

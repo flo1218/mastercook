@@ -75,12 +75,11 @@
 				</div>
 			</div>
             <div class="col">
-				<div class="form-label">{{ form_label(form.ingredients) }}</div>
-				{% for ingredient in form.ingredients %}
-					{{ form_widget(ingredient, { 'attr': {'class': 'form-check-input'} }) }}
-					{{ form_label(ingredient) }}
-					<br>
-				{% endfor %}
+				{{ form_label(form.ingredients) }}
+				{{ form_widget(form.ingredients) }}
+				<div class="form-error text-danger">
+					{{ form_errors(form.ingredients) }}
+				</div>
 			</div>
             <div class="col">
                 <div class="form-label mt-4">Image</div>

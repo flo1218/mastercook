@@ -51,6 +51,8 @@ class RecipeType extends AbstractType
             ->add('time', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'min' => 1,
+                    'onkeypress' => 'return isNaN(event.key) ? false : true',
                 ],
                 'required' => false,
                 'label' => 'recipe.time-minute.label',
@@ -65,6 +67,8 @@ class RecipeType extends AbstractType
             ->add('nbPeople', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'min' => 1,
+                    'onkeypress' => 'return isNaN(event.key) ? false : true',
                 ],
                 'required' => false,
                 'label' => 'recipe.nbPeople.label',
@@ -72,7 +76,7 @@ class RecipeType extends AbstractType
                     'class' => 'form-label mt-4',
                 ],
                 'constraints' => [
-                    new Assert\Positive(),
+                    new Assert\GreaterThanOrEqual(0), // Validation côté serveur
                     new Assert\LessThan(51),
                 ],
             ])
@@ -110,10 +114,13 @@ class RecipeType extends AbstractType
             ->add('price', MoneyType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'min' => 1,
+                    'step' => 'any',
                 ],
                 'required' => false,
                 'label' => 'recipe.price.label',
                 'currency' => '',
+                'html5' => true,
                 'label_attr' => [
                     'class' => 'form-label mt-4',
                 ],
@@ -149,17 +156,21 @@ class RecipeType extends AbstractType
                 'allow_delete' => true,
                 'download_uri' => false,
                 'asset_helper' => true,
-                'imagine_pattern' => 'my_thumb',
                 'label' => 'recipe.image.label',
             ])
             ->add('ingredients', EntityType::class, [
-                'required' => false,
                 'choice_label' => function (Ingredient $ingredient): string {
                     return $ingredient->getName();
                 },
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'placeholder' => '',
+                'autocomplete' => true,
+                'required' => false,
                 'class' => Ingredient::class,
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'label' => 'header.ingredient.label',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
@@ -176,6 +187,7 @@ class RecipeType extends AbstractType
                     return $category->getName();
                 },
                 'placeholder' => '',
+                'autocomplete' => true,
                 'required' => false,
                 'class' => Category::class,
                 'attr' => [
@@ -189,7 +201,9 @@ class RecipeType extends AbstractType
                 ],
                 'query_builder' => function (EntityRepository $r): QueryBuilder {
                     return $r->createQueryBuilder('i')
-                        ->where('i.user = :user')
+                        ->where('i.user = :user or i.is_internal = 1')
+                        ->orderBy('i.is_internal', 'DESC') // Trier les catégories internes en premier
+                        ->addOrderBy('CASE WHEN i.is_internal = 1 THEN 1 ELSE i.name END', 'ASC')
                         ->setParameter('user', $this->security->getToken()->getUser());
                 },
             ])

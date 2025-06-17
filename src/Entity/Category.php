@@ -36,12 +36,13 @@ class Category
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
-    #[Assert\Length(
-        min: 3,
-        max: 50,
-        minMessage: 'app.min.label',
-        maxMessage: 'app.max.label',
-    )
+    #[
+        Assert\Length(
+            min: 3,
+            max: 50,
+            minMessage: 'app.min.label',
+            maxMessage: 'app.max.label',
+        )
     ]
     #[Groups(['category:list', 'category:item'])]
     private ?string $name = null;
@@ -51,8 +52,8 @@ class Category
     #[Groups(['category:list', 'category:item'])]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ingredients')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'categories')]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['category:list', 'category:item'])]
     private ?User $user = null;
 
@@ -61,6 +62,9 @@ class Category
      */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category')]
     private Collection $recipes;
+
+    #[ORM\Column]
+    private ?bool $is_internal = null;
 
     /**
      * Constructor.
@@ -173,5 +177,17 @@ class Category
         foreach ($this->getRecipes() as $recipe) {
             $recipe->setCategory(null);
         }
+    }
+
+    public function isInternal(): ?bool
+    {
+        return $this->is_internal;
+    }
+
+    public function setIsInternal(bool $is_internal): static
+    {
+        $this->is_internal = $is_internal;
+
+        return $this;
     }
 }

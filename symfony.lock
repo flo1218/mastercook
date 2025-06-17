@@ -230,6 +230,18 @@
             ".env.dev"
         ]
     },
+    "symfony/form": {
+        "version": "7.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.2",
+            "ref": "7d86a6723f4a623f59e2bf966b6aad2fc461d36b"
+        },
+        "files": [
+            "config/packages/csrf.yaml"
+        ]
+    },
     "symfony/framework-bundle": {
         "version": "7.1",
         "recipe": {
@@ -396,6 +408,18 @@
             "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
         },
         "files": []
+    },
+    "symfony/ux-autocomplete": {
+        "version": "2.24",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.6",
+            "ref": "07d9602b7231ba355f484305d6cea58310c01741"
+        },
+        "files": [
+            "config/routes/ux_autocomplete.yaml"
+        ]
     },
     "symfony/ux-chartjs": {
         "version": "v2.16.0"

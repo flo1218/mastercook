@@ -166,10 +166,12 @@ class RecipeController extends AbstractController
     #[Route('recipe/print/{id}', 'recipe.print', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function print(Recipe $recipe)
     {
+        $this->weasyPrint->disableTimeout();
         $pdfContent = $this->weasyPrint->getOutputFromHtml(
             $this->twig->render('pages/recipe/print.html.twig', [
                 'recipe' => $recipe,
-            ])
+            ]),
+            ['encoding' => 'utf8', 'media-type' => 'print']
         );
 
         return new PdfResponse(

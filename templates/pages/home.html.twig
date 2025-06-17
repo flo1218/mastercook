@@ -7,10 +7,8 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1 class="big-title">{{ 'home.title'|trans }}</h1>
-			<p class="lead">{{ 'home.description'|trans }}
-			</p>
+			<p class="lead">{{ 'home.description'|trans }}</p>
 			<hr class="my-4">
-
 			{% if not is_granted('IS_AUTHENTICATED') %}
 				<p>{{ 'home.start.description'|trans }}</p>
 				<p class="lead">
@@ -20,14 +18,13 @@
 			{% endif %}
 		</div>
 	</div>
-	<div id="carouselExample" class="carousel slide carousel-fade mt-4" data-bs-ride="carousel">
+	<div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-ride="carousel">
 		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="../images/raclette.jpg" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="../images/poulet_au_four.jpg" class="d-block w-100" alt="...">
-			</div>
+			{% for header_image in header_images %}
+				<div class="carousel-item{% if loop.first %} active{% endif %}">
+					<img src="{{ asset('images/header/' ~ header_image) }}" class="d-block w-100" alt="...">
+				</div>
+			{% endfor %}
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>

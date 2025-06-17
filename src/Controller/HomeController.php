@@ -47,14 +47,23 @@ class HomeController extends AbstractController
     public function index(ViewRecipeRepository $recipeRepository, Request $request): Response
     {
         $cache = new FilesystemAdapter();
-        $data = $cache->get('public_recipes', function (ItemInterface $item) use ($recipeRepository) {
+        $recipes = $cache->get('public_recipes', function (ItemInterface $item) use ($recipeRepository) {
             $item->expiresAfter(60);
 
             return $recipeRepository->findAllPublicRecipes(20);
         });
 
+        $headerDir = $this->getParameter('kernel.project_dir') . '/public/images/header';
+        $headerImages = [];
+        if (is_dir($headerDir)) {
+            $headerImages = array_values(array_filter(scandir($headerDir), function ($file) use ($headerDir) {
+                return is_file($headerDir . '/' . $file) && preg_match('/\.(jpe?g|png|gif|webp)$/i', $file);
+            }));
+        }
+
         return $this->render('pages/home.html.twig', [
-            'recipes' => $data,
+            'recipes' => $recipes,
+            'header_images' => $headerImages,
         ]);
     }
 }

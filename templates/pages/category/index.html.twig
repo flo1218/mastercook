@@ -12,7 +12,7 @@
     <div class="count mt-4">
         <h6>{{ 'category.count.label'|trans({'count': categories.getTotalItemCount}) }}</h6> 
     </div>
-    {% if not categories.items is same as([]) %}        
+    {% if not categories.items is same as([]) %}
         <table class="table table-hover">
         <thead>
             <tr>
@@ -25,18 +25,21 @@
         </thead>
         <tbody>
         {% for category in categories %}    
-            <tr class="jsTableRow">
+            <tr class="jsTableRow" data-is-internal="{{ category.isInternal ? 'true' : 'false' }}">
             <td scope="row"><a href="{{ path('category.edit', { id : category.id }) }}">{{ category.id }}</a></td>
             <td>{{ category.name }}</td>
             <td>{{ category.createdAt | format_datetime('short') }}</td>
             <td>
+                {% if category.isInternal == false %}
                 <a href="{{ path('category.edit', { id : category.id }) }}" 
                     class="btn btn-info" 
                     title="{{'app.edit.label'|trans}}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
+                {% endif %}
             </td>
             <td>
+                {% if category.isInternal == false %}
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
                     data-href="{{ path('category.delete', { id : category.id }) }}"
                     title="{{'app.delete.label'|trans}}"
@@ -44,6 +47,7 @@
                     data-bs-target="#confirmDeleteModal">
                     <i class="bi bi-trash3-fill"></i>
                 </button>
+                {% endif %}
             </td>
             </tr>
         {% endfor %}
