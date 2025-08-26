@@ -58,6 +58,6 @@ EXPOSE 9000
 
 # Augmenter la mémoire disponible pour PHP CLI
 ENV PHP_MEMORY_LIMIT=512M
-env NODE_ENV=development
+ENV NODE_ENV=development
 
 CMD ["php-fpm"]

@@ -16,29 +16,8 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
-    ],
-    '@hotwired/turbo' => [
-        'version' => '7.3.0',
-    ],
-    'intl-messageformat' => [
-        'version' => '10.5.11',
-    ],
-    'tslib' => [
-        'version' => '2.6.2',
-    ],
-    '@formatjs/icu-messageformat-parser' => [
-        'version' => '2.7.6',
-    ],
-    '@formatjs/fast-memoize' => [
-        'version' => '2.2.0',
-    ],
-    '@formatjs/icu-skeleton-parser' => [
-        'version' => '1.8.0',
     ],
     '@symfony/ux-translator' => [
         'path' => './vendor/symfony/ux-translator/assets/dist/translator_controller.js',
@@ -49,32 +28,53 @@ return [
     '@app/translations/configuration' => [
         'path' => './var/translations/configuration.js',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
+    '@hotwired/turbo' => [
+        'version' => '8.0.13',
+    ],
+    'intl-messageformat' => [
+        'version' => '10.7.16',
+    ],
+    'tslib' => [
+        'version' => '2.8.1',
+    ],
+    '@formatjs/icu-messageformat-parser' => [
+        'version' => '2.11.2',
+    ],
+    '@formatjs/fast-memoize' => [
+        'version' => '2.2.7',
+    ],
+    '@formatjs/icu-skeleton-parser' => [
+        'version' => '1.8.14',
+    ],
     'chart.js/auto' => [
-        'version' => '3.9.1',
+        'version' => '4.5.0',
     ],
     'chart.js' => [
-        'version' => '3.9.1',
+        'version' => '4.5.0',
     ],
     '@swup/fade-theme' => [
-        'version' => '1.0.5',
-    ],
-    '@swup/slide-theme' => [
-        'version' => '1.0.5',
-    ],
-    '@swup/forms-plugin' => [
         'version' => '2.0.1',
     ],
+    '@swup/slide-theme' => [
+        'version' => '2.0.1',
+    ],
+    '@swup/forms-plugin' => [
+        'version' => '3.6.0',
+    ],
     '@swup/plugin' => [
-        'version' => '2.0.3',
+        'version' => '4.0.0',
     ],
     'swup' => [
-        'version' => '3.1.1',
+        'version' => '4.8.2',
     ],
     'delegate-it' => [
-        'version' => '6.0.1',
+        'version' => '6.2.1',
     ],
     '@swup/debug-plugin' => [
-        'version' => '3.0.0',
+        'version' => '4.1.0',
     ],
     'tom-select' => [
         'version' => '2.4.3',
@@ -86,6 +86,27 @@ return [
         'version' => '1.1.2',
     ],
     'tom-select/dist/css/tom-select.bootstrap5.css' => [
+        'version' => '2.4.3',
+        'type' => 'css',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.4.0',
+    ],
+    '@swup/theme' => [
+        'version' => '2.1.0',
+    ],
+    'path-to-regexp' => [
+        'version' => '8.2.0',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.4.3',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.default.css' => [
+        'version' => '2.4.3',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap4.css' => [
         'version' => '2.4.3',
         'type' => 'css',
     ],
