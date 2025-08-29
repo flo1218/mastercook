@@ -26,7 +26,13 @@
         <tbody>
         {% for category in categories %}    
             <tr class="jsTableRow" data-is-internal="{{ category.isInternal ? 'true' : 'false' }}">
-            <td scope="row"><a href="{{ path('category.edit', { id : category.id }) }}">{{ category.id }}</a></td>
+            <td scope="row">
+                {% if category.isInternal == false %}
+                    <a href="{{ path('category.edit', { id : category.id }) }}">{{ category.id }}</a>
+                {% else %}
+                    {{ category.id }}
+                {% endif %}
+            </td>
             <td>{{ category.name }}</td>
             <td>{{ category.createdAt | format_datetime('short') }}</td>
             <td>

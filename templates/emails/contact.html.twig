@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8">
     </head>
-    <body>
+    <div class="body">
         <h1>Demande de {{ contact.fullName }}</h1>
         <p>Email : {{ contact.email}}</p>
         <p>Sujet : {{ contact.subject}}</p>
         <p>Message :</p>    
         <div>
-            {{ contact.message|raw }}
+            {{ contact.message|nl2br }}
         </div>
         
-    </body>
+    </div>
 </html>
