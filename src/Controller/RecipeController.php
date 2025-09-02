@@ -10,7 +10,6 @@ use App\Form\MarkType;
 use App\Form\RecipeType;
 use App\Form\RecipeSearchType;
 use App\Repository\MarkRepository;
-use Pontedilana\PhpWeasyPrint\Pdf;
 use App\Repository\RecipeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ViewRecipeRepository;
@@ -23,17 +22,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
     public function __construct(
-        private readonly Environment $twig,
-        private readonly Pdf $weasyPrint,
+        private readonly Environment $twig
     ) {}
 
     /**
@@ -126,8 +122,7 @@ class RecipeController extends AbstractController
         Request $request,
         MarkRepository $markRepository,
         EntityManagerInterface $manager,
-        TranslatorInterface $translator,
-        Pdf $knpSnappyPdf
+        TranslatorInterface $translator
     ) {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
@@ -166,22 +161,13 @@ class RecipeController extends AbstractController
     #[Route('recipe/print/{id}', 'recipe.print', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function print(Recipe $recipe)
     {
-        $this->weasyPrint->disableTimeout();
-        $pdfContent = $this->weasyPrint->getOutputFromHtml(
-            $this->twig->render('pages/recipe/print.html.twig', [
-                'recipe' => $recipe,
-            ]),
-            ['encoding' => 'utf8', 'media-type' => 'print']
-        );
+        $mpdf = new \Mpdf\Mpdf();
+        $pdfContent = $this->twig->render('pages/recipe/print.html.twig', [
+            'recipe' => $recipe,
+        ]);
 
-        return new PdfResponse(
-            content: $pdfContent,
-            fileName: "recipe-{$recipe->getId()}.pdf",
-            contentType: 'application/pdf',
-            contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            status: 200,
-            headers: []
-        );
+        $mpdf->WriteHTML($pdfContent);
+        $mpdf->Output();
     }
 
     /**

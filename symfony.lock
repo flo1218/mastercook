@@ -172,9 +172,6 @@
             "tests/bootstrap.php"
         ]
     },
-    "pontedilana/weasyprint-bundle": {
-        "version": "2.2.0"
-    },
     "squizlabs/php_codesniffer": {
         "version": "3.9",
         "recipe": {
