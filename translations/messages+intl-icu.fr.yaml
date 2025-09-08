@@ -11,6 +11,7 @@ app.createdBy.label : 'Créé par'
 app.createdAt.label : 'Créé le'
 app.by.label : 'par'
 app.print.label : 'Imprimer'
+app.all.label : 'Toutes'
 
 app.yes.label : 'Oui'
 app.no.label : 'Non'

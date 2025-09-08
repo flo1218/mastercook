@@ -11,10 +11,10 @@
 		<div class="clearfix"></div>
 		<div class="row">
 			<div class="col">
-				{% if app.user.categories|length > 0 %}
-					<a class="btn {{ recipeType ==null ? 'btn-primary' : 'btn-secondary' }}" href="{{ path('recipe.index') }}">Toutes</a>
+				{% if categories|length > 0 %}
+					<a class="btn {{ recipeType ==null ? 'btn-primary' : 'btn-secondary' }}" href="{{ path('recipe.index') }}">{{ 'app.all.label'|trans }}</a>
 				{% endif %}
-				{% for category in app.user.categories %}
+				{% for category in categories %}
 					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'btn-secondary' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
 				{% endfor %}
 			</div>

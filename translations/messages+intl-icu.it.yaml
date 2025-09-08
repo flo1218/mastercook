@@ -11,6 +11,7 @@ app.createdBy.label : 'Creato da'
 app.createdAt.label : 'Creato il'
 app.by.label : 'da'
 app.print.label : 'Stampare'
+app.all.label : 'Tutte'
 
 app.yes.label : 'Sì'
 app.no.label : 'No'

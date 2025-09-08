@@ -11,6 +11,7 @@ app.createdBy.label : 'Created by'
 app.createdAt.label : 'Created at'
 app.by.label : 'by'
 app.print.label : 'Print'
+app.all.label : 'All'
 
 app.yes.label : 'Yes'
 app.no.label : 'No'

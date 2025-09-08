@@ -31,15 +31,16 @@ class CategoryRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Category
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function getUserCategories($userId): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->orWhere('c.is_internal = 1')
+            ->setParameter('user', $userId)
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function isNameUniquedByUser(string $name, int $userId, ?int $excludedId = null): bool
     {

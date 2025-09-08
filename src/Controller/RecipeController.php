@@ -12,6 +12,7 @@ use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ViewRecipeRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,6 +36,7 @@ class RecipeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(
         ViewRecipeRepository $repository,
+        CategoryRepository $categoryRepository,
         PaginatorInterface $paginator,
         Request $request,
     ): Response {
@@ -56,6 +58,7 @@ class RecipeController extends AbstractController
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
             'recipeType' => $recipeType,
+            'categories' => $categoryRepository->getUserCategories($user->getId()),
         ]);
     }
 
