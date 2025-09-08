@@ -54,7 +54,7 @@
 						</div>
 						<div class="card-footer">
 							<small class="text-muted">Last updated
-								{{ recipe.updatedAt | format_datetime('short') }}</small>
+								{{ recipe.updatedAt | localized_date(app.request.locale) }}</small>
 						</div>
 					</div>
 

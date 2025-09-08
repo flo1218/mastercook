@@ -28,7 +28,7 @@
                       <img src="/images/user/{{ recipe.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
                       {% endif %}
                       <br/>
-                      <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | format_date('short') }}</small>
+                      <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | localized_date(app.request.locale) }}</small>
                     </div>
                 </div>
         </a>

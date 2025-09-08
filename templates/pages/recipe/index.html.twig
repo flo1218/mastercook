@@ -55,7 +55,7 @@
 							<td class="col-2">{{ recette.name }}</td>
 							<td class="col-2">{{ recette.categoryName }}</td>
 							<td class="col-1">{{ recette.price }}</td>
-							<td class="col-2">{{ recette.updatedAt | format_datetime('short') }}</td>
+							<td class="col-2">{{ recette.updatedAt | localized_date(app.request.locale) }}</td>
 							<td class="col-2">{{ recette.average|stars_rating}}</td>
 							<td class="col-1">
 								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">

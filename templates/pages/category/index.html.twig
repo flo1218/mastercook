@@ -34,7 +34,7 @@
                 {% endif %}
             </td>
             <td>{{ category.name }}</td>
-            <td>{{ category.createdAt | format_datetime('short') }}</td>
+            <td>{{ category.createdAt | localized_date(app.request.locale) }}</td>
             <td>
                 {% if category.isInternal == false %}
                 <a href="{{ path('category.edit', { id : category.id }) }}" 

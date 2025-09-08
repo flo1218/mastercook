@@ -10,7 +10,7 @@
 					{{ recipe.name}}
 				</h1>				
 				<span class="badge bg-info mb-4">
-					{{ 'app.createdAt.label'|trans }} {{ recipe.createdAt|format_date('short') }} {{ 'app.by.label'|trans }} {{ recipe.user.fullName }}  
+					{{ 'app.createdAt.label'|trans }} {{ recipe.createdAt|localized_date(app.request.locale) }} {{ 'app.by.label'|trans }} {{ recipe.user.fullName }}  
 				</span>
 				{% if recipe.time %}
 					<p class="form-label">

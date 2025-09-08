@@ -56,7 +56,7 @@
 								{% endif %}
 								<br/>
 								<small class="text-muted">{{ 'app.updatedAt.label'|trans }}
-									{{ recipe.updatedAt | format_date('short') }}</small>
+									{{ recipe.updatedAt | localized_date(app.request.locale) }}</small>
 							</div>
 						</div>
 					</a>

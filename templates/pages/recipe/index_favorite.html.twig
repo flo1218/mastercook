@@ -31,7 +31,7 @@
                 <td>{{recette.price is null ? '/' : recette.price}}</td>
                 <td>{{recette.nbPeople is null ? '/' : recette.nbPeople}}</td>
                 <td>{{recette.difficulty is null ? '/' : recette.difficulty}}</td>
-                <td>{{recette.createdAt | format_datetime('short')}}</td>
+                <td>{{recette.createdAt | localized_date(app.request.locale)}}</td>
                 <td>{{recette.average|stars_rating()}}</td>
                 <td>
                     <a href="{{ path('recipe.edit', { id : recette.id, redirect : path('recipe.favorite') }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">

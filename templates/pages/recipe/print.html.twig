@@ -1,59 +1,76 @@
-{% block title %}
-	{{ app.request.server.get('APP_NAME') }}
-{% endblock %}
-{% block body %}
-	<div class="container">
-		<h1>{{ recipe.name}}</h1>
-		<span class="badge bg-info rounded-pill mb-4">
-			{{ 'app.createdAt.label'|trans }}
-			{{ recipe.createdAt|format_date('short') }}
-			{{ 'app.by.label'|trans }}
-			{{ recipe.user.fullName }}
-		</span>
-		<div class="row">
-			<div class="col-8">
-				{% if recipe.time %}
-					<p class="form-label">
-						{{ 'recipe.time.label'|trans }}:
-						{{ recipe.time|min_to_hour }}
-					</p>
-				{% endif %}
-				{% if recipe.nbPeople %}
-					<p class="form-label mt-4">
-						{{ 'recipe.nbPeople.label'|trans }}:
-						{{ recipe.nbPeople }}
-					</p>
-				{% endif %}
-				{% if recipe.difficulty %}
-					<p class="form-label mt-4">
-						{{ 'recipe.difficulty.label'|trans }}:
-						{{ recipe.difficulty }}/5
-					</p>
-				{% endif %}
-				<p class="form-label mt-4">
-					{{ 'recipe.description.label'|trans }}:
-				</p>
-				<div>
-					{{ recipe.description| raw}}
-				</div>
-				<p class="form-label mt-4">
-					{{ 'recipe.price.label'|trans }}: {{ recipe.price }}
-				</p>
-				{% if recipe.category %}
-				<p class="form-label mt-4">
-					{{ 'recipe.category.label'|trans }}: {{ recipe.categoryName }}
-				</p>
-				{% endif %}
-				<p class="form-label mt-4">Ingredients:</p>
-				{{ recipe.ingredients|join(', ') }}
-			</div>
-			<div class="col-4">
-				{% if recipe.average %}
-					<p>{{ 'recipe.average.label'|trans }}
-						{{ recipe.average|round(2, 'ceil') }}
-					</p>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.name }}</title>
+    <style>
+        .container { width: 90%; margin: auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header img { width: 120px; margin-bottom: 10px; }
+        .header h1 { margin: 0; font-size: 2em; }
+        .badge { background: #17a2b8; color: #fff; border-radius: 20px; padding: 5px 15px; display: inline-block; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        td { vertical-align: top; width: 50%; padding: 15px; }
+        .info-block { margin-bottom: 15px; }
+        .label { font-weight: bold; color: #333; }
+        .value { margin-left: 5px; }
+        .ingredients { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            {% if recipe.imageName is not empty %}
+            <img src="file://{{ project_dir }}/public/images/recipe/{{ recipe.imageName }}" alt="recipe image">
+            {% endif %}
+            <h1>{{ recipe.name }}</h1>
+            <div class="badge">
+                {{ 'app.createdAt.label'|trans }}
+                {{ recipe.createdAt|localized_date(app.request.locale)}}
+                {{ 'app.by.label'|trans }}
+                {{ recipe.user.fullName }}
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.time.label'|trans }}:</span>
+                        <span class="value">{% if recipe.time %}{{ recipe.time|min_to_hour }}{% else %}-{% endif %}</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.nbPeople.label'|trans }}:</span>
+                        <span class="value">{% if recipe.nbPeople %}{{ recipe.nbPeople }}{% else %}-{% endif %}</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.difficulty.label'|trans }}:</span>
+                        <span class="value">{% if recipe.difficulty %}{{ recipe.difficulty }}/5{% else %}-{% endif %}</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.price.label'|trans }}:</span>
+                        <span class="value">{{ recipe.price }}</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.category.label'|trans }}:</span>
+                        <span class="value">{% if recipe.category %}{{ recipe.categoryName }}{% else %}-{% endif %}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.description.label'|trans }}:</span>
+                        <div class="value">{{ recipe.description|raw }}</div>
+                    </div>
+                    <div class="info-block">
+                        <span class="label">{{ 'recipe.average.label'|trans }}:</span>
+                        <span class="value">{% if recipe.average %}{{ recipe.average|round(2, 'ceil') }}{% else %}-{% endif %}</span>
+                    </div>
+                    <div class="info-block ingredients">
+                        <span class="label">Ingredients:</span>
+                        <div class="value">{{ recipe.ingredients|join(', ') }}</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -32,7 +32,7 @@
             <td>{{ ingredient.price|number_format(2, '.', ',') }}
             CHF
             </td>
-            <td>{{ ingredient.createdAt | format_datetime('short') }}</td>
+            <td>{{ ingredient.createdAt | localized_date(app.request.locale) }}</td>
             <td>
                 <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" 
                     class="btn btn-info" 

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Mark;
 use App\Entity\User;
-use Twig\Environment;
 use App\Entity\Recipe;
 use App\Form\MarkType;
 use App\Form\RecipeType;
@@ -25,13 +24,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
 
 class RecipeController extends AbstractController
 {
-    public function __construct(
-        private readonly Environment $twig
-    ) {}
-
     /**
      * This function is used to display the list of recipes.
      */
@@ -159,15 +155,24 @@ class RecipeController extends AbstractController
     }
 
     #[Route('recipe/print/{id}', 'recipe.print', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function print(Recipe $recipe)
+    public function print(Recipe $recipe, DompdfWrapperInterface $wrapper)
     {
-        $mpdf = new \Mpdf\Mpdf();
-        $pdfContent = $this->twig->render('pages/recipe/print.html.twig', [
+        $pdfContent = $this->renderView('pages/recipe/print.html.twig', [
             'recipe' => $recipe,
         ]);
 
-        $mpdf->WriteHTML($pdfContent);
-        $mpdf->Output();
+        $response = $wrapper->getStreamResponse(
+            $pdfContent,
+            "recipe_{$recipe->getId()}.pdf",   // filename
+            [
+                'isRemoteEnabled' => false, // allow external images
+                'defaultFont' => 'Arial'
+            ]
+        );
+
+        $response->headers->set('Content-Disposition', 'inline; filename="document.pdf"');
+
+        return $response;
     }
 
     /**

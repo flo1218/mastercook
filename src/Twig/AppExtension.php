@@ -13,6 +13,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('min_to_hour', [$this, 'minutesToHours']),
             new TwigFilter('stars_rating', [$this, 'starsRating']),
+            new TwigFilter('localized_date', [$this, 'formatDate']),
         ];
     }
 
@@ -51,5 +52,14 @@ class AppExtension extends AbstractExtension
         $rawString .= '</span>';
 
         return new Markup($rawString, 'UTF-8');
+    }
+
+    public function formatDate(\DateTimeInterface $date, string $locale = 'en'): string
+    {
+        if ($locale !== 'en') {
+            return $date->format('d/m/Y H:i');
+        }
+
+        return $date->format('m-d-Y h:i A');
     }
 }
