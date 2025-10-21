@@ -18,20 +18,17 @@
                     id="username" 
                     name="_username" 
                     autocomplete="email" 
-                    placeholder="name@example.com" 
                     value="{{ last_username }}">
                 <label for="floatingInput">Login</label>
             </div>
-            <div class="form-floating input-group">
-                <input required type="password" 
-                       class="form-control" 
-                       id="password" 
-                       name="_password"
-                       autocomplete="current-password"
-                       placeholder="Password">
-                       <button type="button" id="togglePassword" class="btn btn-secondary bi bi-eye-slash"></button>
-                <label for="floatingPassword">Password</label>
+
+            <div class="form-floating input-group mb-3">
+                <input required type="password" class="form-control" id="password" name="_password" placeholder="Password"
+                       aria-label="user password" aria-describedby="togglePassword" autocomplete="current-password">
+                <label for="_password">Password</label>
+                <button class="bi bi-eye-slash input-group-text" type="button" id="togglePassword"></button>
             </div>
+            
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <input type="hidden" name="_target_path" value="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
@@ -44,7 +41,6 @@
     </form>
 </div>
 <script>
-    
     document.querySelector("#togglePassword").addEventListener("click", function () {
         const password = document.querySelector("#password");
         // toggle the type attribute

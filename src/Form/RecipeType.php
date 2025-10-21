@@ -106,10 +106,6 @@ class RecipeType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4 required',
                 ],
-                'constraints' => [
-                    new Assert\Positive(),
-                    new Assert\Length(['max' => 1000]),
-                ],
             ])
             ->add('price', MoneyType::class, [
                 'attr' => [

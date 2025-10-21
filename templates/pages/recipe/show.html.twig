@@ -29,7 +29,7 @@
 					{{ 'recipe.description.label'|trans }}:
 				</p>
 				<div>
-					{{ recipe.description| raw}}
+					{{ recipe.description| nl2br }}
 				</div>
 				<p class="form-label mt-4">
 					{{ 'recipe.price.label'|trans }}: {{ recipe.price }}
@@ -51,7 +51,7 @@
 				</a>
 			</div>
 			<div class="clearfix"></div>
-				<div class="jumbotron bg-warning p-lg-4 p-2 mt-4 rounded">
+				<div class="bg-warning p-lg-4 p-2 mt-4 rounded">
 				<div class="recipe_image mb-4">
 					{% if recipe.imageName %}
 					<img class="img-fluid img-thumbnail" style="width: 10em;" src="{{ vich_uploader_asset(recipe, 'imageFile') }}">

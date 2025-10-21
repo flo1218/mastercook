@@ -12,18 +12,17 @@
 		<div class="row">
 			<div class="col">
 				{% if categories|length > 0 %}
-					<a class="btn {{ recipeType ==null ? 'btn-primary' : 'btn-secondary' }}" href="{{ path('recipe.index') }}">{{ 'app.all.label'|trans }}</a>
+					<a class="btn {{ recipeType ==null ? 'btn-primary' : 'btn-light' }}" href="{{ path('recipe.index') }}">{{ 'app.all.label'|trans }}</a>
 				{% endif %}
 				{% for category in categories %}
-					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'btn-secondary' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
+					<a class="btn {{ recipeType ==category.id ? 'btn-primary' :'btn-light' }}" href="{{ path('recipe.index') }}?type={{ category.id }}">{{ category.name }}</a>
 				{% endfor %}
 			</div>
 			<div class="col">
-
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Filtrer par nom" id="recipeFilter">
-                    <button type="button" id="recipeFilterReset" style="border-bottom-right-radius:0" class="btn btn-secondary bi bi-x-circle "></button>
-                </div>
+                    <button type="button" id="recipeFilterReset" class="bi bi-x-circle input-group-text"></button>
+				</div>
 			</div>
 		</div>
 		<div class="count mt-4">
@@ -58,7 +57,7 @@
 							<td class="col-2">{{ recette.updatedAt | localized_date(app.request.locale) }}</td>
 							<td class="col-2">{{ recette.average|stars_rating}}</td>
 							<td class="col-1">
-								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-info" title="{{'app.edit.label'|trans}}">
+								<a href="{{ path('recipe.edit', { id : recette.id }) }}" class="btn btn-primary" title="{{'app.edit.label'|trans}}">
 									<i class="bi bi-pencil-fill"></i>
 								</a>
 							</td>

@@ -64,8 +64,9 @@
         "twbs/bootstrap-icons": "^1.11",
         "twig/extra-bundle": "^3.11",
         "twig/intl-extra": "^3.11",
+        "twig/string-extra": "^3.21",
         "twig/twig": "^3.14.0",
-        "vich/uploader-bundle": "^2.3",
+        "vich/uploader-bundle": "^2.8",
         "webonyx/graphql-php": "^15.10"
     },
     "require-dev": {

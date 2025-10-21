@@ -35,7 +35,7 @@
             <td>{{ ingredient.createdAt | localized_date(app.request.locale) }}</td>
             <td>
                 <a href="{{ path('ingredient.edit', { id : ingredient.id }) }}" 
-                    class="btn btn-info" 
+                    class="btn btn-primary" 
                     title="{{'app.edit.label'|trans}}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>

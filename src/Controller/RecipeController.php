@@ -11,7 +11,6 @@ use App\Form\RecipeSearchType;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\IngredientRepository;
-use App\Repository\ViewRecipeRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -35,7 +34,7 @@ class RecipeController extends AbstractController
     #[Route('/recipe', name: 'recipe.index')]
     #[IsGranted('ROLE_USER')]
     public function index(
-        ViewRecipeRepository $repository,
+        RecipeRepository $repository,
         CategoryRepository $categoryRepository,
         PaginatorInterface $paginator,
         Request $request,
@@ -44,11 +43,11 @@ class RecipeController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
-        $searchParameters = ['user_id' => $user->getId()];
+        $searchParameters = ['user' => $user->getId()];
 
         $recipeType = $request->query->get('type');
         if ($recipeType) {
-            $searchParameters['category_id'] = $recipeType;
+            $searchParameters['category'] = $recipeType;
         }
         $recettes = $paginator->paginate(
             $repository->findBy($searchParameters),
@@ -65,17 +64,30 @@ class RecipeController extends AbstractController
     /**
      * This function is used to display the list of public recipes.
      */
-    #[Route('recipe/public', 'recipe.community', methods: ['GET'])]
+    #[Route('public-recipe/', 'recipe.community', methods: ['GET'])]
     public function indexPublic(
-        ViewRecipeRepository $repository,
+        RecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request
     ): Response {
         $cache = new FilesystemAdapter();
         $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(60);
-
-            return $repository->findAllPublicRecipes();
+            return array_map(function ($recipe) {
+                return [
+                    'id' => $recipe->getId(),
+                    'average' => $recipe->getAverage(),
+                    'description' => $recipe->getDescription(),
+                    'createdBy' => $recipe->getCreatedBy(),
+                    'updatedAt' => $recipe->getUpdatedAt(),
+                    'name' => $recipe->getName(),
+                    'imageName' => $recipe->getImageName(),
+                    'user' => [
+                        'fullName' => $recipe->getUser()->getFullName(),
+                        'imageName' => $recipe->getUser()->getImageName(),
+                    ],
+                ];
+            }, $repository->findPublicRecipe());
         });
 
         return $this->render('pages/recipe/index_public.html.twig', [
@@ -86,15 +98,15 @@ class RecipeController extends AbstractController
     /**
      * This function is used to display the list of favorite recipes.
      */
-    #[Route('recipe/favorite', 'recipe.favorite', methods: ['GET'])]
+    #[Route('favorite-recipe', 'recipe.favorite', methods: ['GET'])]
     public function indexFavorite(
-        ViewRecipeRepository $repository,
+        RecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request,
         UserInterface $user
     ): Response {
         /** @var User $user */
-        $data = $repository->findAllFavoriteRecipes($user->getId());
+        $data = $repository->findFavoriteRecipe(0, $user->getId());
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
             'recettes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
@@ -106,11 +118,8 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/{id}', 'recipe.show', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     #[IsGranted(
-        attribute: new Expression('user === subject["recipe_user"] || subject["recipe_public"]'),
-        subject: [
-            'recipe_user' => new Expression('args["recipe"].getUser()'),
-            'recipe_public' => new Expression('args["recipe"].isIsPublic()'),
-        ],
+        attribute: new Expression('user == subject.getUser() || subject.isIsPublic()'),
+        subject: 'recipe',
         message: 'Access denied'
     )]
     /**
@@ -216,10 +225,10 @@ class RecipeController extends AbstractController
      * This function is used to update an existing recipe.
      */
     #[Route('/recipe/edit/{id}', name: 'recipe.edit', methods: ['GET', 'POST'])]
-    #[Route('/recipe/favorite/edit/{id}', name: 'recipe.favorite.edit', methods: ['GET', 'POST'])]
+    #[Route('/favorite-recipe/edit/{id}', name: 'recipe.favorite.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
-        subject: new Expression('args["recipe"].getUser()'),
+        attribute: new Expression('is_granted("ROLE_USER") && user === subject.getUser()'),
+        subject: 'recipe',
         message: 'Access denied'
     )]
     /**
@@ -262,8 +271,8 @@ class RecipeController extends AbstractController
      */
     #[Route('/recipe/suppression/{id}', name: 'recipe.delete', methods: ['GET'])]
     #[IsGranted(
-        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
-        subject: new Expression('args["recipe"].getUser()'),
+        attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
+        subject: 'recipe',
     )]
     /**
      * @SuppressWarnings(PHPMD.ElseExpression)
@@ -289,7 +298,7 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe.index');
     }
 
-    #[Route('recipe/suggest', 'recipe.suggest', methods: ['GET', 'POST'])]
+    #[Route('suggest-recipe/', 'recipe.suggest', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function suggest(
         Request $request,

@@ -83,8 +83,8 @@ class IngredientController extends AbstractController
      */
     #[Route('/ingredient/edit/{id}', name: 'ingredient.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('user === subject && is_granted("ROLE_USER")'),
-        subject: new Expression('args["ingredient"].getUser()'),
+        attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
+        subject: 'ingredient',
         message: 'Access denied'
     )]
     public function edit(
@@ -118,8 +118,8 @@ class IngredientController extends AbstractController
      */
     #[Route('/ingredient/suppression/{id}', name: 'ingredient.delete', methods: ['GET'])]
     #[IsGranted(
-        attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
-        subject: new Expression('args["ingredient"].getUser()'),
+        attribute: new Expression('is_granted("ROLE_USER") && user === subject.getUser()'),
+        subject: 'ingredient',
         message: 'Access denied'
     )]
     /**

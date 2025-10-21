@@ -33,7 +33,7 @@
 			<div class="d-flex justify-content-between flex-wrap">
 				{% for recipe in recettes %}
 					<a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
-						<div class="card bg-light m-3" style="max-width: 20rem;">
+						<div class="card m-3" style="max-width: 20rem;">
 							<div class="card-header">
 								{{ 'recipe.no.label'|trans }}{{ recipe.id }}
 								{{recipe.average|stars_rating()}}
@@ -43,7 +43,7 @@
 							{% endif %}
 							<div class="card-body">
 								<h4 class="card-title">{{ recipe.name }}</h4>
-								<p class="card-text">{{ recipe.description }}</p>
+								<p class="card-text">{{ recipe.description|u.truncate(150, '...')|nl2br }}</p>
 								{% for ingredient in recipe.ingredients %}
 									<span class="badge bg-info">{{ ingredient.name }}</span>
 								{% endfor %}
@@ -51,8 +51,8 @@
 							<div class="card-footer">
 								<small class="text-muted">{{ 'app.createdBy.label'|trans }}
 									{{ recipe.createdBy }}</small>
-								{% if recipe.imageName %}
-									<img src="/images/user/{{ recipe.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar"/>
+								{% if recipe.user.imageName %}
+									<img src="/images/user/{{ recipe.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar"/>
 								{% endif %}
 								<br/>
 								<small class="text-muted">{{ 'app.updatedAt.label'|trans }}

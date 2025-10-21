@@ -4,19 +4,17 @@
 {% endblock %}
 
 {% block body  %}
-	<div class="container">
-		<div class="jumbotron">
-			<h1 class="big-title">{{ 'home.title'|trans }}</h1>
-			<p class="lead">{{ 'home.description'|trans }}</p>
-			<hr class="my-4">
-			{% if not is_granted('IS_AUTHENTICATED') %}
-				<p>{{ 'home.start.description'|trans }}</p>
-				<p class="lead">
-					<a class="btn btn-primary btn-lg custom-btn bi bi-door-open" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
-					<a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'header.register.label'|trans }}</a>
-				</p>
-			{% endif %}
-		</div>
+	<div class="container"> 
+		<h1 class="big-title">{{ 'home.title'|trans }}</h1>
+		<p class="lead">{{ 'home.description'|trans }}</p>
+		<hr class="my-4">
+		{% if not is_granted('IS_AUTHENTICATED') %}
+			<p>{{ 'home.start.description'|trans }}</p>
+			<p class="lead">
+				<a class="btn btn-primary btn-lg custom-btn bi bi-door-open" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
+				<a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'header.register.label'|trans }}</a>
+			</p>
+		{% endif %}
 	</div>
 	<div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-ride="carousel">
 		<div class="carousel-inner">
@@ -40,7 +38,7 @@
 		<div class="card-deck d-flex justify-content-start flex-wrap">
 			{% for recipe in recipes %}
 				<a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
-					<div class="card bg-light m-3" style="max-width: 18rem;">
+					<div class="card m-3" style="max-width: 18rem;">
 						<div class="card-header">
 							{{ 'recipe.no.label'|trans }}{{ recipe.id }}
 							{{recipe.average|stars_rating()}}

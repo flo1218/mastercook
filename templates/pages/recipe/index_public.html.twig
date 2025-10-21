@@ -10,22 +10,22 @@
         <div class="d-flex justify-content-between flex-wrap">
         {% for recipe in recipes %}
         <a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
-            <div class="card bg-light m-3" style="max-width: 20rem;">
+            <div class="card m-3" style="max-width: 20rem;">
                 <div class="card-header">
                     {{ 'recipe.no.label'|trans }}{{ recipe.id }}
                     {{recipe.average|stars_rating()}}
                 </div>
                     {% if recipe.imageName is defined and recipe.imageName is not null  %}
-                    <img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
+                        <img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
                     {% endif %}
                     <div class="card-body">
                         <h4 class="card-title">{{ recipe.name }}</h4>
-                        <p class="card-text">{{ recipe.description }}</p>
+                        <p class="card-text">{{ recipe.description|u.truncate(150, '...')|nl2br }}</p>
                     </div>
                     <div class="card-footer">
                       <small class="text-muted">{{ 'app.createdBy.label'|trans }} {{ recipe.createdBy }}</small>
-                      {% if recipe.imageName %}
-                      <img src="/images/user/{{ recipe.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
+                      {% if recipe.user.imageName %}
+                          <img src="/images/user/{{ recipe.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar" />
                       {% endif %}
                       <br/>
                       <small class="text-muted">{{ 'app.updatedAt.label'|trans }} {{ recipe.updatedAt | localized_date(app.request.locale) }}</small>

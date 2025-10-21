@@ -54,10 +54,20 @@ jQuery(function () {
   }
 
   // Set active to current menu link
-  jQuery.find(".nav-link").forEach((link) => {
-    if (link.href === window.location.href) {
+  jQuery.find(".nav-link:not('.right-nav')").some((link) => {
+    const linkPath = new URL(link.href).pathname;
+    let currentPath = window.location.pathname.replace(/^\/(fr|en|it)(\/|$)/, '/');
+
+    let comparePath = linkPath.replace(/^\/(fr|en|it)(\/|$)/, '/');
+    if (
+        comparePath === "/" 
+            ? currentPath === "/" 
+            : currentPath.startsWith(comparePath)
+    ) {
         link.classList.add("active");
         link.setAttribute("aria-current", "page");
+        return true;
     }
+    return false;
 });
 });

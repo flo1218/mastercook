@@ -103,16 +103,17 @@ class RecipeTest extends ApiTestCase
         static::createAuthenticatedClient()->request(
             method: 'POST',
             url: '/api/recipes',
-            options: [ 'body' => json_encode([
-                "name" => "recipe-TEST-POST",
-                "time" => 1440,
-                "nbPeople" => 50,
-                "difficulty" => 1,
-                "description" => "Description",
-                "price" => 1,
-                "isFavorite" => true,
-                "isPublic" => true
-             ]),
+            options: [
+                'body' => json_encode([
+                    "name" => "recipe-TEST-POST",
+                    "time" => 1440,
+                    "nbPeople" => 50,
+                    "difficulty" => 1,
+                    "description" => "Description",
+                    "price" => 1,
+                    "isFavorite" => true,
+                    "isPublic" => true
+                ]),
                 'headers' => [
                     'Content-Type' => 'application/ld+json',
                 ],
@@ -127,15 +128,16 @@ class RecipeTest extends ApiTestCase
         static::createAuthenticatedClient()->request(
             method: 'POST',
             url: '/api/recipes',
-            options: [ 'body' => json_encode([
-                "time" => 1440,
-                "nbPeople" => 50,
-                "difficulty" => 1,
-                "description" => "Description",
-                "price" => 1,
-                "isFavorite" => true,
-                "isPublic" => true
-             ]),
+            options: [
+                'body' => json_encode([
+                    "time" => 1440,
+                    "nbPeople" => 50,
+                    "difficulty" => 1,
+                    "description" => "Description",
+                    "price" => 1,
+                    "isFavorite" => true,
+                    "isPublic" => true
+                ]),
                 'headers' => [
                     'Content-Type' => 'application/ld+json',
                 ],

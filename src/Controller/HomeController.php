@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\RecipeRepository;
-use App\Repository\ViewRecipeRepository;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,13 +43,26 @@ class HomeController extends AbstractController
      * Controller used to display the home page.
      */
     #[Route('/', 'home.index', methods: ['GET'])]
-    public function index(ViewRecipeRepository $recipeRepository, Request $request): Response
+    public function index(RecipeRepository $repository, Request $request): Response
     {
         $cache = new FilesystemAdapter();
-        $recipes = $cache->get('public_recipes', function (ItemInterface $item) use ($recipeRepository) {
+        $recipes = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
             $item->expiresAfter(60);
 
-            return $recipeRepository->findAllPublicRecipes(20);
+            return array_map(function ($recipe) {
+                return [
+                    'id' => $recipe->getId(),
+                    'average' => $recipe->getAverage(),
+                    'description' => $recipe->getDescription(),
+                    'createdBy' => $recipe->getCreatedBy(),
+                    'updatedAt' => $recipe->getUpdatedAt(),
+                    'name' => $recipe->getName(),
+                    'user' => [
+                        'fullName' => $recipe->getUser()->getFullName(),
+                        'imageName' => $recipe->getUser()->getImageName(),
+                    ],
+                ];
+            }, $repository->findPublicRecipe());
         });
 
         $headerDir = $this->getParameter('kernel.project_dir') . '/public/images/header';

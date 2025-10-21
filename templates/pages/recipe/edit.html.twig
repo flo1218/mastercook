@@ -99,6 +99,9 @@
 			</div>
 			<div class="col">
 				<div class="form-label mt-4">Image</div>
+				{% if recipe.imageName %}
+					<img src="{{ asset('images/recipe/' ~ recipe.imageName) }}" class="img-fluid img-thumbnail" alt="Image recette">
+				{% endif %} 
 				{{ form_widget(form.imageFile) }}
 			</div>
 		</div>

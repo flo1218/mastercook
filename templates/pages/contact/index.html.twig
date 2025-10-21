@@ -7,7 +7,7 @@
 
 {% block body %}
 
-	<div class="container-lg form-error">
+	<div class="container-lg">
 		<h1>{{'contact.title.label'|trans}}</h1>
 		{{ form_start(form) }}
 		<div class="row">
@@ -37,6 +37,9 @@
 			<div class="form-error text-danger">
 				{{ form_errors(form.message) }}
 			</div>
+		</div>
+		<div class="row">
+			{{ form_widget(form.submit) }}
 		</div>
         {{ form_rest(form) }}
 

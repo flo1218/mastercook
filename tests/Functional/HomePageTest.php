@@ -17,6 +17,7 @@ class HomePageTest extends WebTestCase
 
         // Check homepage has 4 button (login, register + confirmDeleteModal buttons)
         $button = $crawler->filter('.btn');
-        $this->assertEquals(4, count($button));
+
+        $this->assertEquals(5, count($button));
     }
 }

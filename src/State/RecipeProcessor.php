@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Entity\Recipe;
 use ApiPlatform\Metadata\Operation;
 use App\Exception\DuplicateException;
-use App\Repository\ViewRecipeRepository;
+use App\Repository\RecipeRepository;
 use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -18,10 +18,9 @@ final class RecipeProcessor implements ProcessorInterface
         private ProcessorInterface $persistProcessor,
         #[Autowire(service: 'api_platform.doctrine.orm.state.remove_processor')]
         private ProcessorInterface $removeProcessor,
-        private ViewRecipeRepository $recipeRepository,
+        private RecipeRepository $recipeRepository,
         private Security $security
-    ) {
-    }
+    ) {}
 
     /**
      * @return void

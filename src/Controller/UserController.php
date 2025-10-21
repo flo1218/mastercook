@@ -19,26 +19,18 @@ class UserController extends AbstractController
 {
     #[Route('/user/edit/{id}', name: 'user_edit')]
     #[IsGranted(
-        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
-        subject: new Expression('args["choosenUser"]'),
+        attribute: new Expression('user == subject and is_granted("ROLE_USER")'),
+        subject: 'user',
         message: 'Access denied'
     )]
     public function edit(
         EntityManagerInterface $manager,
         Request $request,
-        UserPasswordHasherInterface $hasher,
         TranslatorInterface $translator,
-        User $choosenUser
+        User $user
     ): Response {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-
-        if ($this->getUser() != $choosenUser) {
-            return $this->redirectToRoute('recipe.index');
-        }
-
-        $form = $this->createForm(UserType::class, $choosenUser);
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -50,14 +42,15 @@ class UserController extends AbstractController
         }
 
         return $this->render('pages/user/edit.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/user/edit-password/{id}', name: 'user_edit-password')]
     #[IsGranted(
-        attribute: new Expression('user === subject and is_granted("ROLE_USER")'),
-        subject: new Expression('args["choosenUser"]'),
+        attribute: new Expression('user == subject and is_granted("ROLE_USER")'),
+        subject: 'user',
         message: 'Access denied'
     )]
     /**
@@ -67,23 +60,15 @@ class UserController extends AbstractController
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        User $choosenUser
+        User $user
     ): Response {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-
-        if ($this->getUser() != $choosenUser) {
-            return $this->redirectToRoute('recipe.index');
-        }
-
         $form = $this->createForm(UserPasswordType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($choosenUser, $form->getData()['plainPassword'])) {
-                $choosenUser->setPassword($hasher->hashPassword($choosenUser, $form->getData()['newPassword']));
-                $manager->persist($choosenUser);
+            if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
+                $user->setPassword($hasher->hashPassword($user, $form->getData()['newPassword']));
+                $manager->persist($user);
                 $manager->flush();
 
                 $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');

@@ -51,7 +51,7 @@ class RecipeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r')
             ->where('r.isFavorite = 1')
             ->andWhere('r.user = :userId')
-            ->orderBy('r.createdAt', 'DESC');
+            ->orderBy('r.id', 'ASC');
 
         $qb->setParameter('userId', $userId);
 
@@ -80,5 +80,20 @@ class RecipeRepository extends ServiceEntityRepository
             ->andWhere('r.isPublic = 1 or r.user = :user')
             ->setParameter('user', $user)
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipe objects
+     */
+    public function findDuplicateRecipe($userId, $name): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.name = :name')
+            ->setParameter('name', $name)
+            ->andWhere('r.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

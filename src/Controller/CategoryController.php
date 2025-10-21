@@ -87,8 +87,8 @@ class CategoryController extends AbstractController
      */
     #[Route('/category/edit/{id}', name: 'category.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('user === subject && is_granted("ROLE_USER")'),
-        subject: new Expression('args["category"].getUser()'),
+        attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
+        subject: 'category',
         message: 'Access denied'
     )]
     public function edit(
@@ -127,8 +127,8 @@ class CategoryController extends AbstractController
      */
     #[Route('/category/suppression/{id}', name: 'category.delete', methods: ['GET'])]
     #[IsGranted(
-        attribute: new Expression('is_granted("ROLE_USER") && user === subject'),
-        subject: new Expression('args["category"].getUser()'),
+        attribute: new Expression('is_granted("ROLE_USER") && user === subject.getUser()'),
+        subject: 'category',
         message: 'Access denied'
     )]
     /**
