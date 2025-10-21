@@ -25,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 #[UniqueEntity(fields: ['name', 'user'], entityClass: Recipe::class, groups: ['recipe:item', 'recipe:list'])]
 #[ApiResource(
-    security: 'ROLE_USER',
+    security: "is_granted('ROLE_USER')",
     securityMessage: 'Sorry, but you are not the recipe owner.',
     operations: [
         new Delete(security: 'is_granted("ROLE_USER") and object.getUser() == user'),
