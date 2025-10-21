@@ -118,7 +118,7 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/{id}', 'recipe.show', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     #[IsGranted(
-        attribute: new Expression('user == subject.getUser() || subject.isIsPublic()'),
+        attribute: new Expression('user == subject.getUser() && is_granted("ROLE_USER")'),
         subject: 'recipe',
         message: 'Access denied'
     )]
@@ -227,7 +227,7 @@ class RecipeController extends AbstractController
     #[Route('/recipe/edit/{id}', name: 'recipe.edit', methods: ['GET', 'POST'])]
     #[Route('/favorite-recipe/edit/{id}', name: 'recipe.favorite.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('is_granted("ROLE_USER") && user === subject.getUser()'),
+        attribute: new Expression('is_granted("ROLE_USER") && user == subject.getUser()'),
         subject: 'recipe',
         message: 'Access denied'
     )]

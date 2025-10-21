@@ -83,7 +83,7 @@ class IngredientController extends AbstractController
      */
     #[Route('/ingredient/edit/{id}', name: 'ingredient.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
+        attribute: new Expression('user == subject.getUser() && is_granted("ROLE_USER")'),
         subject: 'ingredient',
         message: 'Access denied'
     )]

@@ -87,7 +87,7 @@ class CategoryController extends AbstractController
      */
     #[Route('/category/edit/{id}', name: 'category.edit', methods: ['GET', 'POST'])]
     #[IsGranted(
-        attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
+        attribute: new Expression('user == subject.getUser() && is_granted("ROLE_USER")'),
         subject: 'category',
         message: 'Access denied'
     )]

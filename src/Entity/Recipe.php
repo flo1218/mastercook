@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Post;
 use App\Repository\RecipeRepository;
 use App\State\RecipeProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,13 +26,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 #[UniqueEntity(fields: ['name', 'user'], entityClass: Recipe::class, groups: ['recipe:item', 'recipe:list'])]
 #[ApiResource(
-    security: "is_granted('ROLE_USER')",
+    security: new Expression('is_granted("ROLE_USER")'),
     securityMessage: 'Sorry, but you are not the recipe owner.',
     operations: [
-        new Delete(security: 'is_granted("ROLE_USER") and object.getUser() == user'),
-        new Get(normalizationContext: ['groups' => 'recipe:item']),
+        new Delete(security: 'object.getUser() == user'),
+        new Get(security: 'object.getUser() == user', normalizationContext: ['groups' => 'recipe:item']),
         new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
-        new Post(normalizationContext: ['groups' => 'recipe:item'], processor: RecipeProcessor::class),
+        new Post(security: 'is_granted("ROLE_USER")', normalizationContext: ['groups' => 'recipe:item'], processor: RecipeProcessor::class),
     ],
     // order: ['id' => 'DESC'],
     paginationEnabled: false,

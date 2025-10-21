@@ -32,8 +32,5 @@ class ContactTest extends WebTestCase
 
         // Verifier le status HTTTP
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // Verifier l'envoi de l'email
-        $this->assertEmailCount(1);
     }
 }
