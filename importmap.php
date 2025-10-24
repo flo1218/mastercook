@@ -32,34 +32,34 @@ return [
         'version' => '3.2.2',
     ],
     '@hotwired/turbo' => [
-        'version' => '8.0.13',
+        'version' => '8.0.18',
     ],
     'intl-messageformat' => [
-        'version' => '10.7.16',
+        'version' => '10.7.18',
     ],
     'tslib' => [
         'version' => '2.8.1',
     ],
     '@formatjs/icu-messageformat-parser' => [
-        'version' => '2.11.2',
+        'version' => '2.11.4',
     ],
     '@formatjs/fast-memoize' => [
         'version' => '2.2.7',
     ],
     '@formatjs/icu-skeleton-parser' => [
-        'version' => '1.8.14',
+        'version' => '1.8.16',
     ],
     'chart.js/auto' => [
-        'version' => '4.5.0',
+        'version' => '4.5.1',
     ],
     'chart.js' => [
-        'version' => '4.5.0',
+        'version' => '4.5.1',
     ],
     '@swup/fade-theme' => [
-        'version' => '2.0.1',
+        'version' => '2.0.2',
     ],
     '@swup/slide-theme' => [
-        'version' => '2.0.1',
+        'version' => '2.0.2',
     ],
     '@swup/forms-plugin' => [
         'version' => '3.6.0',
@@ -71,7 +71,7 @@ return [
         'version' => '4.8.2',
     ],
     'delegate-it' => [
-        'version' => '6.2.1',
+        'version' => '6.3.0',
     ],
     '@swup/debug-plugin' => [
         'version' => '4.1.0',
@@ -96,7 +96,7 @@ return [
         'version' => '2.1.0',
     ],
     'path-to-regexp' => [
-        'version' => '8.2.0',
+        'version' => '8.3.0',
     ],
     'tom-select/dist/css/tom-select.default.min.css' => [
         'version' => '2.4.3',

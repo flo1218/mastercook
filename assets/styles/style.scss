@@ -1,20 +1,44 @@
+// Variables
+$bg-light: #f8f9fa;
+$bg-dark: #181a1b;
+$nav-dark: #1d327f;
+$nav-hover: #2c4cc4;
+$accent: #fea400;
+$text-light: #fff;
+$alert-width: 80%;
+$max-img-width: 250px;
+$breakpoint-sm: 576px;
+
+// Global
 body {
   margin: 0;
-  background-color: #f8f9fa;
+  background-color: $bg-light;
+  // text color should be set where needed; keep default here
 }
 
-.carousel .carousel-item img {
-  height: 400px !important;
-  object-fit: cover;
+// Carousel
+.carousel {
+  .carousel-item {
+    img {
+      height: 400px;
+      object-fit: cover;
+      width: 100%;
+      display: block;
+    }
+  }
 }
 
-.custom-btn.bi::before {
-  padding-right: 5px;
+// Buttons / icons
+.custom-btn.bi {
+  &::before {
+    padding-right: 5px;
+  }
 }
 
+// Headings
 h1 {
   font-weight: bold;
-  color: #fea400;
+  color: $accent;
 
   &.big-title {
     font-size: 3.5rem;
@@ -25,79 +49,148 @@ h1 {
 .alert-container {
   position: relative;
 }
+
 .alert {
-  top: 64px;
-  left: 0%;
   position: absolute;
-  width: 100%;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: $alert-width;
+  max-width: 960px;
   padding: 8px;
   text-align: center;
+  box-sizing: border-box;
 }
 /* END ALERTS */
 
+// Vich / images
 .vich-image {
   padding-top: 10px;
+
+  img {
+    width: 100%;
+    max-width: $max-img-width;
+    display: block;
+    height: auto;
+  }
 }
 
-.form-image img,
-.vich-image img {
-  width: 250px;  
+.form-image img {
+  width: 100%;
+  max-width: $max-img-width;
+  display: block;
 }
 
-
+/* Tagify / select styles (ts-*) */
 .ts-control:focus {
   border-color: #9aacf3 !important;
 }
 
 .ts-wrapper {
-  border: 1px #dee2e6 solid !important;
+  border: 1px solid #dee2e6 !important;
 }
 
 .ts-control {
   padding: .5rem 1rem !important;
+  color: inherit;
 }
 
-.ts-wrapper.multi .ts-control > div {
-  padding: 1px 15px !important;
+.ts-wrapper.multi {
+  .ts-control > div {
+    padding: 1px 15px !important;
+  }
 }
 
+/* Cards / labels */
 .recipe_container .card-header {
   font-weight: bold;
 }
 
-label.required:after {
+label.required::after {
   content: ' *';
+  color: #d9534f;
 }
 
+/* Login container */
 .login-container {
   position: relative;
   width: 30%;
+  max-width: 420px;
+  min-width: 260px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding-bottom: 40px;
 }
+
 // Navbar
 a.nav-link,
 span#theme-icon {
-    color: white !important;
+  color: $text-light !important;
 }
 
-.nav-link.active,
-a.nav-link:hover  {
-  background-color: #2c4cc4;
-}
-// End Navbar
-
-// Dark Mode
-html[data-bs-theme="dark"] body {
-  background-color: #181a1b !important;
-}
-html[data-bs-theme="dark"] nav.navbar {
-  background-color: #1d327f !important;
+.nav-link {
+  &.active,
+  &:hover {
+    background-color: $nav-hover;
+  }
 }
 
-html[data-bs-theme="light"] body {
-  background-color: #f8f9fa !important;
+// Dark / Light theme overrides using data-bs-theme
+html[data-bs-theme="dark"] {
+  body {
+    background-color: $bg-dark !important;
+    color: $text-light !important;
+  }
+
+  nav.navbar,
+  footer {
+    background-color: $nav-dark !important;
+  }
+
+  .ts-control,
+  .ts-dropdown,
+  .ts-wrapper.form-control {
+    color: #dee2e6 !important;
+    border-color: #495057 !important;
+  }
+
+  // tweak nav link color if Bootstrap variables differ
+  a.nav-link,
+  span#theme-icon {
+    color: $text-light !important;
+  }
+}
+
+html[data-bs-theme="light"] {
+  body {
+    background-color: $bg-light !important;
+  }
+  footer {
+    background-color: #EBECED !important;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: $breakpoint-sm) {
+  .login-container {
+    width: 90%;
+  }
+
+  .carousel .carousel-item img {
+    height: 220px;
+  }
+
+  .vich-image img,
+  .form-image img {
+    max-width: 180px;
+  }
+
+  .alert {
+    width: 92%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
