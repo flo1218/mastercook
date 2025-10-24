@@ -13,7 +13,6 @@ use App\Repository\RecipeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class RecipeController extends AbstractController
 {
@@ -68,12 +68,13 @@ class RecipeController extends AbstractController
     public function indexPublic(
         RecipeRepository $repository,
         PaginatorInterface $paginator,
-        Request $request
+        Request $request,
+        CacheItemPoolInterface $cache
     ): Response {
-        $cache = new FilesystemAdapter();
-        $data = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
-            $item->expiresAfter(60);
-            return array_map(function ($recipe) {
+        $item = $cache->getItem('public_recipes');
+
+        if (!$item->isHit()) {
+            $data = array_map(function ($recipe) {
                 return [
                     'id' => $recipe->getId(),
                     'average' => $recipe->getAverage(),
@@ -81,14 +82,21 @@ class RecipeController extends AbstractController
                     'createdBy' => $recipe->getCreatedBy(),
                     'updatedAt' => $recipe->getUpdatedAt(),
                     'name' => $recipe->getName(),
-                    'imageName' => $recipe->getImageName(),
                     'user' => [
                         'fullName' => $recipe->getUser()->getFullName(),
                         'imageName' => $recipe->getUser()->getImageName(),
                     ],
                 ];
             }, $repository->findPublicRecipe());
-        });
+
+            $item->set($data);
+            $item->expiresAfter(60);
+            $cache->save($item);
+
+            $recipes = $data;
+        } else {
+            $recipes = $item->get();
+        }
 
         return $this->render('pages/recipe/index_public.html.twig', [
             'recipes' => $paginator->paginate($data, $request->query->getInt('page', 1)),

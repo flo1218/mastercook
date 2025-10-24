@@ -4,13 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\RecipeRepository;
-use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class HomeController extends AbstractController
 {
@@ -43,13 +41,12 @@ class HomeController extends AbstractController
      * Controller used to display the home page.
      */
     #[Route('/', 'home.index', methods: ['GET'])]
-    public function index(RecipeRepository $repository, Request $request): Response
+    public function index(RecipeRepository $repository, Request $request, CacheItemPoolInterface $cache): Response
     {
-        $cache = new FilesystemAdapter();
-        $recipes = $cache->get('public_recipes', function (ItemInterface $item) use ($repository) {
-            $item->expiresAfter(60);
+        $item = $cache->getItem('public_recipes');
 
-            return array_map(function ($recipe) {
+        if (!$item->isHit()) {
+            $data = array_map(function ($recipe) {
                 return [
                     'id' => $recipe->getId(),
                     'average' => $recipe->getAverage(),
@@ -63,7 +60,15 @@ class HomeController extends AbstractController
                     ],
                 ];
             }, $repository->findPublicRecipe());
-        });
+
+            $item->set($data);
+            $item->expiresAfter(60);
+            $cache->save($item);
+
+            $recipes = $data;
+        } else {
+            $recipes = $item->get();
+        }
 
         $headerDir = $this->getParameter('kernel.project_dir') . '/public/images/header';
         $headerImages = [];

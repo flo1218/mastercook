@@ -163,8 +163,8 @@ class RecipeTest extends ApiTestCase
         $this->assertArrayHasKey('@context', $content);
         $this->assertArrayHasKey('@id', $content);
         $this->assertArrayHasKey('@type', $content);
-        $this->assertArrayHasKey('hydra:totalItems', $content);
-        $this->assertArrayHasKey('hydra:member', $content);
+        $this->assertArrayHasKey('totalItems', $content);
+        $this->assertArrayHasKey('member', $content);
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
