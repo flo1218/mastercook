@@ -99,7 +99,7 @@ class RecipeController extends AbstractController
         }
 
         return $this->render('pages/recipe/index_public.html.twig', [
-            'recipes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
+            'recipes' => $paginator->paginate($recipes, $request->query->getInt('page', 1)),
         ]);
     }
 
