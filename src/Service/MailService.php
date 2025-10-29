@@ -15,7 +15,8 @@ class MailService
     }
 
     /**
-     *  Send an email.
+     * Send an email.
+     * @param array<string,mixed> $context Context passed to the Twig template
      */
     public function sendMail(
         string $from,
@@ -23,7 +24,7 @@ class MailService
         array $context,
         string $htmlTemplate = 'emails/contact.html.twig',
         string $to = 'admin@mastercook.com'
-    ) {
+    ): void {
         $email = (new TemplatedEmail())
             ->from($from)
             ->to($to)

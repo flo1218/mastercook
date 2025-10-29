@@ -11,26 +11,32 @@ use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
+/**
+ * @implements ProcessorInterface<Recipe, mixed>
+ */
 final class RecipeProcessor implements ProcessorInterface
 {
+    /**
+     * @param ProcessorInterface<Recipe, mixed> $persistProcessor
+     */
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
         private ProcessorInterface $persistProcessor,
-        #[Autowire(service: 'api_platform.doctrine.orm.state.remove_processor')]
-        private ProcessorInterface $removeProcessor,
         private RecipeRepository $recipeRepository,
         private Security $security
-    ) {}
+    ) {
+        // Constructor body can be empty
+    }
 
     /**
-     * @return void
+     * @return mixed
      */
     public function process(
         mixed $data,
         Operation $operation,
         array $uriVariables = [],
         array $context = []
-    ) {
+    ): mixed {
         /** @var Recipe $data */
         if ($data->getTime() > 1440) {
             throw new \Exception('Time must be < 1440');

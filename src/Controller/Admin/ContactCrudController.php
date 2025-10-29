@@ -11,6 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
+/**
+ * @extends AbstractCrudController<Contact>
+ */
 class ContactCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 2, max: 180)]
     private ?string $email = null;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column]
     #[Assert\NotNull()]
     private array $roles = [];
@@ -59,17 +62,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
+    /**
+     * @var string|null
+     */
     #[PasswordStrength([
         'minScore' => PasswordStrength::STRENGTH_WEAK,
     ])]
-    private $plainPassword;
+    private ?string $plainPassword;
 
+    /**
+     * @var Collection<int, Ingredient>
+     */
     #[ORM\OneToMany(targetEntity: Ingredient::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $ingredients;
 
+    /**
+     * @var Collection<int, Recipe>
+     */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $recipes;
 
+    /**
+     * @var Collection<int, Mark>
+     */
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $marks;
 
@@ -79,7 +94,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Category::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: Category::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true
+    )]
     private Collection $categories;
 
     #[Vich\UploadableField(mapping: 'user_images', fileNameProperty: 'imageName')]
@@ -127,6 +147,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -196,18 +219,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Get the value of plainPassword.
+     * @return string|null
      */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
     /**
      * Set the value of plainPassword.
+     * @param string|null $plainPassword
      *
-     * @return self
      */
-    public function setPlainPassword($plainPassword)
+    public function setPlainPassword(?string $plainPassword): static
     {
         $this->plainPassword = $plainPassword;
 
@@ -393,6 +417,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         ];
     }
 
+
+    /**
+     * @param array<string,mixed> $serialized
+     */
     public function __unserialize(array $serialized): void
     {
         $this->id = $serialized['id'];

@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
     /**
      * This function is used to add a new Categorys.
      *
-     * @var \App\Entity\User user
+     * @param \App\Entity\User $user
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -131,22 +131,16 @@ class CategoryController extends AbstractController
         subject: 'category',
         message: 'Access denied'
     )]
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
+
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         Category $category
     ): Response {
-        if (!$category) {
-            $this->addFlash('warning', $translator->trans('category.notfound.label'));
-        } else {
-            $manager->remove($category);
-            $manager->flush();
-            $this->addFlash('success', $translator->trans('category.deleted.label'));
-        }
+        $manager->remove($category);
+        $manager->flush();
+        $this->addFlash('success', $translator->trans('category.deleted.label'));
 
         return $this->redirectToRoute('category.index');
     }

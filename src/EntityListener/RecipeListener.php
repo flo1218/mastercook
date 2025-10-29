@@ -3,7 +3,7 @@
 namespace App\EntityListener;
 
 use App\Entity\Recipe;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
+use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class RecipeListener
@@ -15,18 +15,16 @@ class RecipeListener
         $this->security = $security;
     }
 
-    public function prePersist(Recipe $recipe, LifecycleEventArgs $event): void
+    public function prePersist(Recipe $recipe): void
     {
-        if ($user = $this->security->getUser()) {
-            /*
-             * @var \App\Entity\User $user
-             */
-            $recipe->setUser($this->security->getUser());
+        $user = $this->security->getUser();
+        if ($user instanceof User) {
+            $recipe->setUser($user);
             $recipe->setCreatedBy($user->getFullName());
         }
     }
 
-    public function preUpdate(Recipe $recipe, LifecycleEventArgs $event)
+    public function preUpdate(Recipe $recipe): void
     {
         $recipe->setUpdatedAt(new \DateTimeImmutable());
     }

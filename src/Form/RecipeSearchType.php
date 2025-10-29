@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Recipe;
 use App\Entity\Ingredient;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
@@ -15,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RecipeSearchType extends AbstractType
 {
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {

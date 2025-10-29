@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {

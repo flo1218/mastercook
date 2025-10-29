@@ -9,19 +9,17 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
-    private $defaultLocale;
-    private $tokenStorage;
+    private string $defaultLocale;
 
-    public function __construct(TokenStorageInterface $tokenStorage, $defaultLocale = 'fr')
+    public function __construct(string $defaultLocale = 'fr')
     {
         $this->defaultLocale = $defaultLocale;
-        $this->tokenStorage = $tokenStorage;
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings("PHPMD.ElseExpression")
      */
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
 

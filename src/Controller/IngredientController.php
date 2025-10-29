@@ -42,7 +42,6 @@ class IngredientController extends AbstractController
     /**
      * This function is used to add a new ingredients.
      *
-     * @var User user
      */
     #[Route('/ingredient/new', name: 'ingredient.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -122,22 +121,16 @@ class IngredientController extends AbstractController
         subject: 'ingredient',
         message: 'Access denied'
     )]
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
+
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
         Ingredient $ingredient,
         TranslatorInterface $translator,
     ): Response {
-        if (!$ingredient) {
-            $this->addFlash('warning', $translator->trans('ingredient.notfound.label'));
-        } else {
-            $manager->remove($ingredient);
-            $manager->flush();
-            $this->addFlash('success', $translator->trans('ingredient.deleted.label'));
-        }
+        $manager->remove($ingredient);
+        $manager->flush();
+        $this->addFlash('success', $translator->trans('ingredient.deleted.label'));
 
         return $this->redirectToRoute('ingredient.index');
     }

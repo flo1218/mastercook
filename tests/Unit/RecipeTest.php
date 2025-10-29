@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RecipeTest extends KernelTestCase
 {
-    public function getEntity()
+    public function getEntity(): Recipe
     {
         $recipe = new Recipe();
         $recipe->setDescription('Description 1')

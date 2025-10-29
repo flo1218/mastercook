@@ -5,6 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Recipe;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
+/**
+ * @extends AbstractCrudController<Recipe>
+ */
 class RecipeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

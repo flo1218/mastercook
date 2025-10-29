@@ -83,7 +83,7 @@ class Category
     /**
      * Get the value of name.
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -93,7 +93,7 @@ class Category
      *
      * @return self
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -103,7 +103,7 @@ class Category
     /**
      * Get the value of created_at.
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
@@ -113,7 +113,7 @@ class Category
      *
      * @return self
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -123,7 +123,7 @@ class Category
     /**
      * Get the value of user.
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -133,7 +133,7 @@ class Category
      *
      * @return self
      */
-    public function setUser($user)
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use App\Repository\RecipeRepository;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use ApiPlatform\Symfony\Bundle\Test\Client;
 
 class RecipeTest extends ApiTestCase
 {
@@ -21,7 +22,7 @@ class RecipeTest extends ApiTestCase
         return $recipe;
     }
 
-    protected static function getEntityManager()
+    protected static function getEntityManager(): mixed
     {
         return self::bootKernel()
             ->getContainer()
@@ -82,13 +83,15 @@ class RecipeTest extends ApiTestCase
         $entityManager->flush(true);
     }
 
-    protected static function createAuthenticatedClient()
+    protected static function createAuthenticatedClient(): Client
     {
-        $client = self::createClient();
+        $client = static::createClient();
         $userRepository = static::getContainer()->get(UserRepository::class);
         $testUser = $userRepository->findOneByEmail('admin-test@mastercook.ch');
 
-        $client->loginUser($testUser);
+        if ($testUser) {
+            $client->loginUser($testUser);
+        }
 
         return $client;
     }

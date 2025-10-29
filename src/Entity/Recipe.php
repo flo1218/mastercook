@@ -32,7 +32,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Delete(security: 'object.getUser() == user'),
         new Get(security: 'object.getUser() == user', normalizationContext: ['groups' => 'recipe:item']),
         new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
-        new Post(security: 'is_granted("ROLE_USER")', normalizationContext: ['groups' => 'recipe:item'], processor: RecipeProcessor::class),
+        new Post(
+            security: 'is_granted("ROLE_USER")',
+            normalizationContext: ['groups' => 'recipe:item'],
+            processor: RecipeProcessor::class
+        ),
     ],
     // order: ['id' => 'DESC'],
     paginationEnabled: false,
@@ -97,6 +101,9 @@ class Recipe
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Ingredient>
+     */
     #[ORM\ManyToMany(targetEntity: Ingredient::class)]
     #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $ingredients;
@@ -106,6 +113,9 @@ class Recipe
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, Mark>
+     */
     #[ORM\OneToMany(targetEntity: Mark::class, mappedBy: 'recipe', orphanRemoval: true)]
     private Collection $marks;
 
@@ -124,6 +134,8 @@ class Recipe
     #[ORM\Column(length: 255)]
     #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $createdBy = null;
+
+    private ?int $ingredientsCount = null;
 
     public function __construct()
     {
@@ -168,7 +180,7 @@ class Recipe
         return $this->imageName;
     }
 
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -367,7 +379,7 @@ class Recipe
     /**
      * Get the value of average.
      */
-    public function getAverage()
+    public function getAverage(): float|int|null
     {
         $marks = $this->marks;
 
@@ -417,12 +429,22 @@ class Recipe
     /**
      * Set the value of id.
      *
-     * @return self
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
         $this->id = $id;
 
+        return $this;
+    }
+
+    public function getIngredientsCount(): ?int
+    {
+        return $this->ingredientsCount;
+    }
+
+    public function setIngredientsCount(?int $count): self
+    {
+        $this->ingredientsCount = $count;
         return $this;
     }
 }

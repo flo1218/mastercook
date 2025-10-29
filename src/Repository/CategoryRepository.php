@@ -16,8 +16,10 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-
-    public function getUserCategories($userId): ?array
+    /**
+     * @return Category[]
+     */
+    public function getUserCategories(int $userId): ?array
     {
         return $this->createQueryBuilder('c')
             ->where('c.user = :user')

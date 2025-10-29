@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-	{{ app.request.server.get('APP_NAME') }}
-	-
-	{{'header.suggest.label'|trans}}
+	{{ app.request.server.get('APP_NAME') }} - {{'header.suggest.label'|trans}}
 {% endblock %}
 {% block body %}
 	<div class="container-lg">
@@ -11,7 +9,6 @@
 		<div class="row">
 			{{ form_start(form) }}
 			<div class="col">
-
 				{% if not ingredients.items is same as([]) %}
 					<h5>{{ 'recipe.suggest.label'|trans }}</h5>
 					{% for ingredient in form.ingredients %}
@@ -32,11 +29,13 @@
 			</div>
 			<div class="d-flex justify-content-between flex-wrap">
 				{% for recipe in recettes %}
+					{% set borderStyle = recipe.ingredientsCount == recipe.ingredients|length ? 'border-warning border-4 ' : '' %}
 					<a style="text-decoration:none" href="{{ path('recipe.show', {'id': recipe.id } )}}">
-						<div class="card m-3" style="max-width: 20rem;">
+						<div class="card m-3 {{ borderStyle }}" style="max-width: 20rem;">
 							<div class="card-header">
 								{{ 'recipe.no.label'|trans }}{{ recipe.id }}
 								{{recipe.average|stars_rating()}}
+								({{recipe.ingredientsCount}})
 							</div>
 							{% if recipe.imageName is defined and recipe.imageName is not null  %}
 								<img class="card-img-top" src="/images/recipe/{{recipe.imageName}}" alt="The recipe image">
@@ -45,17 +44,20 @@
 								<h4 class="card-title">{{ recipe.name }}</h4>
 								<p class="card-text">{{ recipe.description|u.truncate(150, '...')|nl2br }}</p>
 								{% for ingredient in recipe.ingredients %}
-									<span class="badge bg-info">{{ ingredient.name }}</span>
+									{% set isSelected = ingredient.name|lower in selectedIngredientNames %}
+									<span class="badge {{ isSelected ? 'bg-success' : 'bg-info' }}">
+										{{ ingredient.name }}
+									</span>
 								{% endfor %}
 							</div>
 							<div class="card-footer">
-								<small class="text-muted">{{ 'app.createdBy.label'|trans }}
+								<small class="text">{{ 'app.createdBy.label'|trans }}
 									{{ recipe.createdBy }}</small>
 								{% if recipe.user.imageName %}
 									<img src="/images/user/{{ recipe.user.imageName }}" class="rounded-circle" height="22" width="22" alt="Avatar"/>
 								{% endif %}
 								<br/>
-								<small class="text-muted">{{ 'app.updatedAt.label'|trans }}
+								<small class="text">{{ 'app.updatedAt.label'|trans }}
 									{{ recipe.updatedAt | localized_date(app.request.locale) }}</small>
 							</div>
 						</div>

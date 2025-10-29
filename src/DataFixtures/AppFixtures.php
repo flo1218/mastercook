@@ -10,23 +10,15 @@ use App\Entity\User;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
-use Faker\Generator;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    private Generator $faker;
+    private CustomFaker $faker;
 
-    public function __construct(UserPasswordHasherInterface $hasher)
+    public function __construct()
     {
-        $factory = new Factory();
-        $this->faker = $factory::create('fr_FR');
-        $this->faker->addProvider(new \FakerRestaurant\Provider\fr_FR\Restaurant($this->faker));
-        $this->hasher = $hasher;
+        $this->faker = new CustomFaker();
     }
-
-    private UserPasswordHasherInterface $hasher;
 
     public function load(ObjectManager $manager): void
     {
@@ -59,22 +51,13 @@ class AppFixtures extends Fixture
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
 
-            $users[] = $user;
             $manager->persist($user);
 
             // Ingredients
-            $ingredientFakerList = [
-                'dairyName',
-                'vegetableName',
-                'fruitName',
-                'meatName',
-            ];
-
             $ingredients = [];
             for ($j = 1; $j <= 10; ++$j) {
-                $method = $ingredientFakerList[mt_rand(0, 3)];
                 $ingredient = new Ingredient();
-                $ingredient->setName(name: $this->faker->$method())
+                $ingredient->setName(name: $this->faker->randomIngredientName())
                     ->setPrice(mt_rand(0, 100))
                     ->setUser($user);
                 if (!in_array($ingredient->getName(), $ingredients)) {

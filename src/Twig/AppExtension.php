@@ -17,7 +17,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function minutesToHours($value)
+    public function minutesToHours(int $value): mixed
     {
         if (!$value) {
             return $value;
@@ -33,13 +33,14 @@ class AppExtension extends AbstractExtension
         return sprintf('%sh%s', $hours, $minutes);
     }
 
-    public function starsRating($value, $showNumeric = false, $color = 'orange')
+    public function starsRating(float $value, bool $showNumeric = false, string $color = 'orange'): Markup
     {
         $rawString = '<span class="ms-2 inline" style="color: ' . $color . ';">';
         for ($i = 0; $i <= 4; ++$i) {
-            if ($value - $i >= 0.8) {
+            $diff = $value - $i;
+            if ($diff >= 0.8) {
                 $rawString .= '<i class="bi bi-star-fill"></i>';
-            } elseif ($value - $i <= 0.2) {
+            } elseif ($diff <= 0.2) {
                 $rawString .= '<i class="bi bi-star"></i>';
             } else {
                 $rawString .= '<i class="bi bi-star-half"></i>';

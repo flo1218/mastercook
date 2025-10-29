@@ -38,6 +38,7 @@ class CreateAdministratorCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $fullName = $input->getArgument('full_name');

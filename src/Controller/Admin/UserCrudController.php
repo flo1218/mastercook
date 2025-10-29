@@ -11,9 +11,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @extends AbstractCrudController<User>
+ */
 class UserCrudController extends AbstractCrudController
 {
-    private $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(TranslatorInterface $translator)
     {

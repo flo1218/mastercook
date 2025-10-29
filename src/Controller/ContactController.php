@@ -18,7 +18,6 @@ class ContactController extends AbstractController
     /**
      * Controller used to manage the contact page.
      *
-     * @var User user
      */
     #[Route(path: [
         'en' => '/contact-us',

@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -139,13 +140,15 @@ class RecipeController extends AbstractController
         MarkRepository $markRepository,
         EntityManagerInterface $manager,
         TranslatorInterface $translator
-    ) {
+    ): Response {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
         $form->handleRequest($request);
 
+        /** @var User $user */
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            $mark->setuser($this->getUser())
+            $mark->setuser($user)
                 ->setRecipe($recipe);
 
             $existingMark = $markRepository->findOneBy([
@@ -175,7 +178,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('recipe/print/{id}', 'recipe.print', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function print(Recipe $recipe, DompdfWrapperInterface $wrapper)
+    public function print(Recipe $recipe, DompdfWrapperInterface $wrapper): StreamedResponse
     {
         $pdfContent = $this->renderView('pages/recipe/print.html.twig', [
             'recipe' => $recipe,
@@ -282,22 +285,16 @@ class RecipeController extends AbstractController
         attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
         subject: 'recipe',
     )]
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
+
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         Recipe $recipe
     ): Response {
-        if (!$recipe) {
-            $this->addFlash('warning', $translator->trans('recipe.notfound.label'));
-        } else {
-            $manager->remove($recipe);
-            $manager->flush();
-            $this->addFlash('success', $translator->trans('recipe.deleted.label'));
-        }
+        $manager->remove($recipe);
+        $manager->flush();
+        $this->addFlash('success', $translator->trans('recipe.deleted.label'));
 
         if ($request->query->get('redirect')) {
             return $this->redirect($request->query->get('redirect'));
@@ -310,11 +307,9 @@ class RecipeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function suggest(
         Request $request,
-        EntityManagerInterface $manager,
         PaginatorInterface $paginator,
         IngredientRepository $repository,
         RecipeRepository $recipeRepo,
-        TranslatorInterface $translator
     ): Response {
         if (isset($request->get('recipe_search')['cancel'])) {
             return $this->redirectToRoute('recipe.suggest');
@@ -323,8 +318,15 @@ class RecipeController extends AbstractController
         $recipes = null;
         $form = $this->createForm(RecipeSearchType::class, null);
         $form->handleRequest($request);
+
         $ingredients = $form->getData();
+        $selectedIngredientNames = [];
         if ($form->isSubmitted() && count($ingredients['ingredients']) > 0) {
+            $selected = $form->get('ingredients')->getData(); // tableau d'entités Ingredient
+            foreach ($selected as $ing) {
+                $selectedIngredientNames[] = mb_strtolower($ing->getName());
+            }
+            /** @var User $user */
             $user = $this->getUser();
             $recipes = $recipeRepo->findRecipesByIngredients($ingredients['ingredients'], $user);
         }
@@ -338,6 +340,7 @@ class RecipeController extends AbstractController
             'form' => $form->createView(),
             'ingredients' => $ingredients,
             'recettes' => $recipes,
+            'selectedIngredientNames' => $selectedIngredientNames,
         ]);
     }
 }

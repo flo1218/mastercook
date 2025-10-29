@@ -52,3 +52,6 @@ yarn-error.log
 ###< lexik/jwt-authentication-bundle ###
 /tools
 tmp/xdebug.log
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
