@@ -12,8 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Mark|null find($id, $lockMode = null, $lockVersion = null)
  * @method Mark|null findOneBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null)
  * @method Mark[]    findAll()
- * @method Mark[]    findBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null,
- * int|null $limit = null, int|null $offset = null)
+ * @method Mark[]    findBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null, int|null $limit = null, int|null $offset = null)
  */
 class MarkRepository extends ServiceEntityRepository
 {

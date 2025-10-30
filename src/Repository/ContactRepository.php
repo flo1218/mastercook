@@ -12,8 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Contact|null find($id, $lockMode = null, $lockVersion = null)
  * @method Contact|null findOneBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null)
  * @method Contact[]    findAll()
- * @method Contact[]    findBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null,
- *  int|null $limit = null, int|null $offset = null)
+ * @method Contact[]    findBy(array<string,mixed> $criteria, array<string,string>|null $orderBy = null, int|null $limit = null, int|null $offset = null)
  */
 class ContactRepository extends ServiceEntityRepository
 {
