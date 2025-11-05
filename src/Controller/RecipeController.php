@@ -2,21 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Mark;
-use App\Entity\User;
-use App\Entity\Recipe;
-use App\Form\MarkType;
-use App\Form\RecipeType;
-use App\Form\RecipeSearchType;
-use App\Repository\MarkRepository;
-use App\Repository\RecipeRepository;
-use App\Repository\IngredientRepository;
-use App\Repository\CategoryRepository;
+use App\Entity\{Mark, Recipe, User};
+use App\Form\{MarkType, RecipeType, RecipeSearchType};
+use App\Repository\{MarkRepository, RecipeRepository, IngredientRepository, CategoryRepository};
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\{Request, Response, StreamedResponse};
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -127,7 +118,7 @@ class RecipeController extends AbstractController
      */
     #[Route('recipe/{id}', 'recipe.show', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     #[IsGranted(
-        attribute: new Expression('user == subject.getUser() && is_granted("ROLE_USER")'),
+        attribute: new Expression('user == subject.getUser() || subject.isIsPublic()'),
         subject: 'recipe',
         message: 'Access denied'
     )]
@@ -285,7 +276,6 @@ class RecipeController extends AbstractController
         attribute: new Expression('user === subject.getUser() && is_granted("ROLE_USER")'),
         subject: 'recipe',
     )]
-
     public function delete(
         Request $request,
         EntityManagerInterface $manager,

@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Entity\Ingredient;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,14 +26,14 @@ class RecipeRepository extends ServiceEntityRepository
 
     public function groupByMonth(string $year): mixed
     {
-        $qb = $this->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->select('MONTH(r.createdAt) AS gBmonth, count(r.id) AS gCount')
             ->where('YEAR(r.createdAt) = :year')
             ->orderBy('r.updatedAt', 'DESC')
-            ->groupBy('gBmonth');
-        $qb->setParameter('year', $year);
-
-        return $qb->getQuery()->getResult();
+            ->groupBy('gBmonth')
+            ->setParameter('year', $year)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -40,15 +41,12 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findPublicRecipe(int $nbRecipes = 0): array
     {
-        $qb = $this->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.isPublic = 1')
-            ->orderBy('r.updatedAt', 'DESC');
-
-        if (0 != $nbRecipes) {
-            $qb->setMaxResults($nbRecipes);
-        }
-
-        return $qb->getQuery()->getResult();
+            ->orderBy('r.updatedAt', 'DESC')
+            ->setMaxResults($nbRecipes != 0 ? $nbRecipes : null)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -56,38 +54,31 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findFavoriteRecipe(int $nbRecipes = 0, int $userId = 0): array
     {
-        $qb = $this->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.isFavorite = 1')
             ->andWhere('r.user = :userId')
-            ->orderBy('r.id', 'ASC');
-
-        $qb->setParameter('userId', $userId);
-
-        if (0 != $nbRecipes) {
-            $qb->setMaxResults($nbRecipes);
-        }
-
-        return $qb->getQuery()->getResult();
+            ->orderBy('r.id', 'ASC')
+            ->setParameter('userId', $userId)
+            ->setMaxResults($nbRecipes != 0 ? $nbRecipes : null)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * @param array<Ingredient> $ingredients
+     * @param ArrayCollection<int, Ingredient> $ingredients
      * @param User $user
      * @return Recipe[] Returns an array of Recipe
      */
-    public function findRecipesByIngredients(array $ingredients, User $user): array
+    public function findRecipesByIngredients(ArrayCollection $ingredients, User $user): array
     {
-        $ingredientNames = [];
-        foreach ($ingredients as $ingredient) {
-            $ingredientNames[] = $ingredient->getName();
-        }
+        $ingredientNames = $ingredients->map(func: fn(Ingredient $ing): string|null => $ing->getName())->toArray();
 
-        if (count($ingredientNames) === 0) {
+        if (empty($ingredientNames)) {
             return [];
         }
 
         // Requête principale pour récupérer les entités (ordonnées par nombre d'ingrédients correspondants)
-        $qb = $this->createQueryBuilder('r')
+        $recipes = $this->createQueryBuilder('r')
             ->addSelect('count(i.id) AS HIDDEN ingredients_count')
             ->join('r.ingredients', 'i')
             ->where('i.name IN (:names)')
@@ -95,26 +86,24 @@ class RecipeRepository extends ServiceEntityRepository
             ->setParameter('names', $ingredientNames)
             ->setParameter('user', $user)
             ->groupBy('r.id')
-            ->orderBy('ingredients_count', 'DESC');
-
-        $recipes = $qb->getQuery()->getResult();
+            ->orderBy('ingredients_count', 'DESC')
+            ->getQuery()
+            ->getResult();
 
         // Récupérer les ids et calculer les counts (uniquement pour les noms recherchés)
-        $ids = array_map(function (Recipe $r) {
-            return $r->getId();
-        }, $recipes);
+        $ids = array_map(fn(Recipe $r) => $r->getId(), $recipes);
 
-        if (count($ids) > 0) {
-            $countsQb = $this->createQueryBuilder('r2')
+        if (!empty($ids)) {
+            $counts = $this->createQueryBuilder('r2')
                 ->select('r2.id AS id, COUNT(i2.id) AS cnt')
                 ->join('r2.ingredients', 'i2')
                 ->where('r2.id IN (:ids)')
                 ->andWhere('i2.name IN (:names)')
                 ->setParameter('ids', $ids)
                 ->setParameter('names', $ingredientNames)
-                ->groupBy('r2.id');
-
-            $counts = $countsQb->getQuery()->getScalarResult();
+                ->groupBy('r2.id')
+                ->getQuery()
+                ->getScalarResult();
 
             $map = [];
             foreach ($counts as $c) {
@@ -142,7 +131,6 @@ class RecipeRepository extends ServiceEntityRepository
             ->andWhere('r.user = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }

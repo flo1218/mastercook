@@ -23,7 +23,7 @@ class AppExtension extends AbstractExtension
             return $value;
         }
 
-        $hours = floor($value / 60);
+        $hours = intdiv($value, 60);
         $minutes = $value % 60;
 
         if ($minutes < 10) {
@@ -57,10 +57,10 @@ class AppExtension extends AbstractExtension
 
     public function formatDate(\DateTimeInterface $date, string $locale = 'en'): string
     {
-        if ($locale !== 'en') {
-            return $date->format('d/m/Y H:i');
-        }
-
-        return $date->format('m-d-Y h:i A');
+        return match ($locale) {
+            'fr' => $date->format('d/m/Y H:i'),
+            'en' => $date->format('m-d-Y h:i A'),
+            default => $date->format('Y-m-d H:i'),
+        };
     }
 }
