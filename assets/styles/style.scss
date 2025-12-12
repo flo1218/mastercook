@@ -114,7 +114,7 @@ label.required::after {
 /* Login container */
 .login-container {
   position: relative;
-  width: 30%;
+  width: 50%;
   max-width: 420px;
   min-width: 260px;
   margin: 0 auto;
@@ -175,10 +175,6 @@ html[data-bs-theme="light"] {
 
 /* Responsive tweaks */
 @media (max-width: $breakpoint-sm) {
-  .login-container {
-    width: 90%;
-  }
-
   .carousel .carousel-item img {
     height: 220px;
   }
