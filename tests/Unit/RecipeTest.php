@@ -5,7 +5,9 @@ namespace App\Tests\Unit;
 use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RecipeTest extends KernelTestCase
 {
@@ -25,11 +27,12 @@ class RecipeTest extends KernelTestCase
         self::bootKernel();
 
         $container = static::getContainer();
-
         $recipe = $this->getEntity();
         $recipe->setName('Name');
 
-        $errors = $container->get('validator')->validate($recipe);
+        /** @var ValidatorInterface $validator */
+        $validator = $container->get('validator');
+        $errors = $validator->validate($recipe);
 
         $this->assertCount(0, $errors);
     }
@@ -39,20 +42,32 @@ class RecipeTest extends KernelTestCase
         self::bootKernel();
 
         $container = static::getContainer();
-
         $recipe = $this->getEntity();
         $recipe->setName('');
 
-        $errors = $container->get('validator')->validate($recipe);
+        /** @var ValidatorInterface $validator */
+        $validator = $container->get('validator');
+        $errors = $validator->validate($recipe);
 
         $this->assertCount(1, $errors);
     }
 
     public function testGetAverage(): void
     {
+        self::bootKernel();
+
+        $container = static::getContainer();
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $container->get('doctrine.orm.entity_manager');
         $recipe = $this->getEntity();
 
-        $user = static::getContainer()->get('doctrine.orm.entity_manager')->find(User::class, 1);
+        $user = $entityManager->find(User::class, 1);
+        if (!$user) {
+            $user = new User();
+            $user->setEmail('test@example.com');
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
 
         for ($i = 0; $i < 5; ++$i) {
             $mark = new Mark();

@@ -12,7 +12,7 @@ class ContactTest extends WebTestCase
         self::ensureKernelShutdown();
         $client = static::createClient();
         $urlGenerator = $client->getContainer()->get('router');
-
+        /** @var \Symfony\Component\Routing\Router $urlGenerator */
         $crawler = $client->request('GET', $urlGenerator->generate('app.contact'));
 
         $this->assertResponseIsSuccessful();
