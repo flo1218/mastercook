@@ -23,7 +23,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
     }
@@ -34,7 +34,7 @@ final readonly class CurrentUserExtension implements QueryCollectionExtensionInt
         string $resourceClass,
         array $identifiers,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
     }

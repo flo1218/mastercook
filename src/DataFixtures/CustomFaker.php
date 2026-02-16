@@ -36,6 +36,7 @@ class CustomFaker extends Generator
     public function randomIngredientName(): string
     {
         $method = $this->randomElement($this->getIngredientMethods());
+
         return $this->$method();
     }
 }

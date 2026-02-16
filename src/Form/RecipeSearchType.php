@@ -3,14 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Ingredient;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RecipeSearchType extends AbstractType
 {

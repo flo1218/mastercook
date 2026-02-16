@@ -10,11 +10,11 @@ use ApiPlatform\Metadata\Post;
 use App\Repository\RecipeRepository;
 use App\State\RecipeProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -428,7 +428,6 @@ class Recipe
 
     /**
      * Set the value of id.
-     *
      */
     public function setId(int $id): static
     {
@@ -445,6 +444,7 @@ class Recipe
     public function setIngredientsCount(?int $count): self
     {
         $this->ingredientsCount = $count;
+
         return $this;
     }
 }

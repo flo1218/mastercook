@@ -2,21 +2,30 @@
 
 namespace App\Controller;
 
-use App\Entity\{Mark, Recipe, User};
-use App\Form\{MarkType, RecipeType, RecipeSearchType};
-use App\Repository\{MarkRepository, RecipeRepository, IngredientRepository, CategoryRepository};
+use App\Entity\Mark;
+use App\Entity\Recipe;
+use App\Entity\User;
+use App\Form\MarkType;
+use App\Form\RecipeSearchType;
+use App\Form\RecipeType;
+use App\Repository\CategoryRepository;
+use App\Repository\IngredientRepository;
+use App\Repository\MarkRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\{Request, Response, StreamedResponse};
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RecipeController extends AbstractController
 {
@@ -61,7 +70,7 @@ class RecipeController extends AbstractController
         RecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request,
-        CacheItemPoolInterface $cache
+        CacheItemPoolInterface $cache,
     ): Response {
         $item = $cache->getItem('public_recipes');
 
@@ -103,7 +112,7 @@ class RecipeController extends AbstractController
         RecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request,
-        UserInterface $user
+        UserInterface $user,
     ): Response {
         /** @var User $user */
         $data = $repository->findFavoriteRecipe(0, $user->getId());
@@ -130,7 +139,7 @@ class RecipeController extends AbstractController
         Request $request,
         MarkRepository $markRepository,
         EntityManagerInterface $manager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ): Response {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
@@ -180,7 +189,7 @@ class RecipeController extends AbstractController
             "recipe_{$recipe->getId()}.pdf",   // filename
             [
                 'isRemoteEnabled' => false, // allow external images
-                'defaultFont' => 'Arial'
+                'defaultFont' => 'Arial',
             ]
         );
 
@@ -280,7 +289,7 @@ class RecipeController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
-        Recipe $recipe
+        Recipe $recipe,
     ): Response {
         $manager->remove($recipe);
         $manager->flush();

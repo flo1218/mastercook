@@ -2,12 +2,12 @@
 
 namespace App\State;
 
-use App\Entity\User;
-use App\Entity\Recipe;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
+use App\Entity\Recipe;
+use App\Entity\User;
 use App\Exception\DuplicateException;
 use App\Repository\RecipeRepository;
-use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -23,19 +23,16 @@ final class RecipeProcessor implements ProcessorInterface
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
         private ProcessorInterface $persistProcessor,
         private RecipeRepository $recipeRepository,
-        private Security $security
+        private Security $security,
     ) {
         // Constructor body can be empty
     }
 
-    /**
-     * @return mixed
-     */
     public function process(
         mixed $data,
         Operation $operation,
         array $uriVariables = [],
-        array $context = []
+        array $context = [],
     ): mixed {
         /** @var Recipe $data */
         if ($data->getTime() > 1440) {

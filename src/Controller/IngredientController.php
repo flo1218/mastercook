@@ -27,7 +27,7 @@ class IngredientController extends AbstractController
     public function index(
         IngredientRepository $repository,
         PaginatorInterface $paginator,
-        Request $request
+        Request $request,
     ): Response {
         $ingredients = $paginator->paginate(
             $repository->findBy(['user' => $this->getUser()]),
@@ -41,7 +41,6 @@ class IngredientController extends AbstractController
 
     /**
      * This function is used to add a new ingredients.
-     *
      */
     #[Route('/ingredient/new', name: 'ingredient.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -50,7 +49,7 @@ class IngredientController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         IngredientRepository $repository,
-        UserInterface $user
+        UserInterface $user,
     ): Response {
         if (isset($request->get('ingredient')['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
@@ -60,7 +59,7 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
-            /**  @var \App\Entity\User $user  */
+            /** @var User $user */
             if ($repository->isNameUniquedByUser($ingredient->getName(), $user->getId())) {
                 $ingredient->setUser($this->getUser());
                 $manager->persist($ingredient);
@@ -121,7 +120,6 @@ class IngredientController extends AbstractController
         subject: 'ingredient',
         message: 'Access denied'
     )]
-
     public function delete(
         Request $request,
         EntityManagerInterface $manager,

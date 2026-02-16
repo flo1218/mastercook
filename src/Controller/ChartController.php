@@ -22,7 +22,7 @@ class ChartController extends AbstractController
         ManagerRegistry $doctrine,
         TranslatorInterface $translator,
         ?string $year = null,
-        ?string $type = null
+        ?string $type = null,
     ): Response {
         /**
          * @var \Doctrine\ORM\EntityManager $em

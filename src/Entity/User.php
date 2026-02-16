@@ -62,9 +62,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @var string|null
-     */
     #[PasswordStrength([
         'minScore' => PasswordStrength::STRENGTH_WEAK,
     ])]
@@ -219,7 +216,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Get the value of plainPassword.
-     * @return string|null
      */
     public function getPlainPassword(): ?string
     {
@@ -228,8 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Set the value of plainPassword.
-     * @param string|null $plainPassword
-     *
      */
     public function setPlainPassword(?string $plainPassword): static
     {
@@ -416,7 +410,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'imageName' => $this->imageName,
         ];
     }
-
 
     /**
      * @param array<string,mixed> $serialized

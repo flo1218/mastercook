@@ -2,13 +2,13 @@
 
 namespace App\Tests\Functional\Api;
 
-use App\Entity\User;
-use App\Entity\Recipe;
-use App\Repository\UserRepository;
-use App\Repository\RecipeRepository;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use Symfony\Component\HttpFoundation\Response;
 use ApiPlatform\Symfony\Bundle\Test\Client;
+use App\Entity\Recipe;
+use App\Entity\User;
+use App\Repository\RecipeRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class RecipeTest extends ApiTestCase
 {
@@ -64,19 +64,19 @@ class RecipeTest extends ApiTestCase
         // Remove the test recipes
         $recipeRepository = static::getContainer()->get(RecipeRepository::class);
         $recipe = $recipeRepository->findOneByName('API-TEST-Recipe');
-        if ($recipe != null) {
+        if (null != $recipe) {
             $entityManager->remove($recipe);
         }
 
         $recipe = $recipeRepository->findOneByName('recipe-TEST-POST');
-        if ($recipe != null) {
+        if (null != $recipe) {
             $entityManager->remove($recipe);
         }
 
         // Remove the test user
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('admin-test@mastercook.ch');
-        if ($user != null) {
+        if (null != $user) {
             $entityManager->remove($user);
         }
 
@@ -97,9 +97,7 @@ class RecipeTest extends ApiTestCase
     }
 
     /**
-     * This function test the POST new recipe from the API
-     *
-     * @return void
+     * This function test the POST new recipe from the API.
      */
     public function testPostRecipes(): void
     {
@@ -108,14 +106,14 @@ class RecipeTest extends ApiTestCase
             url: '/api/recipes',
             options: [
                 'body' => json_encode([
-                    "name" => "recipe-TEST-POST",
-                    "time" => 1440,
-                    "nbPeople" => 50,
-                    "difficulty" => 1,
-                    "description" => "Description",
-                    "price" => 1,
-                    "isFavorite" => true,
-                    "isPublic" => true
+                    'name' => 'recipe-TEST-POST',
+                    'time' => 1440,
+                    'nbPeople' => 50,
+                    'difficulty' => 1,
+                    'description' => 'Description',
+                    'price' => 1,
+                    'isFavorite' => true,
+                    'isPublic' => true,
                 ]),
                 'headers' => [
                     'Content-Type' => 'application/ld+json',
@@ -133,13 +131,13 @@ class RecipeTest extends ApiTestCase
             url: '/api/recipes',
             options: [
                 'body' => json_encode([
-                    "time" => 1440,
-                    "nbPeople" => 50,
-                    "difficulty" => 1,
-                    "description" => "Description",
-                    "price" => 1,
-                    "isFavorite" => true,
-                    "isPublic" => true
+                    'time' => 1440,
+                    'nbPeople' => 50,
+                    'difficulty' => 1,
+                    'description' => 'Description',
+                    'price' => 1,
+                    'isFavorite' => true,
+                    'isPublic' => true,
                 ]),
                 'headers' => [
                     'Content-Type' => 'application/ld+json',
@@ -151,9 +149,7 @@ class RecipeTest extends ApiTestCase
     }
 
     /**
-     * This function test the GET ALL Recipes from the API
-     *
-     * @return void
+     * This function test the GET ALL Recipes from the API.
      */
     public function testGetRecipes(): void
     {
@@ -174,9 +170,7 @@ class RecipeTest extends ApiTestCase
     }
 
     /**
-     * This function test the GET of one Recipe from the API
-     *
-     * @return void
+     * This function test the GET of one Recipe from the API.
      */
     public function testGetOneRecipe(): void
     {
@@ -200,9 +194,7 @@ class RecipeTest extends ApiTestCase
     }
 
     /**
-     * This function test the Deletion of a Recipe from the API
-     *
-     * @return void
+     * This function test the Deletion of a Recipe from the API.
      */
     public function testDeleteRecipes(): void
     {

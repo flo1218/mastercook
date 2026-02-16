@@ -90,8 +90,6 @@ class Category
 
     /**
      * Set the value of name.
-     *
-     * @return self
      */
     public function setName(string $name): self
     {
@@ -110,8 +108,6 @@ class Category
 
     /**
      * Set the value of created_at.
-     *
-     * @return self
      */
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
@@ -130,8 +126,6 @@ class Category
 
     /**
      * Set the value of user.
-     *
-     * @return self
      */
     public function setUser(?User $user): self
     {

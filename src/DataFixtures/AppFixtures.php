@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Contact;
 use App\Entity\Ingredient;
 use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Entity\User;
-use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -109,7 +109,7 @@ class AppFixtures extends Fixture
             $contact = new Contact();
             $contact->setFullName($this->faker->name())
                 ->setEmail($this->faker->email())
-                ->setSubject('Demande n°' . ($n))
+                ->setSubject('Demande n°' . $n)
                 ->setMessage($this->faker->text());
 
             $manager->persist($contact);

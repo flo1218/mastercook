@@ -27,7 +27,7 @@ class UserController extends AbstractController
         EntityManagerInterface $manager,
         Request $request,
         TranslatorInterface $translator,
-        User $user
+        User $user,
     ): Response {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
@@ -60,7 +60,7 @@ class UserController extends AbstractController
         EntityManagerInterface $manager,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        User $user
+        User $user,
     ): Response {
         $form = $this->createForm(UserPasswordType::class);
 

@@ -17,7 +17,6 @@ class ContactController extends AbstractController
 {
     /**
      * Controller used to manage the contact page.
-     *
      */
     #[Route(path: [
         'en' => '/contact-us',
@@ -28,7 +27,7 @@ class ContactController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
-        MailService $mailService
+        MailService $mailService,
     ): Response {
         $contact = new Contact();
 

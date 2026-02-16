@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Recipe;
 use App\Entity\Ingredient;
+use App\Entity\Recipe;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,7 +44,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->where('r.isPublic = 1')
             ->orderBy('r.updatedAt', 'DESC')
-            ->setMaxResults($nbRecipes != 0 ? $nbRecipes : null)
+            ->setMaxResults(0 != $nbRecipes ? $nbRecipes : null)
             ->getQuery()
             ->getResult();
     }
@@ -59,19 +59,19 @@ class RecipeRepository extends ServiceEntityRepository
             ->andWhere('r.user = :userId')
             ->orderBy('r.id', 'ASC')
             ->setParameter('userId', $userId)
-            ->setMaxResults($nbRecipes != 0 ? $nbRecipes : null)
+            ->setMaxResults(0 != $nbRecipes ? $nbRecipes : null)
             ->getQuery()
             ->getResult();
     }
 
     /**
      * @param ArrayCollection<int, Ingredient> $ingredients
-     * @param User $user
+     *
      * @return Recipe[] Returns an array of Recipe
      */
     public function findRecipesByIngredients(ArrayCollection $ingredients, User $user): array
     {
-        $ingredientNames = $ingredients->map(func: fn(Ingredient $ing): string|null => $ing->getName())->toArray();
+        $ingredientNames = $ingredients->map(func: fn (Ingredient $ing): ?string => $ing->getName())->toArray();
 
         if (empty($ingredientNames)) {
             return [];
@@ -91,7 +91,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
 
         // Récupérer les ids et calculer les counts (uniquement pour les noms recherchés)
-        $ids = array_map(fn(Recipe $r) => $r->getId(), $recipes);
+        $ids = array_map(fn (Recipe $r) => $r->getId(), $recipes);
 
         if (!empty($ids)) {
             $counts = $this->createQueryBuilder('r2')
@@ -107,7 +107,7 @@ class RecipeRepository extends ServiceEntityRepository
 
             $map = [];
             foreach ($counts as $c) {
-                $map[(int)$c['id']] = (int)$c['cnt'];
+                $map[(int) $c['id']] = (int) $c['cnt'];
             }
 
             foreach ($recipes as $recipe) {
@@ -119,8 +119,6 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $userId
-     * @param string $name
      * @return Recipe[] Returns an array of Recipe
      */
     public function findDuplicateRecipe(int $userId, string $name): array

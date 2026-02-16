@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
         return $this->render('pages/security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'back_to_your_page' => $request->headers->get('referer')
+            'back_to_your_page' => $request->headers->get('referer'),
         ]);
     }
 
@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
     public function registration(
         Request $request,
         EntityManagerInterface $manager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ): Response {
         $user = new User();
         $user->setRoles(['ROLE_USER']);

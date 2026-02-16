@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
     public function index(
         CategoryRepository $repository,
         PaginatorInterface $paginator,
-        Request $request
+        Request $request,
     ): Response {
         $userCategories = $repository->findBy(['user' => $this->getUser()]);
         $internalCategories = $repository->findBy(['is_internal' => 1]);
@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
     /**
      * This function is used to add a new Categorys.
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -54,7 +54,7 @@ class CategoryController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         CategoryRepository $repository,
-        UserInterface $user
+        UserInterface $user,
     ): Response {
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
@@ -97,7 +97,7 @@ class CategoryController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         CategoryRepository $repository,
-        UserInterface $user
+        UserInterface $user,
     ): Response {
         if (isset($request->get('category')['cancel'])) {
             return $this->redirectToRoute('category.index');
@@ -131,12 +131,11 @@ class CategoryController extends AbstractController
         subject: 'category',
         message: 'Access denied'
     )]
-
     public function delete(
         Request $request,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
-        Category $category
+        Category $category,
     ): Response {
         $manager->remove($category);
         $manager->flush();
