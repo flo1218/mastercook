@@ -19,15 +19,18 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @return Category[]
      */
-    public function getUserCategories(int $userId): ?array
+    public function getUserCategories(int $userId): array
     {
-        return $this->createQueryBuilder('c')
+        /** @var Category[] $result */
+        $result = $this->createQueryBuilder('c')
             ->where('c.user = :user')
             ->orWhere('c.is_internal = 1')
             ->setParameter('user', $userId)
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult();
+
+        return $result;
     }
 
     public function isNameUniquedByUser(string $name, int $userId, ?int $excludedId = null): bool
@@ -44,6 +47,9 @@ class CategoryRepository extends ServiceEntityRepository
         $qb->setParameter('userId', $userId);
         $qb->setParameter('name', $name);
 
-        return 0 === count($qb->getQuery()->getResult()) ? true : false;
+        /** @var Category[] $result */
+        $result = $qb->getQuery()->getResult();
+
+        return 0 === count($result) ? true : false;
     }
 }

@@ -44,14 +44,15 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
+            /* @var Contact $contact */
 
             $manager->persist($contact);
             $manager->flush();
 
             // Send email
             $mailService->sendMail(
-                $contact->getEmail(),
-                $contact->getSubject(),
+                $contact->getEmail() ?? '',
+                $contact->getSubject() ?? '',
                 ['contact' => $contact]
             );
 

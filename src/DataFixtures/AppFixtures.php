@@ -70,18 +70,21 @@ class AppFixtures extends Fixture
             $dateTimeImmutable = new \DateTimeImmutable();
             for ($k = 1; $k <= 3; ++$k) {
                 $recipe = new Recipe();
+                $desc = $this->faker->paragraphs(3, true);
+                $description = is_string($desc) ? $desc : '';
+
                 $recipe->setName($this->faker->foodName())
                     ->setTime(mt_rand(1, 1440))
                     ->setPrice(mt_rand(1, 1000))
                     ->setNbPeople($this->faker->boolean() ? mt_rand(1, 10) : null)
                     ->setDifficulty($this->faker->boolean() ? mt_rand(1, 5) : null)
-                    ->setDescription($this->faker->paragraphs(3, true))
+                    ->setDescription($description)
                     ->setIsFavorite($this->faker->boolean())
                     ->setIsPublic($this->faker->boolean())
                     ->setCreatedAt(
                         $dateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years'))
                     )
-                    ->setCreatedBy($user->getFullName())
+                    ->setCreatedBy($user->getFullName() ?? '')
                     ->setUser($user);
 
                 for ($l = 1; $l < mt_rand(5, 10); ++$l) {

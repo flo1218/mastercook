@@ -20,10 +20,13 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user instanceof User && $request->getLocale() != strtolower($user->getLanguage())) {
-            return $this->redirect($this->generateUrl('home.index', [
-                '_locale' => strtolower($user->getLanguage()),
-            ]));
+        if ($user instanceof User) {
+            $lang = $user->getLanguage() ?? 'en';
+            if ($request->getLocale() !== strtolower($lang)) {
+                return $this->redirect($this->generateUrl('home.index', [
+                    '_locale' => strtolower($lang),
+                ]));
+            }
         }
 
         return $this->redirect($this->generateUrl('home.index', [
@@ -55,8 +58,8 @@ class HomeController extends AbstractController
                     'updatedAt' => $recipe->getUpdatedAt(),
                     'name' => $recipe->getName(),
                     'user' => [
-                        'fullName' => $recipe->getUser()->getFullName(),
-                        'imageName' => $recipe->getUser()->getImageName(),
+                        'fullName' => $recipe->getUser()?->getFullName() ?? '',
+                        'imageName' => $recipe->getUser()?->getImageName() ?? '',
                     ],
                 ];
             }, $repository->findPublicRecipe());
@@ -70,12 +73,19 @@ class HomeController extends AbstractController
             $recipes = $item->get();
         }
 
-        $headerDir = $this->getParameter('kernel.project_dir') . '/public/images/header';
+        $projectDir = $this->getParameter('kernel.project_dir');
+        if (!is_string($projectDir)) {
+            $projectDir = '';
+        }
+        $headerDir = $projectDir . '/public/images/header';
         $headerImages = [];
         if (is_dir($headerDir)) {
-            $headerImages = array_values(array_filter(scandir($headerDir), function ($file) use ($headerDir) {
-                return is_file($headerDir . '/' . $file) && preg_match('/\.(jpe?g|png|gif|webp)$/i', $file);
-            }));
+            $files = scandir($headerDir);
+            if (is_array($files)) {
+                $headerImages = array_values(array_filter($files, function (string $file) use ($headerDir) {
+                    return is_file($headerDir . '/' . $file) && preg_match('/\.(jpe?g|png|gif|webp)$/i', $file);
+                }));
+            }
         }
 
         return $this->render('pages/home.html.twig', [

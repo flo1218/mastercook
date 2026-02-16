@@ -8,26 +8,29 @@ use App\Entity\Recipe;
 use App\Entity\User;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class RecipeTest extends ApiTestCase
 {
-    private function getTestRecipe(): Recipe
+    private function getTestRecipe(): ?Recipe
     {
+        /** @var EntityManagerInterface $entityManager */
         $entityManager = self::getEntityManager();
 
-        $recipe = $entityManager->getRepository(Recipe::class)
-            ->findOneByName('API-TEST-Recipe');
+        $recipeRepository = $entityManager->getRepository(Recipe::class);
 
-        return $recipe;
+        return $recipeRepository->findOneByName('API-TEST-Recipe');
     }
 
-    protected static function getEntityManager(): mixed
+    protected static function getEntityManager(): EntityManagerInterface
     {
-        return self::bootKernel()
-            ->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        /** @var \Doctrine\Persistence\ManagerRegistry $doctrine */
+        $doctrine = self::bootKernel()->getContainer()->get('doctrine');
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $doctrine->getManager();
+
+        return $entityManager;
     }
 
     public static function setUpBeforeClass(): void
@@ -49,43 +52,47 @@ class RecipeTest extends ApiTestCase
         $recipe = new Recipe();
         $recipe->setName('API-TEST-Recipe');
         $recipe->setDescription('desc');
-        $recipe->setCreatedAt(new \DateTimeImmutable(''));
+        $recipe->setCreatedAt(new \DateTimeImmutable());
         $recipe->setCreatedBy('Admin');
         $recipe->setUser($admin);
         $entityManager->persist($recipe);
 
-        $entityManager->flush(true);
+        $entityManager->flush();
     }
 
     public static function tearDownAfterClass(): void
     {
+        /** @var EntityManagerInterface $entityManager */
         $entityManager = self::getEntityManager();
 
         // Remove the test recipes
+        /** @var RecipeRepository $recipeRepository */
         $recipeRepository = static::getContainer()->get(RecipeRepository::class);
         $recipe = $recipeRepository->findOneByName('API-TEST-Recipe');
-        if (null != $recipe) {
+        if (null !== $recipe) {
             $entityManager->remove($recipe);
         }
 
         $recipe = $recipeRepository->findOneByName('recipe-TEST-POST');
-        if (null != $recipe) {
+        if (null !== $recipe) {
             $entityManager->remove($recipe);
         }
 
         // Remove the test user
+        /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('admin-test@mastercook.ch');
-        if (null != $user) {
+        if (null !== $user) {
             $entityManager->remove($user);
         }
 
-        $entityManager->flush(true);
+        $entityManager->flush();
     }
 
     protected static function createAuthenticatedClient(): Client
     {
         $client = static::createClient();
+        /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
         $testUser = $userRepository->findOneByEmail('admin-test@mastercook.ch');
 
@@ -157,8 +164,12 @@ class RecipeTest extends ApiTestCase
         $client->request('GET', '/api/recipes');
 
         $response = $client->getResponse();
+        if (null === $response) {
+            $this->fail('Response is null');
+        }
         $content = json_decode($response->getContent(), true);
 
+        $this->assertIsArray($content);
         $this->assertArrayHasKey('@context', $content);
         $this->assertArrayHasKey('@id', $content);
         $this->assertArrayHasKey('@type', $content);
@@ -175,19 +186,25 @@ class RecipeTest extends ApiTestCase
     public function testGetOneRecipe(): void
     {
         $recipe = $this->getTestRecipe();
+        if (null === $recipe) {
+            $this->fail('Test recipe not found');
+        }
 
         $client = $this::createAuthenticatedClient();
         $client->request('GET', "/api/recipes/{$recipe->getId()}");
 
         $response = $client->getResponse();
+        if (null === $response) {
+            $this->fail('Response is null');
+        }
         $content = json_decode($response->getContent(), true);
-
+        $this->assertIsArray($content);
         $this->assertArrayHasKey('@context', $content);
         $this->assertArrayHasKey('@id', $content);
         $this->assertArrayHasKey('@type', $content);
         $this->assertArrayHasKey('name', $content);
 
-        $this->assertEquals('API-TEST-Recipe', $content['name']);
+        $this->assertEquals('API-TEST-Recipe', $content['name'] ?? '');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -199,6 +216,10 @@ class RecipeTest extends ApiTestCase
     public function testDeleteRecipes(): void
     {
         $recipe = $this->getTestRecipe();
+        if (null === $recipe) {
+            $this->fail('Test recipe not found');
+        }
+
         $client = $this::createAuthenticatedClient();
         $client->request('DELETE', "/api/recipes/{$recipe->getId()}");
 

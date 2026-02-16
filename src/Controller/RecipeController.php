@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ingredient;
 use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Entity\User;
@@ -12,6 +13,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\MarkRepository;
 use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
@@ -40,11 +42,10 @@ class RecipeController extends AbstractController
         PaginatorInterface $paginator,
         Request $request,
     ): Response {
-        /**
-         * @var User $user
-         */
+        /** @var User|null $user */
         $user = $this->getUser();
-        $searchParameters = ['user' => $user->getId()];
+        $userId = $user instanceof User ? ($user->getId() ?? 0) : 0;
+        $searchParameters = ['user' => $userId];
 
         $recipeType = $request->query->get('type');
         if ($recipeType) {
@@ -58,7 +59,7 @@ class RecipeController extends AbstractController
         return $this->render('pages/recipe/index.html.twig', [
             'recettes' => $recettes,
             'recipeType' => $recipeType,
-            'categories' => $categoryRepository->getUserCategories($user->getId()),
+            'categories' => $categoryRepository->getUserCategories($userId),
         ]);
     }
 
@@ -84,8 +85,8 @@ class RecipeController extends AbstractController
                     'updatedAt' => $recipe->getUpdatedAt(),
                     'name' => $recipe->getName(),
                     'user' => [
-                        'fullName' => $recipe->getUser()->getFullName(),
-                        'imageName' => $recipe->getUser()->getImageName(),
+                        'fullName' => $recipe->getUser()?->getFullName() ?? '',
+                        'imageName' => $recipe->getUser()?->getImageName() ?? '',
                     ],
                 ];
             }, $repository->findPublicRecipe());
@@ -114,8 +115,8 @@ class RecipeController extends AbstractController
         Request $request,
         UserInterface $user,
     ): Response {
-        /** @var User $user */
-        $data = $repository->findFavoriteRecipe(0, $user->getId());
+        $userId = $user instanceof User ? ($user->getId() ?? 0) : 0;
+        $data = $repository->findFavoriteRecipe(0, $userId);
 
         return $this->render('pages/recipe/index_favorite.html.twig', [
             'recettes' => $paginator->paginate($data, $request->query->getInt('page', 1)),
@@ -145,11 +146,13 @@ class RecipeController extends AbstractController
         $form = $this->createForm(MarkType::class, $mark);
         $form->handleRequest($request);
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            $mark->setuser($user)
-                ->setRecipe($recipe);
+            if ($user instanceof User) {
+                $mark->setUser($user)
+                    ->setRecipe($recipe);
+            }
 
             $existingMark = $markRepository->findOneBy([
                 'user' => $this->getUser(),
@@ -157,9 +160,16 @@ class RecipeController extends AbstractController
             ]);
 
             if (!$existingMark) {
+                /* @var Mark $mark */
                 $manager->persist($mark);
             } else {
-                $existingMark->setMark($form->getData()->getMark());
+                $formMark = $form->getData();
+                if ($formMark instanceof Mark) {
+                    $markValue = $formMark->getMark();
+                    if (is_int($markValue)) {
+                        $existingMark->setMark($markValue);
+                    }
+                }
             }
             $manager->flush();
             $this->addFlash('success', $translator->trans('recipe.vote.success'));
@@ -208,7 +218,8 @@ class RecipeController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
-        if (isset($request->get('recipe')['cancel'])) {
+        $recipeData = $request->get('recipe');
+        if (is_array($recipeData) && isset($recipeData['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }
 
@@ -218,13 +229,15 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe = $form->getData();
-            $manager->persist($recipe);
-            $manager->flush();
+            $recipeData = $form->getData();
+            if ($recipeData instanceof Recipe) {
+                $manager->persist($recipeData);
+                $manager->flush();
 
-            $this->addFlash('success', $translator->trans('recipe.created.label'));
+                $this->addFlash('success', $translator->trans('recipe.created.label'));
 
-            return $this->redirectToRoute('recipe.index');
+                return $this->redirectToRoute('recipe.index');
+            }
         }
 
         return $this->render('pages/recipe/new.html.twig', [
@@ -251,7 +264,8 @@ class RecipeController extends AbstractController
         Recipe $recipe,
         TranslatorInterface $translator,
     ): Response {
-        if (isset($request->get('recipe')['cancel'])) {
+        $recipeData = $request->get('recipe');
+        if (is_array($recipeData) && isset($recipeData['cancel'])) {
             return $this->redirectToRoute('recipe.index');
         }
 
@@ -260,12 +274,15 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
-            $manager->persist($recipe);
-            $manager->flush();
+            if ($recipe instanceof Recipe) {
+                $manager->persist($recipe);
+                $manager->flush();
+            }
             $this->addFlash('success', $translator->trans('recipe.updated.label'));
 
-            if ($request->query->get('redirect')) {
-                return $this->redirect($request->query->get('redirect'));
+            $redirect = $request->query->get('redirect');
+            if (is_string($redirect)) {
+                return $this->redirect($redirect);
             }
 
             return $this->redirectToRoute('recipe.index');
@@ -295,8 +312,9 @@ class RecipeController extends AbstractController
         $manager->flush();
         $this->addFlash('success', $translator->trans('recipe.deleted.label'));
 
-        if ($request->query->get('redirect')) {
-            return $this->redirect($request->query->get('redirect'));
+        $redirect = $request->query->get('redirect');
+        if (is_string($redirect)) {
+            return $this->redirect($redirect);
         }
 
         return $this->redirectToRoute('recipe.index');
@@ -310,7 +328,8 @@ class RecipeController extends AbstractController
         IngredientRepository $repository,
         RecipeRepository $recipeRepo,
     ): Response {
-        if (isset($request->get('recipe_search')['cancel'])) {
+        $recipeSearch = $request->get('recipe_search');
+        if (is_array($recipeSearch) && isset($recipeSearch['cancel'])) {
             return $this->redirectToRoute('recipe.suggest');
         }
 
@@ -318,16 +337,25 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeSearchType::class, null);
         $form->handleRequest($request);
 
+        /** @var array<string,mixed>|null $ingredients */
         $ingredients = $form->getData();
         $selectedIngredientNames = [];
-        if ($form->isSubmitted() && count($ingredients['ingredients']) > 0) {
+        if ($form->isSubmitted() && is_array($ingredients) && !empty($ingredients['ingredients']) && is_array($ingredients['ingredients'])) {
             $selected = $form->get('ingredients')->getData(); // tableau d'entités Ingredient
-            foreach ($selected as $ing) {
-                $selectedIngredientNames[] = mb_strtolower($ing->getName());
+            foreach ((array) $selected as $ing) {
+                if ($ing instanceof Ingredient) {
+                    $name = $ing->getName();
+                    $nameStr = is_string($name) ? $name : '';
+                    $selectedIngredientNames[] = mb_strtolower($nameStr);
+                }
             }
-            /** @var User $user */
+            /** @var User|null $user */
             $user = $this->getUser();
-            $recipes = $recipeRepo->findRecipesByIngredients($ingredients['ingredients'], $user);
+            if ($user instanceof User) {
+                /** @var ArrayCollection<int, Ingredient> $ingredientsCollection */
+                $ingredientsCollection = new ArrayCollection($ingredients['ingredients']);
+                $recipes = $recipeRepo->findRecipesByIngredients($ingredientsCollection, $user);
+            }
         }
 
         $ingredients = $paginator->paginate(

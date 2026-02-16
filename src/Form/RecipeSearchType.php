@@ -27,7 +27,7 @@ class RecipeSearchType extends AbstractType
             ->add('ingredients', EntityType::class, [
                 'required' => true,
                 'choice_label' => function (Ingredient $ingredient): string {
-                    return $ingredient->getName();
+                    return $ingredient->getName() ?? '';
                 },
                 'class' => Ingredient::class,
                 'multiple' => true,
@@ -40,7 +40,7 @@ class RecipeSearchType extends AbstractType
                     return $r->createQueryBuilder('i')
                         ->where('i.user = :user')
                         ->orderBy('i.name', 'ASC')
-                        ->setParameter('user', $this->security->getToken()->getUser());
+                        ->setParameter('user', $this->security->getToken()?->getUser());
                 },
             ])
             ->add('submit', SubmitType::class, [

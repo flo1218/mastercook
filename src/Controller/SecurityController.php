@@ -62,27 +62,31 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $manager->persist($user);
+            if ($user instanceof User) {
+                $manager->persist($user);
 
-            // Add default categories
-            $locale = 'FR' == strtoupper($user->getLanguage()) ? 'fr_FR' : 'en_EN';
-            $defaultCategories = [
-                $translator->trans('category.default.starter', [], null, $locale),
-                $translator->trans('category.default.main', [], null, $locale),
-                $translator->trans('category.default.dessert', [], null, $locale),
-            ];
+                // Add default categories
+                $lang = $user->getLanguage();
+                $langStr = is_string($lang) ? $lang : 'FR';
+                $locale = 'FR' == strtoupper($langStr) ? 'fr_FR' : 'en_EN';
+                $defaultCategories = [
+                    $translator->trans('category.default.starter', [], null, $locale),
+                    $translator->trans('category.default.main', [], null, $locale),
+                    $translator->trans('category.default.dessert', [], null, $locale),
+                ];
 
-            foreach ($defaultCategories as $defaultCategory) {
-                $category = new Category();
-                $category->setUser($user)
-                    ->setName($defaultCategory);
-                $manager->persist($category);
+                foreach ($defaultCategories as $defaultCategory) {
+                    $category = new Category();
+                    $category->setUser($user)
+                        ->setName($defaultCategory);
+                    $manager->persist($category);
+                }
+                $manager->flush();
+
+                $this->addFlash('success', $translator->trans('registration.success.label'));
+
+                return $this->redirectToRoute('app_login');
             }
-            $manager->flush();
-
-            $this->addFlash('success', $translator->trans('registration.success.label'));
-
-            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('pages/security/registration.html.twig', [

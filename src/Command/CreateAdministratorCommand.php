@@ -41,21 +41,31 @@ class CreateAdministratorCommand extends Command
         /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
-        $fullName = $input->getArgument('full_name');
-        if (!$fullName) {
+        $fullNameArg = $input->getArgument('full_name');
+        if (!is_string($fullNameArg) || '' === $fullNameArg) {
             $question = new Question("Quel est le nom de l'administrateur ?");
-            $fullName = $helper->ask($input, $output, $question);
+            $answer = $helper->ask($input, $output, $question);
+            $fullName = is_string($answer) ? $answer : '';
+        } else {
+            $fullName = $fullNameArg;
         }
 
-        $email = $input->getArgument('email');
-        if (!$email) {
+        $emailArg = $input->getArgument('email');
+        if (!is_string($emailArg) || '' === $emailArg) {
             $question = new Question("Quel est l'email de " . $fullName . ' ?');
-            $email = $helper->ask($input, $output, $question);
+            $answer = $helper->ask($input, $output, $question);
+            $email = is_string($answer) ? $answer : '';
+        } else {
+            $email = $emailArg;
         }
-        $plainPassword = $input->getArgument('password');
-        if (!$plainPassword) {
+
+        $plainPasswordArg = $input->getArgument('password');
+        if (!is_string($plainPasswordArg) || '' === $plainPasswordArg) {
             $question = new Question('Quel est le mot de passe de ' . $fullName . ' ?');
-            $plainPassword = $helper->ask($input, $output, $question);
+            $answer = $helper->ask($input, $output, $question);
+            $plainPassword = is_string($answer) ? $answer : '';
+        } else {
+            $plainPassword = $plainPasswordArg;
         }
 
         $user = (new User())->setFullName($fullName)

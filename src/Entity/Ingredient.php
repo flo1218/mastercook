@@ -109,9 +109,9 @@ class Ingredient
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     public function getUser(): ?User

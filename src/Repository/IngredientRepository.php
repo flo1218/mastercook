@@ -35,6 +35,9 @@ class IngredientRepository extends ServiceEntityRepository
         $qb->setParameter('userId', $userId);
         $qb->setParameter('name', $name);
 
-        return 0 === count($qb->getQuery()->getResult()) ? true : false;
+        /** @var Ingredient[] $result */
+        $result = $qb->getQuery()->getResult();
+
+        return 0 === count($result) ? true : false;
     }
 }

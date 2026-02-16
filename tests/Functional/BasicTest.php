@@ -10,6 +10,7 @@ class BasicTest extends WebTestCase
     {
         self::ensureKernelShutdown();
         $client = static::createClient();
+        /** @var \Symfony\Component\Routing\Router $urlGenerator */
         $urlGenerator = $client->getContainer()->get('router');
 
         $crawler = $client->request('GET', $urlGenerator->generate('home.index'));

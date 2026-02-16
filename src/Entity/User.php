@@ -56,11 +56,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?string $password = 'password';
+    private string $password = 'password';
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
 
     #[PasswordStrength([
         'minScore' => PasswordStrength::STRENGTH_WEAK,
@@ -73,9 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Ingredient::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $ingredients;
 
-    /**
-     * @var Collection<int, Recipe>
-     */
+    /** @var Collection<int, Recipe> */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $recipes;
 
@@ -129,7 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email ?: 'user';
     }
 
     /**
@@ -416,8 +414,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __unserialize(array $serialized): void
     {
-        $this->id = $serialized['id'];
-        $this->email = $serialized['email'];
-        $this->password = $serialized['password'];
+        $this->id = isset($serialized['id']) && is_numeric($serialized['id']) ? (int) $serialized['id'] : null;
+        $this->email = isset($serialized['email']) && is_string($serialized['email']) ? $serialized['email'] : null;
+        $this->password = isset($serialized['password']) && is_string($serialized['password']) ? $serialized['password'] : '';
     }
 }

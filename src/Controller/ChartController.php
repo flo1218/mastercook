@@ -36,6 +36,7 @@ class ChartController extends AbstractController
         // Get datas for chart
         $monthRecipes = [];
         $year = (null === $year) ? date('Y') : $year;
+        /** @var array<int,array{gBmonth:int,gCount:int}> $recipesPerMonth */
         $recipesPerMonth = $repository->groupByMonth($year);
         for ($i = 1; $i <= 12; ++$i) {
             $found_key = array_search($i, array_column($recipesPerMonth, 'gBmonth'));

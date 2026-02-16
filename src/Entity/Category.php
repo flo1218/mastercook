@@ -83,7 +83,7 @@ class Category
     /**
      * Get the value of name.
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

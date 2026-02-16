@@ -156,7 +156,9 @@ class RecipeType extends AbstractType
             ])
             ->add('ingredients', EntityType::class, [
                 'choice_label' => function (Ingredient $ingredient): string {
-                    return $ingredient->getName();
+                    $name = $ingredient->getName();
+
+                    return $name ?? '';
                 },
                 'attr' => [
                     'class' => 'form-control',
@@ -175,11 +177,11 @@ class RecipeType extends AbstractType
                     return $r->createQueryBuilder('i')
                         ->where('i.user = :user')
                         ->orderBy('i.name', 'ASC')
-                        ->setParameter('user', $this->security->getToken()->getUser());
+                        ->setParameter('user', $this->security->getToken()?->getUser());
                 },
             ])
             ->add('category', EntityType::class, [
-                'choice_label' => function (Category $category): string {
+                'choice_label' => function (Category $category): ?string {
                     return $category->getName();
                 },
                 'placeholder' => '',
@@ -200,7 +202,7 @@ class RecipeType extends AbstractType
                         ->where('i.user = :user or i.is_internal = 1')
                         ->orderBy('i.is_internal', 'DESC') // Trier les catégories internes en premier
                         ->addOrderBy('CASE WHEN i.is_internal = 1 THEN 1 ELSE i.name END', 'ASC')
-                        ->setParameter('user', $this->security->getToken()->getUser());
+                        ->setParameter('user', $this->security->getToken()?->getUser());
                 },
             ])
             ->add('submit', SubmitType::class, [

@@ -39,10 +39,21 @@ final class RecipeProcessor implements ProcessorInterface
             throw new \Exception('Time must be < 1440');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->security->getUser();
+        if (null === $user) {
+            throw new \Exception('User must be authenticated');
+        }
+
         $data = $data->setUser($user);
-        $response = $this->recipeRepository->findDuplicateRecipe($user->getId(), $data->getName());
+        $name = $data->getName();
+        if (null === $name) {
+            throw new \Exception('Recipe name cannot be null');
+        }
+        $userId = $user->getId();
+        // User is not null, so ID should not be null either
+        /** @var int $userId */
+        $response = $this->recipeRepository->findDuplicateRecipe($userId, $name);
         if (0 == count($response)) {
             $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
 

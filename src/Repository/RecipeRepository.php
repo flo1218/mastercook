@@ -41,12 +41,15 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findPublicRecipe(int $nbRecipes = 0): array
     {
-        return $this->createQueryBuilder('r')
+        /** @var Recipe[] $result */
+        $result = $this->createQueryBuilder('r')
             ->where('r.isPublic = 1')
             ->orderBy('r.updatedAt', 'DESC')
             ->setMaxResults(0 != $nbRecipes ? $nbRecipes : null)
             ->getQuery()
             ->getResult();
+
+        return $result;
     }
 
     /**
@@ -54,7 +57,8 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findFavoriteRecipe(int $nbRecipes = 0, int $userId = 0): array
     {
-        return $this->createQueryBuilder('r')
+        /** @var Recipe[] $result */
+        $result = $this->createQueryBuilder('r')
             ->where('r.isFavorite = 1')
             ->andWhere('r.user = :userId')
             ->orderBy('r.id', 'ASC')
@@ -62,6 +66,8 @@ class RecipeRepository extends ServiceEntityRepository
             ->setMaxResults(0 != $nbRecipes ? $nbRecipes : null)
             ->getQuery()
             ->getResult();
+
+        return $result;
     }
 
     /**
@@ -78,6 +84,7 @@ class RecipeRepository extends ServiceEntityRepository
         }
 
         // Requête principale pour récupérer les entités (ordonnées par nombre d'ingrédients correspondants)
+        /** @var Recipe[] $recipes */
         $recipes = $this->createQueryBuilder('r')
             ->addSelect('count(i.id) AS HIDDEN ingredients_count')
             ->join('r.ingredients', 'i')
@@ -91,9 +98,11 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
 
         // Récupérer les ids et calculer les counts (uniquement pour les noms recherchés)
-        $ids = array_map(fn (Recipe $r) => $r->getId(), $recipes);
+        /** @var int[] $ids */
+        $ids = array_map(fn (Recipe $r): int => (int) $r->getId(), $recipes);
 
         if (!empty($ids)) {
+            /** @var array{ id: int, cnt: int }[] $counts */
             $counts = $this->createQueryBuilder('r2')
                 ->select('r2.id AS id, COUNT(i2.id) AS cnt')
                 ->join('r2.ingredients', 'i2')
@@ -107,7 +116,8 @@ class RecipeRepository extends ServiceEntityRepository
 
             $map = [];
             foreach ($counts as $c) {
-                $map[(int) $c['id']] = (int) $c['cnt'];
+                /* @var array{ id: int, cnt: int } $c */
+                $map[$c['id']] = $c['cnt'];
             }
 
             foreach ($recipes as $recipe) {
@@ -123,12 +133,15 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findDuplicateRecipe(int $userId, string $name): array
     {
-        return $this->createQueryBuilder('r')
+        /** @var Recipe[] $result */
+        $result = $this->createQueryBuilder('r')
             ->where('r.name = :name')
             ->setParameter('name', $name)
             ->andWhere('r.user = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
             ->getResult();
+
+        return $result;
     }
 }

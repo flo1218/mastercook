@@ -32,6 +32,10 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository implements 
         string $selector,
         string $hashedToken,
     ): ResetPasswordRequestInterface {
+        if (!$user instanceof \App\Entity\User) {
+            throw new \InvalidArgumentException('Expected instance of App\\Entity\\User');
+        }
+
         return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);
     }
 }

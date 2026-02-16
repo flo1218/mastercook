@@ -41,8 +41,11 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $emailData = $form->get('email')->getData();
+            $emailStr = is_string($emailData) ? $emailData : '';
+
             return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
+                $emailStr,
                 $mailer,
                 $translator
             );
@@ -96,6 +99,7 @@ class ResetPasswordController extends AbstractController
 
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
+            /* @var User $user */
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
                 '%s - %s',
@@ -119,9 +123,12 @@ class ResetPasswordController extends AbstractController
             $this->resetPasswordHelper->removeResetRequest($token);
 
             // Encode(hash) the plain password, and set it.
+            $plain = $form->get('plainPassword')->getData();
+            $plainPassword = is_string($plain) ? $plain : '';
+
             $encodedPassword = $passwordHasher->hashPassword(
                 $user,
-                $form->get('plainPassword')->getData()
+                $plainPassword
             );
 
             $user->setPassword($encodedPassword);
@@ -158,9 +165,10 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
+        $recipient = $user->getEmail() ?? '';
         $email = (new TemplatedEmail())
             ->from(new Address('admin@mastercook.ch', 'Mastercook'))
-            ->to($user->getEmail())
+            ->to($recipient)
             ->subject($translator->trans('reset-password.email.subject'))
             ->htmlTemplate('pages/reset_password/email.html.twig')
             ->context([

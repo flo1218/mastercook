@@ -20,7 +20,10 @@ class RecipeListener
         $user = $this->security->getUser();
         if ($user instanceof User) {
             $recipe->setUser($user);
-            $recipe->setCreatedBy($user->getFullName());
+            $fullName = $user->getFullName();
+            if (null !== $fullName) {
+                $recipe->setCreatedBy($fullName);
+            }
         }
     }
 

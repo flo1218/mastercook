@@ -13,7 +13,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -29,8 +28,10 @@ class IngredientController extends AbstractController
         PaginatorInterface $paginator,
         Request $request,
     ): Response {
+        $user = $this->getUser();
+        $userId = $user instanceof User ? $user->getId() : 0;
         $ingredients = $paginator->paginate(
-            $repository->findBy(['user' => $this->getUser()]),
+            $repository->findBy(['user' => $userId]),
             $request->query->getInt('page', 1)
         );
 
@@ -49,9 +50,10 @@ class IngredientController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         IngredientRepository $repository,
-        UserInterface $user,
+        User $user,
     ): Response {
-        if (isset($request->get('ingredient')['cancel'])) {
+        $ingredientData = $request->get('ingredient');
+        if (is_array($ingredientData) && isset($ingredientData['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         $ingredient = new Ingredient();
@@ -59,9 +61,12 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
+            /** @var Ingredient $ingredient */
             /** @var User $user */
-            if ($repository->isNameUniquedByUser($ingredient->getName(), $user->getId())) {
-                $ingredient->setUser($this->getUser());
+            $name = $ingredient->getName();
+            $userId = $user->getId();
+            if (is_string($name) && null !== $userId && $repository->isNameUniquedByUser($name, $userId)) {
+                $ingredient->setUser($this->getUser() instanceof User ? $this->getUser() : null);
                 $manager->persist($ingredient);
                 $manager->flush();
                 $this->addFlash('success', $translator->trans('ingredient.created.label'));
@@ -91,13 +96,15 @@ class IngredientController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
-        if (isset($request->get('ingredient')['cancel'])) {
+        $ingredientData = $request->get('ingredient');
+        if (is_array($ingredientData) && isset($ingredientData['cancel'])) {
             return $this->redirectToRoute('ingredient.index');
         }
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
+            /* @var Ingredient $ingredient */
 
             $manager->persist($ingredient);
             $manager->flush();

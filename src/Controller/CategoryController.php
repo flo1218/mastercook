@@ -13,7 +13,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,7 +25,9 @@ class CategoryController extends AbstractController
         PaginatorInterface $paginator,
         Request $request,
     ): Response {
-        $userCategories = $repository->findBy(['user' => $this->getUser()]);
+        $user = $this->getUser();
+        $userId = $user instanceof User ? $user->getId() : 0;
+        $userCategories = $repository->findBy(['user' => $userId]);
         $internalCategories = $repository->findBy(['is_internal' => 1]);
 
         // Fusionner les catégories internes et celles de l'utilisateur
@@ -44,8 +45,6 @@ class CategoryController extends AbstractController
 
     /**
      * This function is used to add a new Categorys.
-     *
-     * @param User $user
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -54,9 +53,10 @@ class CategoryController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         CategoryRepository $repository,
-        UserInterface $user,
+        User $user,
     ): Response {
-        if (isset($request->get('category')['cancel'])) {
+        $categoryData = $request->get('category');
+        if (is_array($categoryData) && isset($categoryData['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
         $category = new Category();
@@ -64,15 +64,18 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
-            /** @var User $user */
-            if ($repository->isNameUniquedByUser($category->getName(), $user->getId())) {
-                $category->setUser($this->getUser());
-                $category->setIsInternal(false);
-                $manager->persist($category);
-                $manager->flush();
-                $this->addFlash('success', $translator->trans('category.created.label'));
+            if ($category instanceof Category) {
+                $categoryName = $category->getName();
+                $userId = $user->getId();
+                if (null !== $categoryName && null !== $userId && $repository->isNameUniquedByUser($categoryName, $userId)) {
+                    $category->setUser($this->getUser() instanceof User ? $this->getUser() : null);
+                    $category->setIsInternal(false);
+                    $manager->persist($category);
+                    $manager->flush();
+                    $this->addFlash('success', $translator->trans('category.created.label'));
 
-                return $this->redirectToRoute('category.index');
+                    return $this->redirectToRoute('category.index');
+                }
             }
             $this->addFlash('warning', $translator->trans('category.error.notunique.name'));
         }
@@ -97,22 +100,27 @@ class CategoryController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         CategoryRepository $repository,
-        UserInterface $user,
+        User $user,
     ): Response {
-        if (isset($request->get('category')['cancel'])) {
+        $categoryData = $request->get('category');
+        if (is_array($categoryData) && isset($categoryData['cancel'])) {
             return $this->redirectToRoute('category.index');
         }
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
-            /** @var User $user */
-            if ($repository->isNameUniquedByUser($category->getName(), $user->getId(), $category->getId())) {
-                $manager->persist($category);
-                $manager->flush();
-                $this->addFlash('success', $translator->trans('category.saved.label'));
+            if ($category instanceof Category) {
+                $categoryName = $category->getName();
+                $categoryId = $category->getId();
+                $userId = $user->getId();
+                if (null !== $categoryName && null !== $userId && $repository->isNameUniquedByUser($categoryName, $userId, $categoryId)) {
+                    $manager->persist($category);
+                    $manager->flush();
+                    $this->addFlash('success', $translator->trans('category.saved.label'));
 
-                return $this->redirectToRoute('category.index');
+                    return $this->redirectToRoute('category.index');
+                }
             }
             $this->addFlash('warning', $translator->trans('category.error.notunique.name'));
         }

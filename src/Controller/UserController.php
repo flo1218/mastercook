@@ -29,16 +29,17 @@ class UserController extends AbstractController
         TranslatorInterface $translator,
         User $user,
     ): Response {
-        $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', $translator->trans('registration.update.label'));
+            $userData = $form->getData();
+            if ($userData instanceof User) {
+                $manager->persist($userData);
+                $manager->flush();
+                $this->addFlash('success', $translator->trans('registration.update.label'));
 
-            return $this->redirectToRoute('recipe.index');
+                return $this->redirectToRoute('recipe.index');
+            }
         }
 
         return $this->render('pages/user/edit.html.twig', [
@@ -66,14 +67,19 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
-                $user->setPassword($hasher->hashPassword($user, $form->getData()['newPassword']));
-                $manager->persist($user);
-                $manager->flush();
+            $data = $form->getData();
+            $plain = is_array($data) && isset($data['plainPassword']) && is_string($data['plainPassword']) ? $data['plainPassword'] : '';
+            $new = is_array($data) && isset($data['newPassword']) && is_string($data['newPassword']) ? $data['newPassword'] : '';
+            if ('' !== $plain && $hasher->isPasswordValid($user, $plain)) {
+                if ('' !== $new) {
+                    $user->setPassword($hasher->hashPassword($user, $new));
+                    $manager->persist($user);
+                    $manager->flush();
 
-                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+                    $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
 
-                return $this->redirectToRoute('recipe.index');
+                    return $this->redirectToRoute('recipe.index');
+                }
             } else {
                 $this->addFlash('warning', 'le mot de passe renseigné est incorrect.');
             }
