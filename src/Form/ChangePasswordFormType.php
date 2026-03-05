@@ -35,7 +35,7 @@ class ChangePasswordFormType extends AbstractType
                             'minMessage' => 'Your password should be at least {{ limit }} characters',
                             'max' => 4096,
                         ]),
-                        new PasswordStrength(),
+                        new PasswordStrength(minScore: PasswordStrength::STRENGTH_WEAK),
                         new NotCompromisedPassword(),
                     ],
                     'label' => 'registration.new-password.label',

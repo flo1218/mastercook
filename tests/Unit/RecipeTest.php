@@ -5,12 +5,40 @@ namespace App\Tests\Unit;
 use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RecipeTest extends KernelTestCase
 {
+
+    protected static function getEntityManager(): EntityManagerInterface
+    {
+        /** @var \Doctrine\Persistence\ManagerRegistry $doctrine */
+        $doctrine = self::bootKernel()->getContainer()->get('doctrine');
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $doctrine->getManager();
+
+        return $entityManager;
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = self::getEntityManager();
+
+        // Remove the test user
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('test@example.com');
+        if (null !== $user) {
+            $entityManager->remove($user);
+        }
+
+        $entityManager->flush();
+    }
+
     public function getEntity(): Recipe
     {
         $recipe = new Recipe();

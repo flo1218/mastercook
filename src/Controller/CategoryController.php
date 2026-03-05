@@ -13,6 +13,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -44,7 +45,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * This function is used to add a new Categorys.
+     * This function is used to add a new Category.
      */
     #[Route('/category/new', name: 'category.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
@@ -53,7 +54,7 @@ class CategoryController extends AbstractController
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
         CategoryRepository $repository,
-        User $user,
+        UserInterface $user,
     ): Response {
         $categoryData = $request->get('category');
         if (is_array($categoryData) && isset($categoryData['cancel'])) {

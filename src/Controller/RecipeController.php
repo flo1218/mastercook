@@ -340,7 +340,7 @@ class RecipeController extends AbstractController
         /** @var array<string,mixed>|null $ingredients */
         $ingredients = $form->getData();
         $selectedIngredientNames = [];
-        if ($form->isSubmitted() && is_array($ingredients) && !empty($ingredients['ingredients']) && is_array($ingredients['ingredients'])) {
+        if ($form->isSubmitted() && is_array($ingredients) && !empty($ingredients['ingredients'])) {
             $selected = $form->get('ingredients')->getData(); // tableau d'entités Ingredient
             foreach ((array) $selected as $ing) {
                 if ($ing instanceof Ingredient) {
@@ -353,7 +353,7 @@ class RecipeController extends AbstractController
             $user = $this->getUser();
             if ($user instanceof User) {
                 /** @var ArrayCollection<int, Ingredient> $ingredientsCollection */
-                $ingredientsCollection = new ArrayCollection($ingredients['ingredients']);
+                $ingredientsCollection = $ingredients['ingredients'];
                 $recipes = $recipeRepo->findRecipesByIngredients($ingredientsCollection, $user);
             }
         }

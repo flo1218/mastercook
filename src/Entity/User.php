@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[UniqueEntity('email')]
 #[Vich\Uploadable]
@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 3, max: 50)]
-    private ?string $fullName = null;
+    private ?string $fullName = 'User';
 
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
@@ -62,10 +62,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private \DateTimeImmutable $createdAt;
 
-    #[PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_WEAK,
-    ])]
-    private ?string $plainPassword;
+    #[PasswordStrength(minScore: PasswordStrength::STRENGTH_WEAK)]
+    private ?string $plainPassword = null;
 
     /**
      * @var Collection<int, Ingredient>
@@ -84,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $marks;
 
     #[ORM\Column(length: 255)]
-    private ?string $language = null;
+    private ?string $language = 'fr';
 
     /**
      * @var Collection<int, Category>
