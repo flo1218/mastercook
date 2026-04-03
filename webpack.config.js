@@ -22,8 +22,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('jquery', '/node_modules/jquery/dist/jquery.min.js')
-    .addEntry('bootstrap', '/node_modules/bootstrap/dist/js/bootstrap.min.js')
+    //.addEntry('jquery', '/node_modules/jquery/dist/jquery.min.js')
+    //.addEntry('bootstrap', '/node_modules/bootstrap/dist/js/bootstrap.min.js')
     .addPlugin(new Dotenv( { path: './.env.local', systemvars: true } ))
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

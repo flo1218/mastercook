@@ -9,10 +9,10 @@
         "chartjs-plugin-zoom": "^2.2.0",
         "css-minimizer-webpack-plugin": "^8.0.0",
         "dotenv-webpack": "^9.0.0",
-        "jquery": "^4.0.0",
+        "jquery": "^3.7.1",
         "sass": "^1.98.0",
         "sass-loader": "^16.0.7",
-        "serialize-javascript": "^7.0.4",
+        "serialize-javascript": "^7.0.5",
         "webpack": "^5.105.4",
         "webpack-cli": "^7.0.2",
         "webpack-notifier": "^1.15.0"

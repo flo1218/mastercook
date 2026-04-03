@@ -1,7 +1,8 @@
-jQuery(function () {
+import $ from "jquery";
+
+$(function () {
   // Manage dbl click to edit page
   $(".jsTableRow").on("dblclick", function () {
-    //debugger;
     // Vérifier si la catégorie est interne
     if ($(this).data('is-internal') === true) {
       return; // Ne pas rediriger si isInternal est true
@@ -40,9 +41,9 @@ jQuery(function () {
 
     // Define link on confirm button
     var href = $(e.relatedTarget).data('href');
-    $("#confirmDelete").on("click", (function (e) {
+    $("#confirmDelete").on("click", function (e) {
       window.location.href = href;
-    }))
+    });
   });
 
   // Apply Bootstrap style to the vich-images checkbox
@@ -54,7 +55,7 @@ jQuery(function () {
   }
 
   // Set active to current menu link
-  jQuery.find(".nav-link:not('.right-nav')").some((link) => {
+  document.querySelectorAll(".nav-link:not(.right-nav)").forEach((link) => {
     const linkPath = new URL(link.href).pathname;
     let currentPath = window.location.pathname.replace(/^\/(fr|en|it)(\/|$)/, '/');
 
@@ -66,8 +67,6 @@ jQuery(function () {
     ) {
         link.classList.add("active");
         link.setAttribute("aria-current", "page");
-        return true;
     }
-    return false;
-});
+  });
 });

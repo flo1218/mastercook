@@ -1,17 +1,19 @@
+// CRITICAL: jQuery must be global BEFORE any Bootstrap-related code
+import $ from "jquery";
+window.$ = window.jQuery = $;
+
 import './bootstrap.js';
 // Project assets
-import './styles/style.scss'
-import './js/common.js'
-// Jquery
-import $ from "jquery"
-// Bootstrap 
-import 'bootstrap'
-import 'bootstrap-icons/font/bootstrap-icons.min.css'
+import './styles/style.scss';
+
+// Bootstrap - now has access to jQuery
+import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import "bootswatch/dist/zephyr/bootstrap.min.css";
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'animate.css';
 
-window.$ = window.jQuery = $;
+import './js/common.js';
 
 const customCanvasBackgroundColor = {
     id: 'customCanvasBackgroundColor',
