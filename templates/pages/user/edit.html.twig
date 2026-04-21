@@ -7,8 +7,18 @@
     <h1>{{ 'header.update-informations.label'|trans}}</h1>
 
     {% if app.user.imageName %}
-        <img src="/images/user/{{ app.user.imageName }}" class="img-fluid img-thumbnail" alt="Avatar"/>
+        <img src="/images/user/{{ app.user.imageName }}" class="img-fluid img-thumbnail w-25" alt="Avatar"/>
     {% endif %}
-    {{ form(form) }}
+    
+    {{ form_start(form) }}
+    {{ form_row(form.fullName) }}
+    {{ form_row(form.language) }}
+    {{ form_row(form.pseudo) }}
+    {{ form_row(form.imageFile) }}
+    {{ form_widget(form.submit, {
+        label: '<i class="bi bi-floppy2 me-1"></i> ' ~ 'app.save.label'|trans,
+        label_html: true
+    }) }}
+    {{ form_end(form) }}
 </div>
 {% endblock %}

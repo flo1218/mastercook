@@ -67,7 +67,11 @@
 					<div class="form-group">                
 						{{ form_label(form.mark) }}
 						{{ form_widget(form.mark) }}
-						{{ form_widget(form.submit) }}
+						{{ form_widget(form.submit, {
+							label: '<i class="bi bi-floppy2 me-1"></i> ' ~ 'app.save.label'|trans,
+							label_html: true
+						}) }}
+						
 						
 					</div>
 				{{ form_end(form) }}
@@ -80,11 +84,64 @@
 		<div class="row">
 			{% if app.user is same as(recipe.user) %}
 				<a href="{{ path('recipe.edit', {'id': recipe.id } )}}">
-					<button class="btn btn-primary custom-btn bi bi-pencil-fill mt-4">
+					<button class="btn btn-primary mt-4">
+						<i class="bi bi-pencil-fill me-1"></i>
 						{{ 'app.edit.label'|trans }}
 					</button>
 				</a>
 			{% endif %}
 		</div>
 	</div>
+	{% if app.user %}
+	<section class="recipe-comments mt-5">
+    <div class="container">
+        <h2 class="mb-4 text-center">{{ 'recipe.comments.title'|trans }}</h2>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{{ 'recipe.comment.add'|trans }}</h5>
+            </div>
+            <div class="card-body">
+                {{ form_start(commentForm, {'attr': {'class': 'needs-validation'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(commentForm.content, 'recipe.comment.content.label'|trans, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(commentForm.content, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                        {{ form_errors(commentForm.content) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-4">
+						<i class="bi bi-send-fill me-1"></i>
+						{{ 'recipe.comment.submit'|trans }}
+					</button>
+                {{ form_end(commentForm) }}
+            </div>
+        </div>
+
+        {% if comments is not empty %}
+            <div class="row">
+                {% for comment in comments %}
+                    <div class="col-12 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="card-title mb-1">
+                                            <i class="bi bi-person-circle me-2"></i>
+                                            {{ comment.user ? comment.user.fullName : comment.author }}
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar-event me-1"></i>
+                                            {{ comment.createdAt|date('d/m/Y à H:i') }}
+                                        </small>
+                                    </div>
+                                </div>
+                                <p class="card-text flex-grow-1">{{ comment.content|nl2br }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+	</section>
+	{% endif %}
 	{% endblock %}

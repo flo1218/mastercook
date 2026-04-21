@@ -39,7 +39,7 @@ class MarkType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4 custom-btn bi bi-floppy2',
+                    'class' => 'btn btn-primary mt-4',
                 ],
                 'label' => 'recipe.vote.label',
             ])

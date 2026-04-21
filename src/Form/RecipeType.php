@@ -207,14 +207,14 @@ class RecipeType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary custom-btn mt-4 bi bi-floppy2',
+                    'class' => 'btn btn-primary mt-4',
                 ],
                 'label' => 'app.save.label',
             ])
             ->add('cancel', SubmitType::class, [
                 'attr' => [
                     'formnovalidate' => 'formnovalidate',
-                    'class' => 'btn btn-light mt-4 ms-2 custom-btn bi bi-x-circle',
+                    'class' => 'btn btn-light mt-4 ms-2',
                 ],
                 'label' => 'app.cancel.label',
             ])

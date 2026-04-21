@@ -11,8 +11,14 @@
 		{% if not is_granted('IS_AUTHENTICATED') %}
 			<p>{{ 'home.start.description'|trans }}</p>
 			<p class="lead">
-				<a class="btn btn-primary btn-lg custom-btn bi bi-door-open" href="{{ path('app_login')}}" role="button">{{ 'app.login.label'|trans }}</a>
-				<a class="btn btn-primary btn-lg" href="{{ path('app_register')}}" role="button">{{ 'header.register.label'|trans }}</a>
+				<button type="button" class="btn btn-primary btn-lg" onclick="location.href='{{ path('app_login') }}'">
+					<i class="bi bi-door-open me-2"></i>
+					{{ 'app.login.label'|trans }}
+				</button>
+				<button type="button" class="btn btn-primary btn-lg" onclick="location.href='{{ path('app_register') }}'">
+					<i class="bi bi-person-plus me-2"></i>
+					{{ 'header.register.label'|trans }}
+				</button>
 			</p>
 		{% endif %}
 	</div>

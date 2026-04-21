@@ -111,6 +111,12 @@ recipe.recipe-per-month.label : 'Nuove ricette per mese'
 recipe.category.label : 'Categoria'
 recipe.suggest.label : 'Seleziona gli ingredienti di cui disponi.'
 
+# RECIPE COMMENT
+recipe.comments.title: Commenti
+recipe.comment.add: Aggiungi un commento
+recipe.comment.content.label: Il tuo commento
+recipe.comment.submit: Pubblica commento
+
 # INGREDIENT
 ingredient.new.label : 'Crea un ingrediente'
 ingredient.my.label : 'I miei ingredienti'

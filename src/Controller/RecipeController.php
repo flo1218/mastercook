@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Ingredient;
 use App\Entity\Mark;
 use App\Entity\Recipe;
+use App\Entity\RecipeComment;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\MarkType;
 use App\Form\RecipeSearchType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\MarkRepository;
+use App\Repository\RecipeCommentRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -139,15 +142,36 @@ class RecipeController extends AbstractController
         Recipe $recipe,
         Request $request,
         MarkRepository $markRepository,
+        RecipeCommentRepository $commentRepository,
         EntityManagerInterface $manager,
         TranslatorInterface $translator,
     ): Response {
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
+
+        $comment = new RecipeComment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
         $form->handleRequest($request);
+        $commentForm->handleRequest($request);
 
         /** @var User|null $user */
         $user = $this->getUser();
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            if ($user instanceof User) {
+                $comment->setUser($user);
+            }
+            $comment->setRecipe($recipe);
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash('success', $translator->trans('Commentaire ajouté avec succès.'));
+
+            return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             if ($user instanceof User) {
                 $mark->setUser($user)
@@ -181,9 +205,16 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute('recipe.show', ['id' => $recipe->getId()]);
         }
 
+        $comments = $commentRepository->findBy(
+            ['recipe' => $recipe],
+            ['createdAt' => 'DESC']
+        );
+
         return $this->render('pages/recipe/show.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+            'commentForm' => $commentForm->createView(),
+            'comments' => $comments,
         ]);
     }
 

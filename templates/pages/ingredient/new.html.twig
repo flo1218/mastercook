@@ -21,8 +21,14 @@
                     {{ form_errors(form.price) }}
                 </div>
             </div>
-            {{ form_widget(form.submit) }}
-            {{ form_widget(form.cancel) }}
+            {{ form_widget(form.submit, {
+            label: '<i class="bi bi-floppy2 me-1"></i> ' ~ 'app.save.label'|trans,
+            label_html: true
+        }) }}
+        {{ form_widget(form.cancel, {
+            label: '<i class="bi bi-x-circle me-1"></i> ' ~ 'app.cancel.label'|trans,
+            label_html: true
+        }) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

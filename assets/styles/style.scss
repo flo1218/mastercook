@@ -29,11 +29,6 @@ body {
 }
 
 // Buttons / icons
-.custom-btn.bi {
-  &::before {
-    padding-right: 5px;
-  }
-}
 
 // Headings
 h1 {
@@ -144,7 +139,6 @@ html[data-bs-theme="dark"] {
     background-color: $bg-dark !important;
     color: $text-light !important;
   }
-
   nav.navbar,
   footer {
     background-color: $nav-dark !important;
@@ -165,6 +159,9 @@ html[data-bs-theme="dark"] {
 }
 
 html[data-bs-theme="light"] {
+  .navbar-brand {
+    color: $bg-light !important;
+  }
   body {
     background-color: $bg-light !important;
   }

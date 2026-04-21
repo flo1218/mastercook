@@ -100,7 +100,7 @@ class RegistrationType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'registration.submit.label',
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4 custom-btn bi bi-send ',
+                    'class' => 'btn btn-primary mt-4 bi bi-send ',
                 ],
             ])
         ;

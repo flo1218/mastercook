@@ -9,8 +9,14 @@
 				<p>{{ 'app.confirmation.label'|trans }}</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-light custom-btn bi bi-x-circle" data-bs-dismiss="modal">{{ 'app.no.label'|trans }}</button>
-				<button type="button" id="confirmDelete" class="btn btn-primary custom-btn bi bi-floppy2">{{ 'app.yes.label'|trans }}</button>
+				<button type="button" id="confirmDelete" class="btn btn-primary">
+					<i class="bi bi-floppy2 me-1"></i>
+					{{ 'app.yes.label'|trans }}
+				</button>
+				<button type="button" class="btn btn-light" data-bs-dismiss="modal">
+					<i class="bi bi-x-circle me-1"></i>
+					{{ 'app.no.label'|trans }}
+				</button>
 			</div>
 		</div>
 	</div>

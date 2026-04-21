@@ -1,21 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    {{ app.request.server.get('APP_NAME') }} - {{ 'category.new.label'|trans }}
+	{{ app.request.server.get('APP_NAME') }}
+	-
+	{{ 'category.new.label'|trans }}
 {% endblock %}
 {% block body %}
-    <div class="container-lg">
-        <h1>{{ 'category.new.label'|trans }}</h1>
+	<div class="container-lg">
+		<h1>{{ 'category.new.label'|trans }}</h1>
 
-        {{ form_start(form) }}
-            <div class="form-group">                
-                {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
-                <div class="form-error text-danger">
-                    {{ form_errors(form.name) }}
-                </div>
-            </div>
-            {{ form_widget(form.submit) }}
-            {{ form_widget(form.cancel) }}
-        {{ form_end(form) }}
-    </div>
+		{{ form_start(form) }}
+		<div class="form-group">
+			{{ form_label(form.name) }}
+			{{ form_widget(form.name) }}
+			<div class="form-error text-danger">
+				{{ form_errors(form.name) }}
+			</div>
+		</div>
+		{{ form_widget(form.submit, {
+            label: '<i class="bi bi-floppy2 me-1"></i> ' ~ 'app.save.label'|trans,
+            label_html: true
+        }) }}
+        {{ form_widget(form.cancel, {
+            label: '<i class="bi bi-x-circle me-1"></i> ' ~ 'app.cancel.label'|trans,
+            label_html: true
+        }) }}
+		{{ form_end(form) }}
+	</div>
 {% endblock %}
