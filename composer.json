@@ -58,7 +58,7 @@
         "symfony/validator": "7.3.*",
         "symfony/web-link": "7.3.*",
         "symfony/webpack-encore-bundle": "^2.1",
-        "symfony/yaml": "7.3.*",
+        "symfony/yaml": "7.4.*",
         "symfonycasts/reset-password-bundle": "^1.21",
         "symfonycasts/sass-bundle": "^0.6.0",
         "twbs/bootstrap-icons": "^1.11",
