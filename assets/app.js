@@ -1,4 +1,3 @@
-// CRITICAL: jQuery must be global BEFORE any Bootstrap-related code
 import $ from "jquery";
 window.$ = window.jQuery = $;
 

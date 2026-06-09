@@ -44,9 +44,9 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 5; ++$i) {
             $user = new User();
-            $user->setFullName($this->faker->name())
-                ->setPseudo($this->faker->boolean() ? $this->faker->firstName() : null)
-                ->setEmail($this->faker->email())
+            $user->setFullName($this->faker->faker()->name())
+                ->setPseudo($this->faker->faker()->boolean() ? $this->faker->faker()->firstName() : null)
+                ->setEmail($this->faker->faker()->email())
                 ->setLanguage('fr')
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
@@ -70,19 +70,19 @@ class AppFixtures extends Fixture
             $dateTimeImmutable = new \DateTimeImmutable();
             for ($k = 1; $k <= 3; ++$k) {
                 $recipe = new Recipe();
-                $desc = $this->faker->paragraphs(3, true);
+                $desc = $this->faker->faker()->paragraphs(3, true);
                 $description = is_string($desc) ? $desc : '';
 
-                $recipe->setName($this->faker->foodName())
+                $recipe->setName($this->faker->faker()->foodName())
                     ->setTime(mt_rand(1, 1440))
                     ->setPrice(mt_rand(1, 1000))
-                    ->setNbPeople($this->faker->boolean() ? mt_rand(1, 10) : null)
-                    ->setDifficulty($this->faker->boolean() ? mt_rand(1, 5) : null)
+                    ->setNbPeople($this->faker->faker()->boolean() ? mt_rand(1, 10) : null)
+                    ->setDifficulty($this->faker->faker()->boolean() ? mt_rand(1, 5) : null)
                     ->setDescription($description)
-                    ->setIsFavorite($this->faker->boolean())
-                    ->setIsPublic($this->faker->boolean())
+                    ->setIsFavorite($this->faker->faker()->boolean())
+                    ->setIsPublic($this->faker->faker()->boolean())
                     ->setCreatedAt(
-                        $dateTimeImmutable::createFromMutable($this->faker->dateTimeBetween($startDate = '-3 years'))
+                        $dateTimeImmutable::createFromMutable($this->faker->faker()->dateTimeBetween($startDate = '-3 years'))
                     )
                     ->setCreatedBy($user->getFullName() ?? '')
                     ->setUser($user);
@@ -110,10 +110,10 @@ class AppFixtures extends Fixture
         // Contact
         for ($n = 1; $n < 6; ++$n) {
             $contact = new Contact();
-            $contact->setFullName($this->faker->name())
-                ->setEmail($this->faker->email())
+            $contact->setFullName($this->faker->faker()->name())
+                ->setEmail($this->faker->faker()->email())
                 ->setSubject('Demande n°' . $n)
-                ->setMessage($this->faker->text());
+                ->setMessage($this->faker->faker()->text());
 
             $manager->persist($contact);
         }

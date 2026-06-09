@@ -5,7 +5,7 @@
 
 {% block body  %}
 	<div class="container"> 
-		<h1 class="big-title animate__animated animate__bounceInDown">{{ 'home.title'|trans }}</h1>
+		<h1 class="big-title animate__animated animate__fadeIn">{{ 'home.title'|trans }}</h1>
 		<p class="lead">{{ 'home.description'|trans }}</p>
 		<hr class="my-4">
 		{% if not is_granted('IS_AUTHENTICATED') %}
