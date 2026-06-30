@@ -47,6 +47,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/symrecipe
 
 COPY composer.json  ./
+RUN composer config --global policy.advisories.block false
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-progress
 
 COPY . .
