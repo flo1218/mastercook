@@ -45,6 +45,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/mastercook
 
+RUN git config --global --add safe.directory /var/www/mastercook \
+    && echo 'memory_limit=512M' > /usr/local/etc/php/conf.d/memory-limit.ini
+
 COPY composer.json  ./
 RUN composer config --global policy.advisories.block false
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-progress
@@ -56,8 +59,6 @@ EXPOSE 9000
 # Nettoyage des libs de build APRÈS composer install et extensions PHP
 #RUN apk del icu-dev libzip-dev libpng-dev libjpeg-turbo-dev freetype-dev autoconf make gcc g++ musl-dev linux-headers
 
-# Augmenter la mémoire disponible pour PHP CLI
-ENV PHP_MEMORY_LIMIT=512M
 ENV NODE_ENV=development
 
 CMD ["php-fpm"]

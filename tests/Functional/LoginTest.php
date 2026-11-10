@@ -2,7 +2,9 @@
 
 namespace App\Tests\Functional;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginTest extends WebTestCase
@@ -17,22 +19,36 @@ class LoginTest extends WebTestCase
         /** @var \Symfony\Component\Routing\Router $urlGenerator */
         /** @var UserRepository $userRepository */
         $userRepository = $client->getContainer()->get(UserRepository::class);
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        // Find the test user in the database
         $testUser = $userRepository->findOneByEmail('admin@mastercook.ch');
-        $this->assertNotNull($testUser, 'Test user not found in the database.');
+        $createdTestUser = null === $testUser;
 
-        // Log in the test user
-        if ($testUser) {
-            $client->loginUser($testUser);
+        if ($createdTestUser) {
+            $testUser = (new User())
+                ->setFullName('Admin')
+                ->setPseudo('Admin')
+                ->setLanguage('fr')
+                ->setEmail('admin@mastercook.ch')
+                ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+                ->setPlainPassword('password');
+            $entityManager->persist($testUser);
+            $entityManager->flush();
         }
 
-        // User is now logged in, so you can test protected resources
-        $client->request('GET', $urlGenerator->generate('recipe.index'));
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Mes recettes');
-        // Nouvelles assertions
-        $this->assertSelectorExists('nav'); // Vérifie la présence de la barre de navigation
-        $this->assertSelectorTextContains('h1', 'Mes recettes'); // Vérifie le titre de la page
+        try {
+            $client->loginUser($testUser);
+            $client->request('GET', $urlGenerator->generate('recipe.index'));
+
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorTextContains('h1', 'Mes recettes');
+            $this->assertSelectorExists('nav');
+        } finally {
+            if ($createdTestUser) {
+                $entityManager->remove($testUser);
+                $entityManager->flush();
+            }
+        }
     }
 }

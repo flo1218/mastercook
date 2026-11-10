@@ -1,0 +1,4 @@
+karser_recaptcha3:
+    site_key: 'test-site-key'
+    secret_key: 'test-secret'
+    enabled: false
