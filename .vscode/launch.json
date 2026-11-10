@@ -17,7 +17,7 @@
             "port": 9003,
             "cwd": "${workspaceFolder}",
             "pathMappings": {
-                "/var/www/symrecipe" : "${workspaceRoot}"
+                "/var/www/mastercook": "${workspaceFolder}"
             }
         },
         {

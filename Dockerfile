@@ -7,7 +7,6 @@ RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache \
     git \
     unzip \
-    libpq \
     libzip-dev \
     icu-libs \
     icu-dev \
@@ -44,7 +43,7 @@ COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/symrecipe
+WORKDIR /var/www/mastercook
 
 COPY composer.json  ./
 RUN composer config --global policy.advisories.block false

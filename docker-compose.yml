@@ -1,14 +1,16 @@
-version: '3.8'
+name: mastercook
 
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: symrecipe_app
+    container_name: mastercook_app
     volumes:
-      - .:/var/www/symrecipe
-      - /var/www/symrecipe/node_modules # Monte le dossier node_modules
+      - .:/var/www/mastercook
+      - /var/www/mastercook/node_modules # Monte le dossier node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "9000:9000"
     depends_on:
@@ -20,11 +22,11 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: symrecipe_db
+    container_name: mastercook_db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: symrecipe
-      MYSQL_USER: symrecipe_user
+      MYSQL_DATABASE: mastercook
+      MYSQL_USER: mastercook_user
       MYSQL_PASSWORD: Welcome123
     ports:
       - "5555:3306" # Expose le port 3306 de MySQL sur le port 5555 de l'hôte
@@ -38,9 +40,9 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: symrecipe_nginx
+    container_name: mastercook_nginx
     volumes:
-      - .:/var/www/symrecipe
+      - .:/var/www/mastercook
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8090:80"

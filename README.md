@@ -13,7 +13,7 @@ MasterCook est une application de démonstration Symfony conçue pour illustrer 
 
 - PHP 8.2+
 - Symfony 6.x
-- Doctrine ORM + migrations
+- Doctrine ORM + migrations (MySQL 8.0)
 - ApiPlatform (optionnel selon le code)
 - Twig + Webpack Encore (front JS/CSS)
 - PHPUnit 9.5 (tests unitaires + fonctionnels)
@@ -30,27 +30,28 @@ MasterCook est une application de démonstration Symfony conçue pour illustrer 
 ## 🛠️ Installation locale (Docker)
 
 ```bash
-git clone https://github.com/flo1218/mastercook symrecipe
-cd symrecipe
+git clone https://github.com/flo1218/mastercook
+cd mastercook
 
 docker compose up -d
 
-docker exec -it symrecipe_app composer install
-docker exec -it symrecipe_app npm install
+docker exec -it mastercook_app composer install
+docker exec -it mastercook_app npm install
+docker exec -it mastercook_app php -d memory_limit=512M bin/console sass:build
 
-docker exec -it symrecipe_app php bin/console doctrine:migrations:migrate --no-interaction
-docker exec -it symrecipe_app php bin/console doctrine:fixtures:load --no-interaction
+docker exec -it mastercook_app php bin/console doctrine:migrations:migrate --no-interaction
+docker exec -it mastercook_app php bin/console doctrine:fixtures:load --no-interaction
 
 # construction assets front
-docker exec -it symrecipe_app npm run build
+docker exec -it mastercook_app npm run build
 ```
 
 ## 🧪 Exécution des tests
 
 ```bash
-docker exec -it symrecipe_app ./vendor/bin/phpunit -c phpunit.xml.dist
+docker exec -it mastercook_app ./vendor/bin/phpunit -c phpunit.xml.dist
 # ou via Symfony bridge (recommandé)
-# docker exec -it symrecipe_app ./vendor/bin/simple-phpunit
+# docker exec -it mastercook_app ./vendor/bin/simple-phpunit
 ```
 
 ## ▶️ Lancer l’application
@@ -83,5 +84,5 @@ docker exec -it symrecipe_app ./vendor/bin/phpunit -c phpunit.xml.dist
 
 ## 🔧 Développement
 
-- `docker exec -it symrecipe_app php bin/console cache:clear --env=dev`
-- `docker exec -it symrecipe_app npm run dev -- --watch`
+- `docker exec -it mastercook_app php bin/console cache:clear --env=dev`
+- `docker exec -it mastercook_app npm run dev -- --watch`

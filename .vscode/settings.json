@@ -1,4 +1,21 @@
 {
     "DockerRun.DisableDockerrc": true,
-    "DockerRun.DisableAutoGenerateConfig": true
+    "DockerRun.DisableAutoGenerateConfig": true,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5555,
+            "driver": "MySQL",
+            "name": "Mastercook",
+            "database": "mastercook",
+            "username": "mastercook_user",
+            "password": "Welcome123"
+        }
+    ]
 }

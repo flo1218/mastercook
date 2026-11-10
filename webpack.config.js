@@ -1,4 +1,4 @@
-const Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore').default;
 const Dotenv = require('dotenv-webpack');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.

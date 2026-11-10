@@ -9,7 +9,7 @@
         "chartjs-plugin-zoom": "^2.2.0",
         "css-minimizer-webpack-plugin": "^8.0.0",
         "dotenv-webpack": "^9.0.0",
-        "jquery": "^4.0.0",
+        "jquery": "^3.7.1",
         "sass": "^1.101.0",
         "sass-loader": "^17.0.0",
         "serialize-javascript": "^7.0.6",

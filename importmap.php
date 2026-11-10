@@ -22,12 +22,6 @@ return [
     '@symfony/ux-translator' => [
         'path' => './vendor/symfony/ux-translator/assets/dist/translator_controller.js',
     ],
-    '@app/translations' => [
-        'path' => './var/translations/index.js',
-    ],
-    '@app/translations/configuration' => [
-        'path' => './var/translations/configuration.js',
-    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
